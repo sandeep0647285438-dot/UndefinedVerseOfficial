@@ -1,77 +1,84 @@
 
 const canvas = document.getElementById("cosmos");
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { alpha: true });
 
 let width = 0;
 let height = 0;
 let stars = [];
 let galaxies = [];
-let animationFrame;
+let frame = 0;
 let lastFrame = 0;
 
-const reducedMotion = window.matchMedia(
+const reduceMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
 
-function random(min, max) {
-  return Math.random() * (max - min) + min;
+function rand(min, max) {
+  return min + Math.random() * (max - min);
 }
 
-function resizeCanvas() {
-  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+function createGalaxy(big = false) {
+  return {
+    x: rand(-0.05, 1.05),
+    y: rand(0.04, 0.96),
+    size: big ? rand(65, 115) : rand(18, 38),
+    rotation: rand(0, Math.PI * 2),
+    speed: rand(-0.00012, 0.00012),
+    arms: Math.random() > 0.5 ? 2 : 3,
+    hue: Math.random() > 0.72 ? 225 : rand(258, 282),
+    alpha: big ? rand(0.19, 0.35) : rand(0.12, 0.25)
+  };
+}
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
   width = window.innerWidth;
   height = window.innerHeight;
 
-  canvas.width = Math.round(width * pixelRatio);
-  canvas.height = Math.round(height * pixelRatio);
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
   canvas.style.width = width + "px";
   canvas.style.height = height + "px";
 
-  ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  const starCount = Math.min(
-    260,
-    Math.floor((width * height) / 5000)
+  const count = Math.min(
+    170,
+    Math.max(65, Math.floor(width * height / 6500))
   );
 
-  stars = Array.from({ length: starCount }, () => ({
-    x: random(0, width),
-    y: random(0, height),
-    radius: random(0.4, 1.6),
-    alpha: random(0.2, 0.9),
-    speed: random(0.08, 0.35),
-    phase: random(0, Math.PI * 2),
-    tint: Math.random() > 0.7 ? 190 : 270
+  stars = Array.from({ length: count }, () => ({
+    x: rand(0, width),
+    y: rand(0, height),
+    r: rand(0.35, 1.35),
+    phase: rand(0, Math.PI * 2),
+    speed: rand(0.04, 0.22),
+    alpha: rand(0.25, 0.9),
+    hue: Math.random() > 0.7 ? 225 : 270
   }));
 
-  galaxies = Array.from(
-    { length: width < 600 ? 3 : 6 },
-    () => ({
-      x: random(0, width),
-      y: random(0, height),
-      size: random(9, 23),
-      rotation: random(0, Math.PI * 2),
-      speed: random(-0.0008, 0.0008),
-      alpha: random(0.12, 0.32)
-    })
+  const countGalaxies = width < 600 ? 5 : 8;
+
+  galaxies = Array.from({ length: countGalaxies }, (_, i) =>
+    createGalaxy(i < (width < 600 ? 2 : 3))
   );
 }
 
 function drawStar(star, time) {
-  const twinkle = reducedMotion
+  const pulse = reduceMotion
     ? 0.8
-    : 0.55 + Math.sin(time * 0.001 + star.phase) * 0.4;
+    : 0.65 + Math.sin(time * 0.001 + star.phase) * 0.35;
+
+  ctx.fillStyle =
+    `hsla(${star.hue}, 90%, 88%, ${star.alpha * pulse})`;
 
   ctx.beginPath();
-  ctx.fillStyle = `hsla(${star.tint}, 90%, 88%, ${
-    star.alpha * twinkle
-  })`;
-  ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+  ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
   ctx.fill();
 
-  if (star.radius > 1.25 && star.alpha > 0.55) {
-    ctx.strokeStyle = `rgba(205, 175, 255, ${twinkle * 0.25})`;
+  if (star.r > 1.05) {
+    ctx.strokeStyle = `rgba(207, 179, 255, ${pulse * 0.25})`;
     ctx.lineWidth = 0.6;
     ctx.beginPath();
     ctx.moveTo(star.x - 3, star.y);
@@ -81,107 +88,131 @@ function drawStar(star, time) {
     ctx.stroke();
   }
 
-  if (!reducedMotion) {
+  if (!reduceMotion) {
     star.y += star.speed;
 
-    if (star.y > height + 3) {
-      star.y = -3;
-      star.x = random(0, width);
+    if (star.y > height + 2) {
+      star.y = -2;
+      star.x = rand(0, width);
     }
   }
 }
 
-function drawGalaxy(galaxy, time) {
+function drawGalaxy(g, time) {
+  const x = g.x * width;
+  const y = g.y * height;
+
   ctx.save();
-  ctx.translate(galaxy.x, galaxy.y);
-  ctx.rotate(
-    galaxy.rotation + (reducedMotion ? 0 : time * galaxy.speed)
-  );
+  ctx.translate(x, y);
+  ctx.rotate(g.rotation + (reduceMotion ? 0 : time * g.speed));
+  ctx.globalAlpha = g.alpha;
 
-  ctx.globalAlpha = galaxy.alpha;
-
-  const glow = ctx.createRadialGradient(
-    0, 0, 0,
-    0, 0, galaxy.size * 1.8
-  );
-
-  glow.addColorStop(0, "rgba(211, 174, 255, 0.65)");
-  glow.addColorStop(0.35, "rgba(151, 86, 255, 0.3)");
-  glow.addColorStop(1, "rgba(100, 42, 180, 0)");
+  // Soft galactic glow.
+  const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, g.size * 1.8);
+  glow.addColorStop(0, `hsla(${g.hue}, 95%, 78%, 0.52)`);
+  glow.addColorStop(0.22, `hsla(${g.hue}, 90%, 65%, 0.23)`);
+  glow.addColorStop(1, `hsla(${g.hue}, 90%, 45%, 0)`);
 
   ctx.fillStyle = glow;
   ctx.beginPath();
-  ctx.ellipse(
-    0, 0,
-    galaxy.size * 1.8,
-    galaxy.size * 0.65,
-    0, 0, Math.PI * 2
-  );
+  ctx.ellipse(0, 0, g.size * 1.8, g.size * 0.85, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.strokeStyle = "rgba(200, 163, 255, 0.7)";
-  ctx.lineWidth = 0.7;
+  // Spiral arms made from many small points.
+  for (let arm = 0; arm < g.arms; arm++) {
+    for (let i = 0; i < 115; i++) {
+      const t = i / 115;
+      const angle =
+        t * Math.PI * 4.2 + (arm * Math.PI * 2) / g.arms;
 
-  for (let arm = 0; arm < 2; arm++) {
-    ctx.beginPath();
+      const radius = 2 + t * g.size;
+      const scatter = (Math.random() - 0.5) * 2.8;
 
-    for (let i = 0; i <= 50; i++) {
-      const progress = i / 50;
-      const angle = progress * Math.PI * 2.5 +
-        arm * Math.PI;
+      const px = Math.cos(angle) * radius + scatter;
+      const py = Math.sin(angle) * radius * 0.43 + scatter;
 
-      const radius = progress * galaxy.size;
+      const pointSize = (1 - t) * 1.15 + 0.15;
+      const opacity = (1 - t * 0.6) * 0.8;
 
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius * 0.45;
+      ctx.fillStyle =
+        `hsla(${g.hue + rand(-8, 8)}, 90%, ${rand(65, 92)}%, ${opacity})`;
 
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
+      ctx.beginPath();
+      ctx.arc(px, py, pointSize, 0, Math.PI * 2);
+      ctx.fill();
     }
-
-    ctx.stroke();
   }
 
-  ctx.fillStyle = "rgba(246, 229, 255, 0.85)";
+  // Bright centre and a delicate outer halo.
+  ctx.fillStyle = `hsla(${g.hue}, 100%, 94%, 0.9)`;
   ctx.beginPath();
-  ctx.arc(0, 0, 1.2, 0, Math.PI * 2);
+  ctx.arc(0, 0, g.size > 60 ? 2.4 : 1.2, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.restore();
 }
 
-function drawCosmos(time = 0) {
-  if (reducedMotion) time = 0;
-
-  // Limit the animation workload on slower phones.
-  if (!reducedMotion && time - lastFrame < 32) {
-    animationFrame = requestAnimationFrame(drawCosmos);
+function draw(time = 0) {
+  if (!reduceMotion && time - lastFrame < 40) {
+    frame = requestAnimationFrame(draw);
     return;
   }
 
   lastFrame = time;
-
   ctx.clearRect(0, 0, width, height);
 
-  galaxies.forEach(galaxy => drawGalaxy(galaxy, time));
+  galaxies.forEach(g => drawGalaxy(g, time));
   stars.forEach(star => drawStar(star, time));
 
-  if (!reducedMotion) {
-    animationFrame = requestAnimationFrame(drawCosmos);
+  if (!reduceMotion) {
+    frame = requestAnimationFrame(draw);
   }
 }
 
-window.addEventListener("resize", () => {
-  cancelAnimationFrame(animationFrame);
-  resizeCanvas();
-  drawCosmos();
-});
+function restartCanvas() {
+  cancelAnimationFrame(frame);
+  resize();
+  draw();
+}
 
-resizeCanvas();
-drawCosmos();
+window.addEventListener("resize", restartCanvas);
+
+resize();
+draw();
+
+// Change the demonstration dialogue when the button is tapped.
+const dialogueSets = [
+  [
+    ["THE EXPLORER", "What lies beyond the edge of everything we know?"],
+    ["THE UNKNOWN", "Perhaps the things we haven't dared to imagine yet."]
+  ],
+  [
+    ["THE DREAMER", "Do you think every star has a story?"],
+    ["THE OBSERVER", "Maybe. We just haven't learned how to listen."]
+  ],
+  [
+    ["THE SEEKER", "What makes a world worth discovering?"],
+    ["THE GUIDE", "The possibility that it might change you."]
+  ]
+];
+
+let dialogueIndex = 0;
+
+const changeButton = document.getElementById("changeDialogue");
+
+if (changeButton) {
+  changeButton.addEventListener("click", () => {
+    dialogueIndex = (dialogueIndex + 1) % dialogueSets.length;
+
+    const speeches = document.querySelectorAll(".speech");
+
+    speeches.forEach((speech, i) => {
+      const [speaker, words] = dialogueSets[dialogueIndex][i];
+      speech.querySelector(".speaker").textContent = speaker;
+      speech.querySelector("p").textContent = words;
+    });
+  });
+}
 
 document.getElementById("year").textContent =
   new Date().getFullYear();
