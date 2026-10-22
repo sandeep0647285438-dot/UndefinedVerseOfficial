@@ -638,3 +638,104 @@ h2 {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* UV COSMIC CORE — abstract energy, not a planet */
+
+.core {
+  width: 37%;
+  height: 41%;
+  overflow: visible;
+  clip-path: polygon(
+    47% 0%, 58% 8%, 76% 5%, 72% 19%,
+    95% 27%, 81% 41%, 100% 53%, 78% 61%,
+    82% 79%, 61% 75%, 48% 100%, 36% 78%,
+    17% 87%, 22% 65%, 0% 55%, 18% 39%,
+    9% 22%, 31% 23%, 35% 7%
+  );
+  background:
+    conic-gradient(
+      from 35deg at 48% 50%,
+      #3b126c,
+      #d7b2ff,
+      #8735f5,
+      #4b16a0,
+      #bd7cff,
+      #35105e,
+      #a96bff,
+      #3b126c
+    );
+  box-shadow: none;
+  filter: drop-shadow(0 0 20px rgba(153, 82, 255, .5));
+}
+
+.core::before {
+  inset: -12%;
+  background:
+    repeating-conic-gradient(
+      from 15deg at 50% 50%,
+      transparent 0deg 24deg,
+      rgba(240, 220, 255, .85) 25deg 26deg,
+      transparent 28deg 48deg
+    );
+  mix-blend-mode: screen;
+  animation: energy-flow 18s linear infinite;
+}
+
+.core::after {
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 32% 28%,
+      #fff 0%,
+      #e3caff 4%,
+      transparent 17%
+    ),
+    linear-gradient(
+      145deg,
+      transparent 25%,
+      rgba(226, 193, 255, .7) 39%,
+      transparent 44%,
+      transparent 59%,
+      rgba(192, 135, 255, .65) 64%,
+      transparent 72%
+    );
+  filter: blur(2px);
+}
+
+.core-glow {
+  width: 49%;
+  height: 49%;
+  background: conic-gradient(
+    from 45deg,
+    #5520a5,
+    #c38aff,
+    #6020ba,
+    #e2c7ff,
+    #5520a5
+  );
+  clip-path: polygon(
+    48% 0%, 68% 14%, 91% 19%, 83% 40%,
+    100% 56%, 75% 69%, 67% 91%, 46% 82%,
+    27% 100%, 23% 75%, 0% 60%, 17% 41%,
+    12% 20%, 35% 20%
+  );
+  filter: blur(35px);
+  opacity: .55;
+}
+
+.core-light {
+  width: 12%;
+  height: 30%;
+  top: 22%;
+  left: 30%;
+  border-radius: 50%;
+  background: #fff;
+  filter: blur(15px);
+  opacity: .9;
+}
+
+@keyframes energy-flow {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.06); }
+}
