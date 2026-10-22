@@ -3,150 +3,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08080A">
-
-  <title>UndefinedVerseofficial | Enter the Verse</title>
-
-  <meta
-    name="description"
-    content="Discover manga, explore novels, and connect with readers at UndefinedVerseofficial."
-  >
-
-  <meta name="author" content="UndefinedVerseofficial">
-
-  <link rel="icon" href="assets/images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08080d">
+  <meta name="description" content="UndefinedVerse — discover original manga, novels and communities.">
+  <title>UndefinedVerse | Stories Beyond the Stars</title>
   <link rel="stylesheet" href="assets/css/style.css">
-
   <script src="assets/js/main.js" defer></script>
 </head>
-
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html" aria-label="UV home">
-        UV<span>.</span>
-      </a>
+  <header class="header">
+    <a href="#home" class="logo">UV<span>.</span>
+      <small>UNDEFINEDVERSE</small>
+    </a>
 
-      <nav class="main-nav" aria-label="Main navigation">
-        <a class="active" href="index.html">Home</a>
-        <a href="manga/index.html">Manga</a>
-        <a href="novels/index.html">Novels</a>
-        <a href="community/index.html">Community</a>
-      </nav>
+    <nav class="desktop-nav">
+      <a href="#home">Home</a>
+      <a href="#discover">Discover</a>
+      <a href="#latest">Latest</a>
+      <a href="#community">Community</a>
+    </nav>
 
-      <a class="btn btn-outline header-link" href="#explore">
-        Explore UV
-      </a>
-    </div>
+    <a href="#account" class="signin">Sign in ↗</a>
   </header>
 
-  <main>
+  <main id="home">
     <section class="hero">
-      <div class="container">
-        <p class="eyebrow">THE UNDEFINED UNIVERSE</p>
+      <p class="eyebrow">YOUR NEXT OBSESSION STARTS HERE</p>
+      <h1>Stories beyond<br>the <span>known universe.</span></h1>
+      <p class="intro">
+        Discover original worlds, unforgettable characters,
+        and stories waiting to be explored.
+      </p>
+      <a class="button" href="#discover">Explore the verse ↗</a>
 
-        <h1>
-          Stories beyond<br>
-          <span>boundaries.</span>
-        </h1>
-
-        <p class="hero-description">
-          A universe of manga, novels, and imagination.
-          Discover stories, explore new worlds, and become
-          part of something bigger.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn" href="#explore">Explore the Verse</a>
-          <a class="btn btn-outline" href="#about">Discover UV</a>
-        </div>
-
-        <div class="hero-mark" aria-hidden="true">
-          <span>U</span><span>V</span>
-        </div>
+      <div class="galaxy" aria-hidden="true">
+        <div class="planet"></div>
+        <div class="orbit"></div>
       </div>
     </section>
 
-    <section class="section" id="explore">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">YOUR NEXT OBSESSION</p>
-          <h2>Explore the universe.</h2>
-          <p>
-            Find a story that stays with you.
-          </p>
-        </div>
+    <section class="section" id="discover">
+      <p class="eyebrow">FIND YOUR NEXT WORLD</p>
+      <h2>Explore the <span>archive.</span></h2>
 
-        <div class="card-grid">
-          <a class="card" href="manga/index.html">
-            <span class="card-label">01 / MANGA</span>
-            <h3>Manga</h3>
-            <p>
-              Explore illustrated adventures, unique worlds,
-              and unforgettable characters.
-            </p>
-            <span class="card-link">Explore manga ↗</span>
-          </a>
+      <input id="search" type="search"
+        placeholder="Search manga, novels, genres...">
 
-          <a class="card" href="novels/index.html">
-            <span class="card-label">02 / LITERATURE</span>
-            <h3>Novels</h3>
-            <p>
-              Discover immersive fiction, powerful stories,
-              and original writing.
-            </p>
-            <span class="card-link">Explore novels ↗</span>
-          </a>
-
-          <a class="card" href="community/index.html">
-            <span class="card-label">03 / COMMUNITY</span>
-            <h3>Community</h3>
-            <p>
-              A future home for readers, creators,
-              discussions, and shared discoveries.
-            </p>
-            <span class="card-link">Enter community ↗</span>
-          </a>
-        </div>
+      <div class="filters">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="manga">Manga</button>
+        <button data-filter="novel">Novels</button>
+        <button data-filter="fantasy">Fantasy</button>
+        <button data-filter="sci-fi">Sci-fi</button>
       </div>
+
+      <div class="cards" id="cards">
+        <article class="card" data-type="manga"
+          data-genres="fantasy sci-fi" data-title="Eclipse Protocol">
+          <div class="cover cover-one">
+            <small>ORIGINAL MANGA</small>
+            <strong>ECLIPSE<br>PROTOCOL</strong>
+          </div>
+          <h3>Eclipse Protocol</h3>
+          <p>Fantasy · Sci-fi · Manga</p>
+        </article>
+
+        <article class="card" data-type="novel"
+          data-genres="fantasy" data-title="The Glass Kingdom">
+          <div class="cover cover-two">
+            <small>ORIGINAL NOVEL</small>
+            <strong>THE GLASS<br>KINGDOM</strong>
+          </div>
+          <h3>The Glass Kingdom</h3>
+          <p>Fantasy · Novel</p>
+        </article>
+
+        <article class="card" data-type="manga"
+          data-genres="sci-fi" data-title="Neon Afterlight">
+          <div class="cover cover-three">
+            <small>ORIGINAL MANGA</small>
+            <strong>NEON<br>AFTERLIGHT</strong>
+          </div>
+          <h3>Neon Afterlight</h3>
+          <p>Sci-fi · Manga</p>
+        </article>
+      </div>
+      <p id="status" class="muted">Explore original works from UV.</p>
     </section>
 
-    <section class="section about-section" id="about">
-      <div class="container">
-        <div class="about-panel">
-          <p class="eyebrow">BEYOND THE ORDINARY</p>
-
-          <h2>One universe.<br>Infinite possibilities.</h2>
-
-          <p>
-            UndefinedVerseofficial is being built for people
-            who love stories and the worlds behind them.
-            From manga to novels, UV aims to bring discovery
-            and community together in one place.
-          </p>
-
-          <a class="btn" href="community/index.html">
-            Discover the vision
-          </a>
-        </div>
+    <section class="section" id="latest">
+      <p class="eyebrow">FRESH FROM THE ARCHIVE</p>
+      <h2>Latest <span>releases.</span></h2>
+      <div class="release">
+        <div><strong>Eclipse Protocol</strong>
+          <p>Chapter 01 · The Awakening</p></div>
+        <span>MANGA</span>
       </div>
+      <div class="release">
+        <div><strong>The Glass Kingdom</strong>
+          <p>Chapter 01 · A Crown of Shards</p></div>
+        <span>NOVEL</span>
+      </div>
+      <p class="muted">These are sample titles for the prototype.</p>
+    </section>
+
+    <section class="community" id="community">
+      <p class="eyebrow">MORE THAN READING</p>
+      <h2>Find your people<br>in the <span>verse.</span></h2>
+      <p>Discover public groups and connect with fellow readers.</p>
+      <a class="button button-outline" href="#account">
+        Enter the community ↗
+      </a>
+    </section>
+
+    <section class="section" id="account">
+      <p class="eyebrow">YOUR UNIVERSE AWAITS</p>
+      <h2>Ready to enter the <span>verse?</span></h2>
+      <p class="muted">
+        Account registration will be connected in a later development stage.
+      </p>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="logo" href="index.html">UV<span>.</span></a>
-
-      <p>
-        © <span id="current-year">2026</span>
-        UndefinedVerseofficial.
-      </p>
-
-      <p class="footer-tagline">
-        A universe still being written.
-      </p>
-    </div>
+  <footer>
+    <a href="#home" class="logo">UV<span>.</span></a>
+    <p>Original worlds. Infinite possibilities.</p>
+    <small>© <span id="year"></span> UndefinedVerse</small>
   </footer>
+
+  <nav class="mobile-nav">
+    <a href="#home">⌂<small>Home</small></a>
+    <a href="#discover">⌕<small>Discover</small></a>
+    <a href="#latest">▤<small>Latest</small></a>
+    <a href="#community">◎<small>Community</small></a>
+    <a href="#account">◉<small>Profile</small></a>
+  </nav>
 </body>
 </html>
