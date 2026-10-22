@@ -1,67 +1,54 @@
 
-/* ========================================
-   UndefinedVerseofficial (UV)
-   Main JavaScript
-======================================== */
+const year = document.querySelector("#year");
+if (year) year.textContent = new Date().getFullYear();
 
-"use strict";
+const search = document.querySelector("#search");
+const cards = [...document.querySelectorAll(".card")];
+const buttons = [...document.querySelectorAll("[data-filter]")];
+const status = document.querySelector("#status");
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Keep the footer year current.
-  const yearElement = document.getElementById("current-year");
+let activeFilter = "all";
 
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
+function updateCards() {
+  const query = (search?.value || "").trim().toLowerCase();
+  let count = 0;
 
-  // Smoothly navigate to sections on the same page.
-  const sectionLinks = document.querySelectorAll(
-    'a[href^="#"]'
-  );
+  cards.forEach(card => {
+    const title = (card.dataset.title || "").toLowerCase();
+    const type = (card.dataset.type || "").toLowerCase();
+    const genres = (card.dataset.genres || "").toLowerCase();
 
-  sectionLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const targetId = link.getAttribute("href");
+    const matchesText =
+      !query || `${title} ${type} ${genres}`.includes(query);
 
-      if (!targetId || targetId === "#") {
-        return;
-      }
+    const matchesFilter =
+      activeFilter === "all" ||
+      type === activeFilter ||
+      genres.split(" ").includes(activeFilter);
 
-      const target = document.querySelector(targetId);
+    const visible = matchesText && matchesFilter;
+    card.hidden = !visible;
 
-      if (!target) {
-        return;
-      }
-
-      event.preventDefault();
-
-      target.scrollIntoView({
-        behavior: window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches
-          ? "auto"
-          : "smooth",
-        block: "start"
-      });
-
-      history.replaceState(null, "", targetId);
-    });
+    if (visible) count++;
   });
 
-  // Mark the current page's navigation link.
-  const currentPath = window.location.pathname.replace(
-    /\/+$/,
-    ""
-  );
+  if (status) {
+    status.textContent = count
+      ? `${count} work${count === 1 ? "" : "s"} found.`
+      : "No matches yet. Try another search.";
+  }
+}
 
-  document.querySelectorAll(".main-nav a").forEach((link) => {
-    const linkUrl = new URL(link.href, window.location.origin);
+search?.addEventListener("input", updateCards);
 
-    const linkPath = linkUrl.pathname.replace(/\/+$/, "");
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter || "all";
 
-    link.classList.toggle(
-      "active",
-      linkPath === currentPath
-    );
+    buttons.forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    updateCards();
   });
 });
