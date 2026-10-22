@@ -739,3 +739,38 @@ h2 {
   from { transform: rotate(0deg) scale(1); }
   to { transform: rotate(360deg) scale(1.06); }
 }
+
+
+/* UV CLEAN COSMIC DESIGN — remove the centerpiece */
+
+.universe-art {
+  display: none !important;
+}
+
+.hero {
+  min-height: 620px;
+  height: min(760px, calc(100svh - 82px));
+  background:
+    radial-gradient(ellipse at 75% 45%, rgba(101, 43, 177, 0.14), transparent 38%),
+    radial-gradient(ellipse at 20% 80%, rgba(84, 35, 138, 0.10), transparent 42%);
+}
+
+.hero-copy {
+  width: 75%;
+  max-width: 760px;
+}
+
+.hero h1 {
+  font-size: clamp(48px, 7vw, 88px);
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 650px;
+    height: auto;
+  }
+
+  .hero-copy {
+    width: 100%;
+  }
+}
