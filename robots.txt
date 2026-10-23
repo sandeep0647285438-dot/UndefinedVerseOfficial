@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://undefinedverseofficial.pages.dev/sitemap.xml
