@@ -1,0 +1,14 @@
+
+{
+  "id": "/",
+  "name": "UndefinedVerseOfficial",
+  "short_name": "UndefinedVerse",
+  "description": "An independent creative project in development.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#090810",
+  "theme_color": "#090810",
+  "orientation": "any",
+  "lang": "en"
+}
