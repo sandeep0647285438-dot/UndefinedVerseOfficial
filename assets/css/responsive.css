@@ -1,0 +1,296 @@
+
+/* =========================================
+   UNDEFINEDVERSEOFFICIAL
+   RESPONSIVE LAYOUT
+   File: assets/css/responsive.css
+   ========================================= */
+
+/* ---------- Fluid media and overflow safety ---------- */
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+  overflow-wrap: break-word;
+}
+
+main,
+section,
+header,
+footer,
+.container,
+.section-inner {
+  min-width: 0;
+}
+
+/* ---------- Wide screens ---------- */
+
+@media (min-width: 1440px) {
+  :root {
+    --page-gutter: clamp(36px, 6vw, 112px);
+    --content-width: 1240px;
+  }
+
+  .hero {
+    min-height: min(760px, calc(100svh - var(--header-height)));
+  }
+}
+
+/* ---------- Tablets and compact laptops ---------- */
+
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 76px;
+  }
+
+  .hero {
+    gap: clamp(30px, 5vw, 64px);
+  }
+
+  .hero__visual {
+    max-width: 420px;
+  }
+
+  .dimension-grid,
+  .dimensions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .category-grid,
+  .categories-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Mobile navigation and layout ---------- */
+
+@media (max-width: 760px) {
+  :root {
+    --header-height: 70px;
+    --page-gutter: 22px;
+  }
+
+  .site-header {
+    padding-inline: var(--page-gutter);
+  }
+
+  .site-nav {
+    gap: 18px;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+    padding-top: clamp(70px, 12vw, 110px);
+    padding-bottom: 70px;
+  }
+
+  .hero__content {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .hero__visual {
+    width: min(100%, 390px);
+    margin-inline: auto;
+  }
+
+  .section {
+    padding-block: clamp(64px, 10vw, 88px);
+  }
+
+  .section-heading {
+    gap: 18px;
+  }
+
+  .dimension-grid,
+  .dimensions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .category-grid,
+  .categories-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-footer {
+    gap: 22px;
+  }
+}
+
+/* ---------- Small phones ---------- */
+
+@media (max-width: 540px) {
+  :root {
+    --page-gutter: 18px;
+    --header-height: 66px;
+  }
+
+  .brand {
+    gap: 10px;
+    max-width: calc(100% - 64px);
+  }
+
+  .brand__mark {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+  }
+
+  .brand__text {
+    min-width: 0;
+  }
+
+  .brand__name {
+    font-size: 0.88rem;
+  }
+
+  .brand__sub {
+    font-size: 0.58rem;
+  }
+
+  .hero {
+    padding-top: 66px;
+    padding-bottom: 56px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 12vw, 4.2rem);
+    line-height: 0.99;
+    letter-spacing: -0.065em;
+  }
+
+  .hero__description {
+    max-width: 42ch;
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
+  .hero__actions {
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero__actions .button {
+    flex: 1 1 auto;
+  }
+
+  .hero__visual {
+    width: min(100%, 330px);
+  }
+
+  .section {
+    padding-block: 58px;
+  }
+
+  .section-heading {
+    margin-bottom: 28px;
+  }
+
+  .dimension-grid,
+  .dimensions-grid,
+  .category-grid,
+  .categories-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dimension-card {
+    min-height: 190px;
+  }
+
+  .dimension-card__top {
+    margin-bottom: 22px;
+  }
+
+  .category-card {
+    min-height: 190px;
+  }
+
+  .codex-link {
+    padding: 22px;
+  }
+
+  .notice {
+    padding: 24px 20px;
+  }
+
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: 28px;
+  }
+}
+
+/* ---------- Extra-small devices ---------- */
+
+@media (max-width: 360px) {
+  :root {
+    --page-gutter: 14px;
+  }
+
+  .brand__sub {
+    display: none;
+  }
+
+  .hero__title {
+    font-size: 2.45rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions .button {
+    width: 100%;
+  }
+
+  .dimension-card,
+  .category-card {
+    padding: 20px;
+  }
+
+  .codex-link {
+    padding: 18px;
+  }
+}
+
+/* ---------- Landscape phones ---------- */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  .hero__visual {
+    max-width: 260px;
+  }
+}
+
+/* ---------- Touch-friendly controls ---------- */
+
+@media (hover: none) and (pointer: coarse) {
+  .site-nav__link,
+  .button,
+  .category-card,
+  .codex-link {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dimension-card:hover,
+  .category-card:hover,
+  .codex-link:hover {
+    transform: none;
+  }
+}
