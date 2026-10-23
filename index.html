@@ -4,144 +4,852 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#05030e">
-  <meta name="description" content="UndefinedVerseOfficial — a universe of stars, galaxies, imagination, and discovery.">
-  <title>UndefinedVerseOfficial — Infinite Space</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta name="theme-color" content="#080914">
+  <meta name="description" content="UndefinedVerseOfficial — an independent creative universe exploring fictional worlds, stories, concepts, and ideas.">
+  <meta name="color-scheme" content="dark">
+
+  <title>UndefinedVerseOfficial — Creative Worlds</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080914;
+      --surface: #10111e;
+      --surface-hover: #151728;
+      --text: #f0eff8;
+      --muted: #a6a6bb;
+      --line: rgba(200, 198, 255, 0.14);
+      --accent: #b8a7ff;
+      --content-width: 1120px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    ::selection {
+      color: white;
+      background: #6550a9;
+    }
+
+    /* Cosmic background canvas */
+    #cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .background-shade {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(8, 9, 20, 0.12) 0%,
+          rgba(8, 9, 20, 0.08) 45%,
+          rgba(8, 9, 20, 0.66) 100%
+        );
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(
+        var(--content-width),
+        calc(100% - 48px)
+      );
+      margin-inline: auto;
+    }
+
+    /* Navigation */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8, 9, 20, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(184, 167, 255, 0.5);
+      border-radius: 10px;
+      color: var(--accent);
+      font-size: 19px;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color 160ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .menu-icon,
+    .menu-icon::before,
+    .menu-icon::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    .menu-icon {
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .menu-icon::before {
+      top: -6px;
+    }
+
+    .menu-icon::after {
+      top: 6px;
+    }
+
+    /* Main introduction */
+    .hero {
+      display: flex;
+      min-height: min(690px, 78vh);
+      align-items: center;
+      padding-block: 100px 115px;
+    }
+
+    .hero-content {
+      width: min(720px, 100%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 22px;
+      color: #c6baff;
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 20px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .hero h1 {
+      max-width: 750px;
+      margin-bottom: 25px;
+      font-size: clamp(42px, 7.5vw, 82px);
+      font-weight: 650;
+      letter-spacing: -0.075em;
+      line-height: 1.04;
+      text-wrap: balance;
+    }
+
+    .hero h1 span {
+      color: #b9aaff;
+    }
+
+    .hero-description {
+      max-width: 530px;
+      margin-bottom: 32px;
+      color: #c0bfd0;
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 18px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        transform 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      border-color: #b7a8ff;
+      background: #b7a8ff;
+      color: #111020;
+    }
+
+    .button-primary:hover {
+      border-color: #d0c6ff;
+      background: #d0c6ff;
+    }
+
+    .button-secondary {
+      background: rgba(14, 15, 31, 0.64);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      border-color: rgba(184, 167, 255, 0.48);
+      background: var(--surface-hover);
+    }
+
+    .arrow {
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    /* Shared section layout */
+    .section {
+      padding-block: 76px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      max-width: 600px;
+      margin-bottom: 34px;
+    }
+
+    .section-heading .eyebrow {
+      margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 12px;
+      font-size: clamp(28px, 4.5vw, 43px);
+      font-weight: 600;
+      letter-spacing: -0.055em;
+      line-height: 1.2;
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Project cards */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      display: flex;
+      min-height: 230px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(13, 14, 28, 0.76);
+      transition:
+        background 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(184, 167, 255, 0.4);
+      background: rgba(20, 21, 40, 0.91);
+    }
+
+    .card-index {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    .project-card h3 {
+      margin-bottom: 9px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .project-card p {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .card-link {
+      margin-top: auto;
+      color: #d0c6ff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .card-link span {
+      display: inline-block;
+      margin-left: 5px;
+      transition: transform 160ms ease;
+    }
+
+    .card-link:hover span {
+      transform: translateX(4px);
+    }
+
+    /* About section */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-layout .section-heading {
+      margin-bottom: 0;
+    }
+
+    .about-copy p {
+      margin-bottom: 18px;
+      color: #b8b8ca;
+      font-size: 15px;
+      line-height: 1.95;
+    }
+
+    .about-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-note {
+      margin-top: 26px;
+      padding: 17px 19px;
+      border-left: 2px solid #9b8ae8;
+      background: rgba(17, 17, 35, 0.7);
+      color: #d0cde0;
+      font-size: 13px;
+    }
+
+    /* Contact section */
+    .contact-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(13, 14, 28, 0.8);
+    }
+
+    .contact-panel h2 {
+      margin-bottom: 9px;
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .contact-panel p {
+      max-width: 490px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding-block: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      color: #d6d4e6;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .footer-copy,
+    .footer-links a {
+      color: #9292aa;
+      font-size: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    /* Mobile */
+    @media (max-width: 760px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .nav {
+        min-height: 66px;
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 18px 14px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(8, 9, 20, 0.98);
+      }
+
+      .nav-links.is-open {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .nav-links a {
+        padding: 12px 2px;
+        border-bottom: 1px solid rgba(200, 198, 255, 0.07);
+        font-size: 14px;
+      }
+
+      .nav-links a:last-child {
+        border-bottom: 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-block: 105px 110px;
+      }
+
+      .hero h1 {
+        font-size: clamp(43px, 11vw, 66px);
+      }
+
+      .section {
+        padding-block: 58px;
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .project-card {
+        min-height: 195px;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .contact-panel {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 24px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- The external cosmic engine draws the background here. -->
   <canvas id="cosmos" aria-hidden="true"></canvas>
-  <div class="space-vignette" aria-hidden="true"></div>
+  <div class="background-shade" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#home" aria-label="UndefinedVerseOfficial home">
-      <span class="brand-symbol">UV</span>
-      <span>UndefinedVerseOfficial</span>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle"
-      aria-label="Open navigation" aria-expanded="false"
-      aria-controls="navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav id="navigation" class="navigation" aria-label="Main navigation">
-      <a class="nav-link active" href="#home">Home</a>
-      <a class="nav-link" href="#discover">Discover</a>
-      <a class="nav-link" href="#about">About</a>
-      <a class="nav-link" href="#community">Community</a>
-    </nav>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="hero-content">
-        <span class="eyebrow">
-          <span class="status-dot"></span>
-          A UNIVERSE WITHOUT LIMITS
-        </span>
-
-        <div class="hero-logo" aria-hidden="true">UV</div>
-
-        <h1>Undefined<span>Verse</span>Official</h1>
-
-        <p class="hero-subtitle">
-          Countless galaxies. Infinite possibilities.
-        </p>
-
-        <p class="hero-description">
-          Wander through a sea of stars, discover distant galaxies,
-          and let your imagination travel beyond the ordinary.
-        </p>
-
-        <a class="primary-button" href="#discover">
-          Explore the Cosmos <span aria-hidden="true">↗</span>
+  <div class="site">
+    <header class="site-header">
+      <nav class="nav container" aria-label="Main navigation">
+        <a class="brand" href="#home" aria-label="UndefinedVerseOfficial home">
+          <span class="brand-mark" aria-hidden="true">U</span>
+          <span>UndefinedVerseOfficial</span>
         </a>
 
-        <div class="cosmic-stats" aria-label="A glimpse of the cosmos">
-          <div>
-            <span class="stat-number">∞</span>
-            <span class="stat-label">Possibilities</span>
-          </div>
-          <span class="stat-divider"></span>
-          <div>
-            <span class="stat-number">One</span>
-            <span class="stat-label">Shared universe</span>
-          </div>
-          <span class="stat-divider"></span>
-          <div>
-            <span class="stat-number">Always</span>
-            <span class="stat-label">Keep exploring</span>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="navigation"
+        >
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+
+        <div class="nav-links" id="navigation">
+          <a href="#home">Home</a>
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container" id="home">
+        <div class="hero-content">
+          <p class="eyebrow">Independent creative project</p>
+
+          <h1>
+            Ideas beyond the
+            <span>ordinary.</span>
+          </h1>
+
+          <p class="hero-description">
+            UndefinedVerseOfficial is a creative space for fictional
+            worlds, original concepts, experimental storytelling, and
+            ideas still taking shape.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">
+              Explore projects
+              <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="button button-secondary" href="#about">
+              About the project
+            </a>
           </div>
         </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">The collection</p>
+            <h2>Explore the work</h2>
+            <p>
+              A growing collection of creative directions and original ideas.
+            </p>
+          </div>
+
+          <div class="project-grid">
+            <article class="project-card">
+              <span class="card-index" aria-hidden="true">01</span>
+              <h3>Worldbuilding</h3>
+              <p>
+                Fictional settings, imagined environments, and worlds
+                developed through original concepts.
+              </p>
+              <a class="card-link" href="#about">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="project-card">
+              <span class="card-index" aria-hidden="true">02</span>
+              <h3>Stories &amp; Lore</h3>
+              <p>
+                Characters, narratives, histories, and connected ideas
+                developed for fictional settings.
+              </p>
+              <a class="card-link" href="#about">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="project-card">
+              <span class="card-index" aria-hidden="true">03</span>
+              <h3>Experiments</h3>
+              <p>
+                Visual concepts, creative explorations, and new directions
+                for future projects.
+              </p>
+              <a class="card-link" href="#about">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container about-layout">
+          <div class="section-heading">
+            <p class="eyebrow">About UV</p>
+            <h2>A project built around ideas.</h2>
+          </div>
+
+          <div class="about-copy">
+            <p>
+              UndefinedVerseOfficial is an independent creative project
+              focused on imagination, fictional universes, storytelling,
+              and visual exploration.
+            </p>
+
+            <p>
+              The goal is to develop original concepts with care, build
+              coherent fictional settings, and present the work through
+              a clear and accessible website.
+            </p>
+
+            <p>
+              This is a work in progress. New material can be added as
+              individual projects develop.
+            </p>
+
+            <div class="about-note">
+              Fictional concepts and creative explorations are presented
+              as creative work, not as verified scientific discoveries.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="contact-panel">
+            <div>
+              <p class="eyebrow">Get in touch</p>
+              <h2>Contact the project</h2>
+              <p>
+                For questions, feedback, or enquiries about
+                UndefinedVerseOfficial, use the project's official contact
+                channel.
+              </p>
+            </div>
+
+            <!-- Replace # with your real contact link when available. -->
+            <a class="button button-secondary" href="#home">
+              Back to top <span class="arrow" aria-hidden="true">↑</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="footer-brand" href="#home">
+          UndefinedVerseOfficial
+        </a>
+
+        <span class="footer-copy">
+          © <span id="year">2026</span> UndefinedVerseOfficial
+        </span>
+
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
       </div>
-    </section>
+    </footer>
+  </div>
 
-    <section class="discover section-wrap" id="discover">
-      <div class="section-heading">
-        <span class="eyebrow">A DEEPER LOOK</span>
-        <h2>Lost in the <span>starlight</span></h2>
-        <p>Every corner of the cosmos has a different kind of beauty.</p>
-      </div>
+  <script>
+    (() => {
+      "use strict";
 
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">✦</div>
-          <h3>Starfields</h3>
-          <p>Countless distant lights scattered across the darkness.</p>
-          <a href="#about">Discover more <span>→</span></a>
-        </article>
+      const menuButton = document.getElementById("menuToggle");
+      const navigation = document.getElementById("navigation");
+      const year = document.getElementById("year");
 
-        <article class="feature-card">
-          <div class="feature-icon galaxy-icon" aria-hidden="true">✺</div>
-          <h3>Galaxies</h3>
-          <p>Vast spirals of cosmic dust, stars, and brilliant light.</p>
-          <a href="#about">Look deeper <span>→</span></a>
-        </article>
+      if (year) {
+        year.textContent = String(new Date().getFullYear());
+      }
 
-        <article class="feature-card">
-          <div class="feature-icon nebula-icon" aria-hidden="true">☄</div>
-          <h3>Nebulae</h3>
-          <p>Dreamlike clouds of color drifting through deep space.</p>
-          <a href="#about">See the beauty <span>→</span></a>
-        </article>
+      if (menuButton && navigation) {
+        menuButton.addEventListener("click", () => {
+          const isOpen = navigation.classList.toggle("is-open");
 
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">∞</div>
-          <h3>Possibilities</h3>
-          <p>A place for curious minds, creative ideas, and wonder.</p>
-          <a href="#community">Join the journey <span>→</span></a>
-        </article>
-      </div>
-    </section>
+          menuButton.setAttribute("aria-expanded", String(isOpen));
+          menuButton.setAttribute(
+            "aria-label",
+            isOpen ? "Close navigation menu" : "Open navigation menu"
+          );
+        });
 
-    <section class="about section-wrap" id="about">
-      <span class="eyebrow">BEYOND THE ORDINARY</span>
-      <h2>The universe is bigger<br>than you <span>think.</span></h2>
-      <p>
-        From quiet constellations to brilliant spiral galaxies,
-        there is always something new to imagine, learn, and explore.
-      </p>
-    </section>
+        navigation.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            navigation.classList.remove("is-open");
+            menuButton.setAttribute("aria-expanded", "false");
+            menuButton.setAttribute(
+              "aria-label",
+              "Open navigation menu"
+            );
+          });
+        });
 
-    <section class="community section-wrap" id="community">
-      <span class="eyebrow">DIFFERENT MINDS ✦ ONE UNIVERSE</span>
-      <h2>Keep looking up.</h2>
-      <p>Let curiosity lead the way.</p>
-      <a class="primary-button" href="#home">Back to the stars ↑</a>
-    </section>
-  </main>
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            navigation.classList.remove("is-open");
+            menuButton.setAttribute("aria-expanded", "false");
+            menuButton.setAttribute(
+              "aria-label",
+              "Open navigation menu"
+            );
+            menuButton.focus();
+          }
+        });
+      }
+    })();
+  </script>
 
-  <footer class="footer">
-    <a class="brand footer-brand" href="#home">
-      <span class="brand-symbol">UV</span>
-      <span>UndefinedVerseOfficial</span>
-    </a>
-    <p>A little corner of the internet for cosmic wonder.</p>
-    <p class="copyright">
-      © <span id="year"></span> UndefinedVerseOfficial. All rights reserved.
-    </p>
-  </footer>
+  <!-- Keep this path identical to the actual file in your repository. -->
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
