@@ -1,0 +1,191 @@
+
+/*
+ * UNDEFINEDVERSEOFFICIAL
+ * Navigation and mobile header — assets/css/navigation.css
+ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  width: 100%;
+  min-height: var(--header-height);
+  padding: 0 var(--page-gutter);
+  border-bottom: 1px solid rgba(216, 211, 229, 0.08);
+  background: rgba(9, 8, 16, 0.78);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+
+.site-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 550;
+  white-space: nowrap;
+  transition:
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.site-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  left: 0;
+  height: 1px;
+  background: var(--gradient-accent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-normal) var(--ease-emphasized);
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--color-silver-bright);
+}
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.site-nav a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Hidden on desktop; JavaScript controls the mobile menu. */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: rgba(18, 16, 28, 0.8);
+  color: var(--color-silver-bright);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  transition:
+    transform var(--duration-normal) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+
+.nav-toggle:hover {
+  border-color: var(--color-purple-border);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+/* The menu button receives this class when opened by JavaScript. */
+.nav-toggle.is-active span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.nav-toggle.is-active span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* Tablet and mobile navigation. */
+@media (max-width: 760px) {
+  .site-header {
+    gap: var(--space-3);
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 var(--page-gutter);
+    overflow: hidden;
+    border-bottom: 1px solid transparent;
+    background: rgba(9, 8, 16, 0.97);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition:
+      opacity var(--duration-normal) var(--ease-standard),
+      transform var(--duration-normal) var(--ease-standard),
+      visibility var(--duration-normal);
+  }
+
+  .site-nav.is-open {
+    padding-top: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom-color: var(--color-border);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .site-nav a {
+    min-height: 48px;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(216, 211, 229, 0.06);
+  }
+
+  .site-nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .site-nav a::after {
+    display: none;
+  }
+
+  .site-nav a:hover {
+    color: var(--color-purple);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav,
+  .site-nav a,
+  .site-nav a::after,
+  .nav-toggle span {
+    transition: none !important;
+  }
+}
