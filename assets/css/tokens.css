@@ -1,0 +1,156 @@
+
+/*
+ * UNDEFINEDVERSEOFFICIAL
+ * Design tokens — assets/css/tokens.css
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Core backgrounds */
+  --color-background: #090810;
+  --color-background-soft: #0d0b15;
+  --color-surface: #12101c;
+  --color-surface-raised: #191624;
+  --color-surface-hover: #201b30;
+
+  /* Typography */
+  --color-text: #f0edf7;
+  --color-text-secondary: #c3bdcf;
+  --color-text-muted: #928ba2;
+  --color-text-subtle: #716a81;
+
+  /* Silver and restrained violet */
+  --color-silver: #d8d3e5;
+  --color-silver-bright: #f5f2fc;
+  --color-purple: #a78bfa;
+  --color-purple-soft: #8870d5;
+  --color-purple-deep: #5c428e;
+
+  /* Semantic colors */
+  --color-border: rgba(216, 211, 229, 0.13);
+  --color-border-strong: rgba(216, 211, 229, 0.25);
+  --color-purple-border: rgba(167, 139, 250, 0.32);
+  --color-focus: #c4b5fd;
+  --color-status: #b9a4ff;
+
+  /* Cosmic atmosphere */
+  --glow-purple-soft: 0 0 32px rgba(139, 92, 246, 0.12);
+  --glow-purple-medium: 0 0 52px rgba(139, 92, 246, 0.2);
+  --glow-silver-soft: 0 0 26px rgba(216, 211, 229, 0.08);
+
+  --gradient-background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(93, 61, 145, 0.12),
+      transparent 55%
+    ),
+    var(--color-background);
+
+  --gradient-accent:
+    linear-gradient(
+      115deg,
+      var(--color-silver-bright) 0%,
+      var(--color-silver) 42%,
+      var(--color-purple) 100%
+    );
+
+  --gradient-border:
+    linear-gradient(
+      120deg,
+      rgba(216, 211, 229, 0.32),
+      rgba(167, 139, 250, 0.12),
+      rgba(216, 211, 229, 0.04)
+    );
+
+  /* Typography */
+  --font-body:
+    Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-display:
+    Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-mono:
+    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  /* Fluid type scale */
+  --text-xs: 0.72rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.35rem;
+  --text-2xl: clamp(1.6rem, 3vw, 2.25rem);
+  --text-3xl: clamp(2.1rem, 4.5vw, 3.4rem);
+  --text-hero: clamp(3rem, 8vw, 6.8rem);
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Layout */
+  --content-width: 1200px;
+  --content-width-wide: 1440px;
+  --page-gutter: clamp(1.2rem, 5vw, 4.5rem);
+  --header-height: 84px;
+
+  /* Corners */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* Borders and depth */
+  --border-thin: 1px solid var(--color-border);
+  --border-strong: 1px solid var(--color-border-strong);
+
+  --shadow-card:
+    0 14px 42px rgba(0, 0, 0, 0.2);
+
+  --shadow-floating:
+    0 20px 70px rgba(0, 0, 0, 0.32);
+
+  /* Motion timing */
+  --duration-fast: 160ms;
+  --duration-normal: 260ms;
+  --duration-slow: 600ms;
+  --duration-reveal: 800ms;
+
+  --ease-standard: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layer order */
+  --z-background: -1;
+  --z-content: 1;
+  --z-header: 20;
+  --z-menu: 30;
+  --z-modal: 50;
+}
+
+/* Keep anchor navigation clear of the fixed header. */
+html {
+  scroll-padding-top: calc(var(--header-height) + var(--space-6));
+}
+
+/* Respect operating-system accessibility preferences. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-reveal: 0ms;
+  }
+}
