@@ -1,460 +1,359 @@
-/**
- * UNDEFINEDVERSEOFFICIAL // CORE JAVASCRIPT (assets/js/main.js)
- * Implements mobile navigation, dimensional explorer tabs, modal focus management, 
- * accessibility controls, and lightweight optimized canvas animation.
- */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // State Tracking for Focus Restoration
-    let lastDrawerTrigger = null;
-    let lastModalTrigger = null;
+(() => {
+  "use strict";
 
-    // ==========================================
-    // 1. MOBILE NAVIGATION DRAWER
-    // ==========================================
-    window.toggleMobileMenu = function() {
-        const drawer = document.getElementById('mobileDrawer');
-        const btn = document.getElementById('mobileMenuBtn');
-        if (!drawer || !btn) return;
-        
-        const isOpen = drawer.classList.toggle('open');
-        btn.setAttribute('aria-expanded', isOpen);
-        drawer.setAttribute('aria-hidden', !isOpen);
+  const canvas = document.getElementById("cosmos");
+  const ctx = canvas?.getContext("2d", { alpha: false });
 
-        if (isOpen) {
-            drawer.removeAttribute('inert');
-            lastDrawerTrigger = btn;
-            const firstLink = drawer.querySelector('a');
-            if (firstLink) firstLink.focus();
-        } else {
-            drawer.setAttribute('inert', '');
-            if (lastDrawerTrigger && document.body.contains(lastDrawerTrigger)) {
-                lastDrawerTrigger.focus();
-            }
-        }
+  if (!canvas || !ctx) return;
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let stars = [];
+  let galaxyLayer = document.createElement("canvas");
+  let galaxyCtx = galaxyLayer.getContext("2d");
+  let animationId = 0;
+  let lastFrame = 0;
+
+  const rand = (min, max) => Math.random() * (max - min) + min;
+
+  function makeStar() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: rand(0.35, 1.7),
+      alpha: rand(0.25, 0.95),
+      phase: rand(0, Math.PI * 2),
+      speed: rand(0.4, 1.8),
+      color: Math.random() < 0.17
+        ? (Math.random() < 0.5 ? "#b6caff" : "#dcbaff")
+        : "#ffffff",
+      twinkle: Math.random() > 0.35
     };
+  }
 
-    window.handleDrawerNavLinkClick = function(e, isModalTrigger = false) {
-        const drawer = document.getElementById('mobileDrawer');
-        const btn = document.getElementById('mobileMenuBtn');
-        if (!drawer) return;
-        
-        if (drawer.classList.contains('open')) {
-            drawer.classList.remove('open');
-            if (btn) {
-                btn.setAttribute('aria-expanded', 'false');
-            }
-            drawer.setAttribute('aria-hidden', 'true');
-            drawer.setAttribute('inert', '');
-        }
+  function drawBackground() {
+    const gradient = ctx.createRadialGradient(
+      width * 0.52, height * 0.43, 0,
+      width * 0.52, height * 0.43,
+      Math.max(width, height) * 0.82
+    );
 
-        if (isModalTrigger) {
-            lastModalTrigger = btn;
-            window.openModal(e);
-        } else {
-            if (btn && document.body.contains(btn)) {
-                btn.focus();
-            }
-        }
-    };
+    gradient.addColorStop(0, "#100a27");
+    gradient.addColorStop(0.52, "#080619");
+    gradient.addColorStop(1, "#03020a");
 
-    // ==========================================
-    // 2. DIMENSIONAL EXPLORER TABS & KEYBOARD NAV
-    // ==========================================
-    window.switchTab = function(index) {
-        const tabs = document.querySelectorAll('.explorer-tab');
-        const panels = document.querySelectorAll('.explorer-panel');
-        
-        tabs.forEach((tab, i) => {
-            const isSelected = (i === index);
-            tab.classList.toggle('active', isSelected);
-            tab.setAttribute('aria-selected', isSelected);
-            tab.setAttribute('tabindex', isSelected ? '0' : '-1');
-        });
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+  }
 
-        panels.forEach((panel, i) => {
-            const isSelected = (i === index);
-            panel.classList.toggle('active', isSelected);
-            if (isSelected) {
-                panel.removeAttribute('hidden');
-            } else {
-                panel.setAttribute('hidden', '');
-            }
-        });
-    };
+  // Soft, irregular nebula clouds behind the spiral arms.
+  function drawNebula(x, y, radius, color) {
+    const glow = galaxyCtx.createRadialGradient(
+      x, y, radius * 0.04,
+      x, y, radius
+    );
 
-    // Keyboard navigation for explorer tabs
-    const tabList = document.querySelector('.explorer-nav');
-    if (tabList) {
-        const tabs = tabList.querySelectorAll('.explorer-tab');
-        tabs.forEach((tab, index) => {
-            tab.addEventListener('keydown', (e) => {
-                let targetIndex = null;
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    targetIndex = (index + 1) % tabs.length;
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    targetIndex = (index - 1 + tabs.length) % tabs.length;
-                } else if (e.key === 'Home') {
-                    targetIndex = 0;
-                } else if (e.key === 'End') {
-                    targetIndex = tabs.length - 1;
-                }
+    glow.addColorStop(0, color);
+    glow.addColorStop(0.3, color.replace("ALPHA", "0.12"));
+    glow.addColorStop(1, "rgba(0,0,0,0)");
 
-                if (targetIndex !== null) {
-                    e.preventDefault();
-                    switchTab(targetIndex);
-                    tabs[targetIndex].focus();
-                }
-            });
-        });
+    galaxyCtx.fillStyle = glow;
+    galaxyCtx.beginPath();
+    galaxyCtx.arc(x, y, radius, 0, Math.PI * 2);
+    galaxyCtx.fill();
+  }
+
+  // A real mathematical spiral-arm layout, stylized for a cosmic scene.
+  function drawGalaxy(config) {
+    const { x, y, rx, ry, rotation, arms, color } = config;
+
+    galaxyCtx.save();
+    galaxyCtx.translate(x, y);
+    galaxyCtx.rotate(rotation);
+
+    // Wide halo around the galaxy.
+    const halo = galaxyCtx.createRadialGradient(0, 0, 0, 0, 0, rx * 1.4);
+    halo.addColorStop(0, "rgba(188,150,255,0.18)");
+    halo.addColorStop(0.35, "rgba(107,83,255,0.09)");
+    halo.addColorStop(1, "rgba(0,0,0,0)");
+
+    galaxyCtx.fillStyle = halo;
+    galaxyCtx.beginPath();
+    galaxyCtx.ellipse(0, 0, rx * 1.4, ry * 1.8, 0, 0, Math.PI * 2);
+    galaxyCtx.fill();
+
+    // Bright central stellar bulge.
+    const core = galaxyCtx.createRadialGradient(
+      0, 0, 0, 0, 0, Math.max(rx, ry) * 0.46
+    );
+
+    core.addColorStop(0, "rgba(255,247,224,0.98)");
+    core.addColorStop(0.09, color);
+    core.addColorStop(0.38, "rgba(177,124,255,0.28)");
+    core.addColorStop(1, "rgba(0,0,0,0)");
+
+    galaxyCtx.fillStyle = core;
+    galaxyCtx.beginPath();
+    galaxyCtx.arc(0, 0, Math.max(rx, ry) * 0.46, 0, Math.PI * 2);
+    galaxyCtx.fill();
+
+    const particleCount = Math.round(
+      Math.min(1550, Math.max(520, rx * 4.1))
+    );
+
+    // Scatter stars along curved spiral arms.
+    for (let i = 0; i < particleCount; i++) {
+      const arm = i % arms;
+      const progress = Math.random();
+      const angle = arm * (Math.PI * 2 / arms)
+        + progress * Math.PI * 4.5
+        + rand(-0.3, 0.3);
+
+      const distance = 0.055 + progress * 0.95;
+      const scatter = (0.025 + progress * 0.085) * rx;
+
+      const px = Math.cos(angle) * distance * rx
+        + rand(-scatter, scatter);
+      const py = Math.sin(angle) * distance * ry
+        + rand(-scatter, scatter);
+
+      const particleSize = rand(0.35, 1.45)
+        * (1.1 - progress * 0.25);
+
+      const brightness = rand(0.28, 0.95);
+
+      galaxyCtx.globalAlpha = brightness;
+      galaxyCtx.fillStyle = Math.random() > 0.73
+        ? "#c8d8ff"
+        : color;
+
+      galaxyCtx.beginPath();
+      galaxyCtx.arc(px, py, particleSize, 0, Math.PI * 2);
+      galaxyCtx.fill();
     }
 
-    // ==========================================
-    // 3. PREVIEW MODAL & ACCESSIBILITY CONTROLS
-    // ==========================================
-    window.openModal = function(e) {
-        if (e) e.preventDefault();
-        if (!lastModalTrigger) {
-            lastModalTrigger = document.activeElement;
-        }
-        const overlay = document.getElementById('modalOverlay');
-        const appRoot = document.getElementById('appRoot');
-        const mobileDrawer = document.getElementById('mobileDrawer');
-        const closeBtn = document.getElementById('modalCloseBtn');
-        
-        if (!overlay) return;
+    // Fine luminous threads following the arms.
+    galaxyCtx.globalAlpha = 0.16;
+    galaxyCtx.strokeStyle = color;
+    galaxyCtx.lineWidth = Math.max(0.6, rx * 0.003);
 
-        overlay.removeAttribute('inert');
-        overlay.classList.add('active');
-        
-        if (appRoot) appRoot.inert = true;
-        if (mobileDrawer) mobileDrawer.inert = true;
-        
-        if (closeBtn) closeBtn.focus();
-    };
+    for (let arm = 0; arm < arms; arm++) {
+      galaxyCtx.beginPath();
 
-    window.closeModal = function(e) {
-        if (e && e.target.id === 'modalOverlay') {
-            window.closeModalDirect();
-        }
-    };
+      for (let step = 0; step <= 150; step++) {
+        const progress = step / 150;
+        const angle = arm * (Math.PI * 2 / arms)
+          + progress * Math.PI * 4.5;
+        const distance = 0.055 + progress * 0.95;
 
-    window.closeModalDirect = function() {
-        const overlay = document.getElementById('modalOverlay');
-        const appRoot = document.getElementById('appRoot');
-        const mobileDrawer = document.getElementById('mobileDrawer');
-        
-        if (!overlay) return;
+        const px = Math.cos(angle) * distance * rx;
+        const py = Math.sin(angle) * distance * ry;
 
-        overlay.classList.remove('active');
-        overlay.setAttribute('inert', '');
-        
-        // Restore background interactivity first before restoring focus
-        if (appRoot) appRoot.inert = false;
-        if (mobileDrawer) {
-            if (!mobileDrawer.classList.contains('open')) {
-                mobileDrawer.setAttribute('inert', '');
-            } else {
-                mobileDrawer.removeAttribute('inert');
-            }
-        }
+        if (step === 0) galaxyCtx.moveTo(px, py);
+        else galaxyCtx.lineTo(px, py);
+      }
 
-        // Rigorous focus restoration checking validity, visibility, and responsiveness
-        const trigger = lastModalTrigger;
-        lastModalTrigger = null;
+      galaxyCtx.stroke();
+    }
 
-        const isElementUsable = (el) => {
-            if (!el || !document.body.contains(el)) return false;
-            if (el.disabled || el.getAttribute('aria-hidden') === 'true') return false;
-            const style = window.getComputedStyle(el);
-            if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
-            return true;
-        };
+    galaxyCtx.restore();
+    galaxyCtx.globalAlpha = 1;
+  }
 
-        if (isElementUsable(trigger)) {
-            trigger.focus();
-        } else {
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            const fallback = (mobileBtn && window.getComputedStyle(mobileBtn).display !== 'none' && isElementUsable(mobileBtn))
-                ? mobileBtn 
-                : (document.querySelector('.btn-primary') || document.querySelector('a[href="#preview"]'));
-            
-            if (fallback && typeof fallback.focus === 'function') {
-                fallback.focus();
-            }
-        }
-    };
+  function buildGalaxyLayer() {
+    galaxyLayer.width = Math.ceil(width * dpr);
+    galaxyLayer.height = Math.ceil(height * dpr);
 
-    // Global Keyboard Handler (Escape key & Focus Trap)
-    window.addEventListener('keydown', (e) => {
-        const modal = document.getElementById('modalOverlay');
-        const drawer = document.getElementById('mobileDrawer');
+    galaxyCtx = galaxyLayer.getContext("2d");
+    galaxyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    galaxyCtx.clearRect(0, 0, width, height);
 
-        if (e.key === 'Escape') {
-            if (modal && modal.classList.contains('active')) {
-                window.closeModalDirect();
-            } else if (drawer && drawer.classList.contains('open')) {
-                window.toggleMobileMenu();
-            }
-        }
+    // Colored clouds create depth behind the galaxies.
+    const clouds = [
+      [0.13, 0.23, 0.23, "rgba(122,58,255,ALPHA)"],
+      [0.83, 0.31, 0.25, "rgba(42,103,255,ALPHA)"],
+      [0.52, 0.75, 0.25, "rgba(212,61,203,ALPHA)"],
+      [0.94, 0.76, 0.17, "rgba(81,65,255,ALPHA)"],
+      [0.06, 0.68, 0.17, "rgba(239,70,179,ALPHA)"]
+    ];
 
-        if (modal && modal.classList.contains('active') && e.key === 'Tab') {
-            const container = document.getElementById('modalContainer');
-            if (!container) return;
-            
-            const focusableElements = container.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            if (focusableElements.length === 0) return;
-            
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
+    for (const [nx, ny, scale, color] of clouds) {
+      drawNebula(
+        nx * width,
+        ny * height,
+        Math.min(width, height) * scale,
+        color
+      );
+    }
 
-            if (!container.contains(document.activeElement)) {
-                firstElement.focus();
-                e.preventDefault();
-                return;
-            }
+    // Galaxies are deliberately distributed around the screen,
+    // leaving the center open for website text.
+    const mobile = width < 650;
+    const smallSide = Math.min(width, height);
 
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement) {
-                    lastElement.focus();
-                    e.preventDefault();
-                }
-            } else {
-                if (document.activeElement === lastElement) {
-                    firstElement.focus();
-                    e.preventDefault();
-                }
-            }
-        }
+    const galaxyConfigs = [
+      {
+        x: width * 0.15,
+        y: height * (mobile ? 0.20 : 0.24),
+        rx: smallSide * (mobile ? 0.15 : 0.20),
+        ry: smallSide * (mobile ? 0.055 : 0.075),
+        rotation: -0.55,
+        arms: 3,
+        color: "#bc8cff"
+      },
+      {
+        x: width * 0.86,
+        y: height * (mobile ? 0.34 : 0.31),
+        rx: smallSide * (mobile ? 0.17 : 0.24),
+        ry: smallSide * (mobile ? 0.075 : 0.095),
+        rotation: 0.42,
+        arms: 4,
+        color: "#729aff"
+      },
+      {
+        x: width * 0.12,
+        y: height * 0.77,
+        rx: smallSide * 0.105,
+        ry: smallSide * 0.043,
+        rotation: 0.3,
+        arms: 3,
+        color: "#ff83d4"
+      },
+      {
+        x: width * 0.77,
+        y: height * 0.82,
+        rx: smallSide * 0.12,
+        ry: smallSide * 0.05,
+        rotation: -0.5,
+        arms: 3,
+        color: "#8a7cff"
+      }
+    ];
+
+    for (const galaxy of galaxyConfigs) {
+      drawGalaxy(galaxy);
+    }
+  }
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Increase star density on large screens without
+    // creating an excessive amount of animation work.
+    const starCount = Math.min(
+      950,
+      Math.max(260, Math.floor(width * height / 1250))
+    );
+
+    stars = Array.from({ length: starCount }, makeStar);
+
+    drawBackground();
+    buildGalaxyLayer();
+    render(performance.now(), true);
+  }
+
+  function render(time, still = false) {
+    drawBackground();
+
+    // The galaxy art is static between resizes; only stars twinkle.
+    ctx.drawImage(galaxyLayer, 0, 0, width, height);
+
+    for (const star of stars) {
+      const twinkle = star.twinkle && !still && !reducedMotion.matches
+        ? 0.65 + 0.35 * Math.sin(
+            time * 0.001 * star.speed + star.phase
+          )
+        : 0.9;
+
+      ctx.globalAlpha = star.alpha * twinkle;
+      ctx.fillStyle = star.color;
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Occasional subtle four-point glints.
+      if (star.radius > 1.35) {
+        ctx.strokeStyle = star.color;
+        ctx.globalAlpha = star.alpha * twinkle * 0.45;
+        ctx.lineWidth = 0.6;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x - 3.2, star.y);
+        ctx.lineTo(star.x + 3.2, star.y);
+        ctx.moveTo(star.x, star.y - 3.2);
+        ctx.lineTo(star.x, star.y + 3.2);
+        ctx.stroke();
+      }
+    }
+
+    ctx.globalAlpha = 1;
+
+    if (!still && !reducedMotion.matches) {
+      animationId = requestAnimationFrame(render);
+    }
+  }
+
+  function startAnimation() {
+    cancelAnimationFrame(animationId);
+    animationId = 0;
+    render(performance.now());
+  }
+
+  window.addEventListener("resize", resize, { passive: true });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationId);
+      animationId = 0;
+    } else {
+      startAnimation();
+    }
+  });
+
+  reducedMotion.addEventListener?.("change", startAnimation);
+
+  // Mobile navigation.
+  const menuToggle = document.getElementById("menuToggle");
+  const navigation = document.getElementById("navigation");
+
+  menuToggle?.addEventListener("click", () => {
+    const isOpen = navigation.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation" : "Open navigation"
+    );
+  });
+
+  navigation?.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navigation.classList.remove("open");
+      menuToggle?.setAttribute("aria-expanded", "false");
+      menuToggle?.setAttribute("aria-label", "Open navigation");
     });
+  });
 
-    // ==========================================
-    // 4. NULL-AXIS CANVAS ANIMATION (STABLE & OPTIMIZED)
-    // ==========================================
-    const canvas = document.getElementById('null-axis-canvas');
-    const container = document.getElementById('canvasContainer');
+  // Keep the footer year current.
+  const year = document.getElementById("year");
+  if (year) year.textContent = new Date().getFullYear();
 
-    if (canvas && container) {
-        const ctx = canvas.getContext('2d');
-        let lastDpr = window.devicePixelRatio || 1;
-        let animationFrameId = null;
-        let isVisible = true;
-
-        function updateCanvasDimensions() {
-            const rect = container.getBoundingClientRect();
-            lastDpr = Math.min(window.devicePixelRatio || 1, 2);
-            canvas.width = rect.width * lastDpr;
-            canvas.height = rect.height * lastDpr;
-            ctx.setTransform(lastDpr, 0, 0, lastDpr, 0, 0);
-        }
-
-        // Initialize persistent background nodes once to prevent flicker & runtime overhead
-        const nodeCount = 35;
-        const backgroundNodes = [];
-        for (let i = 0; i < nodeCount; i++) {
-            backgroundNodes.push({
-                nx: Math.random(),
-                ny: Math.random(),
-                size: Math.random() * 1.2 + 0.4,
-                alpha: Math.random() * 0.4 + 0.1
-            });
-        }
-
-        updateCanvasDimensions();
-
-        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-        function drawNullAxis(time = 0) {
-            const displayWidth = container.clientWidth;
-            const displayHeight = container.clientHeight;
-            const centerX = displayWidth / 2;
-            const centerY = displayHeight / 2;
-
-            ctx.clearRect(0, 0, displayWidth, displayHeight);
-
-            // Draw stable background nodes using normalized relative coordinates
-            backgroundNodes.forEach(node => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${node.alpha})`;
-                ctx.fillRect(node.nx * displayWidth, node.ny * displayHeight, node.size, node.size);
-            });
-
-            const maxRadius = 205; 
-            const scaleX = (displayWidth / 2) / maxRadius;
-            const scaleY = (displayHeight / 2) / maxRadius;
-            const scale = Math.min(1, scaleX, scaleY);
-
-            const t = time * 0.0004;
-
-            // 1. Asymmetric Monolithic Core
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.scale(scale, scale);
-            ctx.rotate(t * 0.5);
-
-            ctx.beginPath();
-            for (let i = 0; i < 4; i++) {
-                const angle = (i / 4) * Math.PI * 2;
-                const r = i % 2 === 0 ? 12 : 8;
-                const x = Math.cos(angle) * r;
-                const y = Math.sin(angle) * r;
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.strokeStyle = '#f1f1f3';
-            ctx.lineWidth = 1.2;
-            ctx.shadowColor = '#8c7ae6';
-            ctx.shadowBlur = 12;
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-            ctx.restore();
-
-            // 2. Interlocking Polygonal Aperture Path A (Asymmetric Hexagon Frame)
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.scale(scale, scale);
-            ctx.rotate(-t * 0.3);
-
-            ctx.strokeStyle = 'rgba(209, 209, 224, 0.55)';
-            ctx.lineWidth = 1.25;
-            ctx.beginPath();
-            const hexPoints = 6;
-            const hexRadius = 115;
-            for (let i = 0; i < hexPoints; i++) {
-                const angle = (i / hexPoints) * Math.PI * 2;
-                const offsetRadius = hexRadius + (i % 2 === 0 ? 12 : -8);
-                const x = Math.cos(angle) * offsetRadius;
-                const y = Math.sin(angle) * hexRadius;
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.stroke();
-            ctx.restore();
-
-            // 3. Interlocking Elliptical Path B (Tilted Perspective Ring)
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.scale(scale, scale);
-            ctx.rotate(t * 0.4);
-            ctx.scale(1, 0.55);
-
-            ctx.strokeStyle = 'rgba(140, 122, 230, 0.45)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.arc(0, 0, 150, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.restore();
-
-            // 4. Outer Coordinate Frame
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.scale(scale, scale);
-            ctx.rotate(-t * 0.15);
-
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
-            ctx.lineWidth = 0.75;
-            ctx.beginPath();
-            const octPoints = 8;
-            const octRadius = 185;
-            for (let i = 0; i < octPoints; i++) {
-                const angle = (i / octPoints) * Math.PI * 2;
-                const x = Math.cos(angle) * octRadius;
-                const y = Math.sin(angle) * octRadius;
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.stroke();
-            ctx.restore();
-        }
-
-        function animationLoop(timestamp) {
-            if (!isVisible || motionQuery.matches) return;
-            drawNullAxis(timestamp);
-            animationFrameId = requestAnimationFrame(animationLoop);
-        }
-
-        function handleMotionPreference() {
-            if (motionQuery.matches) {
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                }
-                drawNullAxis(0); // Render static frame
-            } else {
-                if (!animationFrameId && isVisible) {
-                    animationFrameId = requestAnimationFrame(animationLoop);
-                }
-            }
-        }
-
-        function handleResizeOrDprChange() {
-            const currentDpr = Math.min(window.devicePixelRatio || 1, 2);
-            if (currentDpr !== lastDpr) {
-                lastDpr = currentDpr;
-            }
-            updateCanvasDimensions();
-            if (motionQuery.matches || !isVisible) {
-                drawNullAxis(0);
-            }
-        }
-
-        // IntersectionObserver to pause animation when canvas is scrolled out of viewport
-        if (typeof IntersectionObserver !== 'undefined') {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    isVisible = entry.isIntersecting;
-                    if (isVisible) {
-                        handleMotionPreference();
-                    } else if (animationFrameId) {
-                        cancelAnimationFrame(animationFrameId);
-                        animationFrameId = null;
-                    }
-                });
-            }, { threshold: 0.05 });
-            observer.observe(container);
-        }
-
-        // Media Query List listener for DPR changes & reduced motion
-        if (window.matchMedia) {
-            let dprMediaQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-            const handleDprChange = () => {
-                handleResizeOrDprChange();
-                if (dprMediaQuery.removeEventListener) {
-                    dprMediaQuery.removeEventListener('change', handleDprChange);
-                } else if (dprMediaQuery.removeListener) {
-                    dprMediaQuery.removeListener(handleDprChange);
-                }
-                dprMediaQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-                if (dprMediaQuery.addEventListener) {
-                    dprMediaQuery.addEventListener('change', handleDprChange);
-                } else if (dprMediaQuery.addListener) {
-                    dprMediaQuery.addListener(handleDprChange);
-                }
-            };
-            if (dprMediaQuery.addEventListener) {
-                dprMediaQuery.addEventListener('change', handleDprChange);
-            } else if (dprMediaQuery.addListener) {
-                dprMediaQuery.addListener(handleDprChange);
-            }
-        }
-
-        if (motionQuery.addEventListener) {
-            motionQuery.addEventListener('change', handleMotionPreference);
-        } else if (motionQuery.addListener) {
-            motionQuery.addListener(handleMotionPreference);
-        }
-
-        if (typeof ResizeObserver !== 'undefined') {
-            const resizeObserver = new ResizeObserver(() => {
-                handleResizeOrDprChange();
-            });
-            resizeObserver.observe(container);
-        } else {
-            window.addEventListener('resize', handleResizeOrDprChange);
-        }
-
-        handleMotionPreference();
-    }
-});
+  // Initial render.
+  resize();
+})();
