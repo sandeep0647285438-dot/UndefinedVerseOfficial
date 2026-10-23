@@ -1,0 +1,184 @@
+
+/* =========================================
+   UNDEFINEDVERSEOFFICIAL
+   ACCESSIBILITY & USABILITY
+   File: assets/css/accessibility.css
+   ========================================= */
+
+/* ---------- Screen-reader-only content ---------- */
+
+.sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ---------- Skip navigation ---------- */
+
+.skip-link {
+  position: fixed;
+  z-index: 9999;
+  top: 12px;
+  left: 12px;
+  padding: 12px 16px;
+  transform: translateY(calc(-100% - 20px));
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ---------- Visible keyboard focus ---------- */
+
+:where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: 2px solid var(--color-purple);
+  outline-offset: 4px;
+}
+
+:where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary
+):focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------- Interactive control clarity ---------- */
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+a:not([class]) {
+  color: var(--color-silver-bright);
+  text-decoration-thickness: 1px;
+}
+
+a:not([class]):hover {
+  color: var(--color-purple);
+}
+
+/* ---------- Form feedback ---------- */
+
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #d88b9a;
+}
+
+.form-error,
+[role="alert"] {
+  color: #efb2bd;
+}
+
+/* ---------- Selection and readability ---------- */
+
+::selection {
+  background: rgb(167 139 250 / 28%);
+  color: var(--color-text);
+}
+
+:target {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
+/* ---------- Forced-colors support ---------- */
+
+@media (forced-colors: active) {
+  .dimension-card,
+  .category-card,
+  .codex-link,
+  .button,
+  .site-header {
+    border: 1px solid CanvasText;
+  }
+
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"])
+  ):focus-visible {
+    outline: 2px solid Highlight;
+  }
+
+  .status-indicator__dot {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* ---------- Reduced transparency ---------- */
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header {
+    background: var(--color-background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
