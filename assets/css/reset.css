@@ -1,0 +1,157 @@
+
+/*
+ * UNDEFINEDVERSEOFFICIAL
+ * Browser reset and base defaults — assets/css/reset.css
+ */
+
+/* Predictable sizing across all elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove inconsistent browser spacing. */
+html {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  tab-size: 2;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Remove default margins from common content elements. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Keep headings readable and inherit the site's typography. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: inherit;
+  text-wrap: balance;
+}
+
+/* Make media responsive by default. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* Form elements should use the site's font. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Remove default link decoration; individual components style links. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Prevent long words and URLs from breaking layouts. */
+p,
+li,
+a,
+button {
+  overflow-wrap: anywhere;
+}
+
+/* Lists are reset only when given a class or role for custom UI. */
+ul[role="list"],
+ol[role="list"] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Make hidden elements stay hidden. */
+[hidden] {
+  display: none !important;
+}
+
+/* Use a clear keyboard focus indicator. */
+:focus-visible {
+  outline: 2px solid var(--color-focus, #c4b5fd);
+  outline-offset: 4px;
+}
+
+/* Remove tap highlight without removing keyboard focus. */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keep selection consistent with the visual identity. */
+::selection {
+  color: #ffffff;
+  background: rgba(126, 91, 202, 0.65);
+}
+
+/* Avoid automatic smooth scrolling for users who request less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
