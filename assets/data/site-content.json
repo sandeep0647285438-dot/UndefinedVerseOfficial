@@ -1,0 +1,36 @@
+
+{
+  "schemaVersion": 1,
+  "siteName": "UndefinedVerseOfficial",
+  "tagline": "Beyond the known.",
+  "status": "in-development",
+  "developmentNotice": {
+    "title": "Website under construction.",
+    "message": "This section is currently being developed. Content and features will become available as the project progresses."
+  },
+  "sections": {
+    "home": {
+      "label": "Home",
+      "enabled": true
+    },
+    "dimensions": {
+      "label": "Dimensions",
+      "enabled": true
+    },
+    "manga": {
+      "label": "Manga",
+      "enabled": true,
+      "status": "in-development"
+    },
+    "novels": {
+      "label": "Novels",
+      "enabled": true,
+      "status": "in-development"
+    },
+    "codex": {
+      "label": "Codex",
+      "enabled": true,
+      "status": "in-development"
+    }
+  }
+}
