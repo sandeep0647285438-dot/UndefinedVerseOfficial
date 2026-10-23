@@ -1,0 +1,216 @@
+
+/*
+ * UNDEFINEDVERSEOFFICIAL
+ * Typography system — assets/css/typography.css
+ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 750;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+h1 {
+  font-size: var(--text-hero);
+  letter-spacing: -0.075em;
+}
+
+h2 {
+  font-size: var(--text-3xl);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  letter-spacing: -0.035em;
+}
+
+p {
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+strong,
+b {
+  color: var(--color-silver-bright);
+  font-weight: 750;
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+}
+
+/* Main hero heading. */
+.hero__title {
+  max-width: 950px;
+  font-size: var(--text-hero);
+  font-weight: 800;
+  line-height: 0.99;
+  letter-spacing: -0.078em;
+  text-wrap: balance;
+}
+
+.hero__title span,
+.section-heading h2 span {
+  color: transparent;
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Section headings. */
+.section-heading h2 {
+  max-width: 850px;
+  margin-top: var(--space-3);
+  font-size: var(--text-3xl);
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -0.06em;
+}
+
+.section-heading > p:last-child {
+  max-width: 620px;
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+}
+
+/* Small editorial labels. */
+.eyebrow {
+  color: var(--color-purple);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* Card titles and supporting copy. */
+.dimension-card h3 {
+  color: var(--color-silver-bright);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 700;
+}
+
+.dimension-card p,
+.category-card__description {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+}
+
+/* Category titles. */
+.category-card__title {
+  color: var(--color-silver-bright);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+}
+
+/* Technical metadata. */
+.dimension-card__number,
+.dimension-card__footer,
+.category-card__index,
+.codex-link__label,
+.hero__index,
+.site-footer__copyright {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.09em;
+}
+
+/* Project status heading. */
+.development-notice h2 {
+  max-width: 800px;
+  margin-top: var(--space-6);
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.07em;
+  text-wrap: balance;
+}
+
+.development-notice__content > p:not(.eyebrow) {
+  max-width: 570px;
+  margin-top: var(--space-5);
+  color: var(--color-text-secondary);
+}
+
+/* Navigation and action labels. */
+.site-nav a,
+.button,
+.category-card__action {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* Footer typography. */
+.site-footer p {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.footer-brand {
+  font-size: var(--text-xs);
+  font-weight: 750;
+  letter-spacing: 0.15em;
+}
+
+/* Smaller screens. */
+@media (max-width: 600px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.13em;
+  }
+}
+
+/* Avoid animated or transparent text effects if contrast is affected. */
+@media (forced-colors: active) {
+  .hero__title span,
+  .section-heading h2 span {
+    color: CanvasText;
+    background: none;
+  }
+}
