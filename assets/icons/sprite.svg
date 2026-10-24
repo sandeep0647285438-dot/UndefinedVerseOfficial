@@ -1,78 +1,37 @@
 
-<svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>UndefinedVerse Interface Icon Sprite</title>
-
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="display:none"
+>
   <symbol id="uv-menu" viewBox="0 0 24 24">
-    <path d="M4 7H20M4 12H20M4 17H20"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"/>
+    <path d="M4 7H20M4 12H20M4 17H20" />
   </symbol>
 
   <symbol id="uv-close" viewBox="0 0 24 24">
-    <path d="M6 6L18 18M18 6L6 18"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"/>
+    <path d="M6 6L18 18M18 6L6 18" />
   </symbol>
 
   <symbol id="uv-arrow-right" viewBox="0 0 24 24">
-    <path d="M4 12H19M13 6L19 12L13 18"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
+    <path d="M4 12H20M13 5L20 12L13 19" />
   </symbol>
 
   <symbol id="uv-chevron-down" viewBox="0 0 24 24">
-    <path d="M6 9L12 15L18 9"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
+    <path d="M6 9L12 15L18 9" />
   </symbol>
 
   <symbol id="uv-search" viewBox="0 0 24 24">
-    <circle cx="10.8" cy="10.8" r="6.3"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.6"/>
-    <path d="M15.5 15.5L20 20"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"/>
+    <circle cx="10.8" cy="10.8" r="6.8" />
+    <path d="M16 16L21 21" />
   </symbol>
 
   <symbol id="uv-external-link" viewBox="0 0 24 24">
-    <path d="M13 5H19V11M19 5L10 14"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M18 13V19H5V6H11"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
+    <path d="M13 5H19V11M19 5L10 14" />
+    <path d="M18 13V19H5V6H11" />
   </symbol>
 
   <symbol id="uv-info" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.6"/>
-    <path d="M12 11V16M12 8H12.01"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"/>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11V16M12 8H12.01" />
   </symbol>
 </svg>
