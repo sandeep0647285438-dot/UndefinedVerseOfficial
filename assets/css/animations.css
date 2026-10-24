@@ -1,233 +1,191 @@
+/*
+ * UNDEFINEDVERSEOFFICIAL
+ * Cosmic animations & transitions
+ * File: assets/css/animations.css
+ */
 
 /* =========================================
-   UNDEFINEDVERSEOFFICIAL
-   COSMIC ANIMATIONS & TRANSITIONS
-   File: assets/css/animations.css
+   1. COSMIC BACKGROUND
    ========================================= */
 
-/* ---------- Shared animation defaults ---------- */
-
-.cosmos__nebula,
-.cosmos__stars,
-.cosmos__stars--far,
-.cosmos__stars--near {
+/* Keep the background atmospheric rather than distracting. */
+.cosmos__galaxy {
   transform-origin: center;
-  will-change: transform;
+  animation: uv-galaxy-drift 100s ease-in-out infinite alternate;
 }
 
-/* ---------- Slow cosmic background movement ---------- */
-
-.cosmos__nebula {
-  animation: uv-nebula-drift 42s ease-in-out infinite alternate;
+.cosmos__galaxy--one {
+  animation-duration: 115s;
 }
 
-.cosmos__stars {
-  animation: uv-stars-drift 100s linear infinite alternate;
+.cosmos__galaxy--two {
+  animation-duration: 135s;
+  animation-direction: alternate-reverse;
 }
 
-.cosmos__stars--far {
-  animation: uv-stars-far 150s linear infinite alternate;
+.cosmos__galaxy--three {
+  animation-duration: 150s;
 }
 
-.cosmos__stars--near {
-  animation: uv-stars-near 75s ease-in-out infinite alternate;
-}
-
-/* ---------- Keyframes ---------- */
-
-@keyframes uv-nebula-drift {
-  0% {
-    transform: translate3d(-1.5%, -1%, 0) scale(1);
+@keyframes uv-galaxy-drift {
+  from {
+    translate: -0.6% -0.4%;
   }
 
-  50% {
-    transform: translate3d(1%, 1.5%, 0) scale(1.035);
-  }
-
-  100% {
-    transform: translate3d(2%, -1%, 0) scale(1.015);
+  to {
+    translate: 0.8% 0.6%;
   }
 }
 
-@keyframes uv-stars-drift {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
+/*
+ * Background.css already defines the nebula and star animations.
+ * Do not redefine their animation names here.
+ */
 
-  100% {
-    transform: translate3d(-1.5%, 1%, 0);
-  }
-}
-
-@keyframes uv-stars-far {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: translate3d(1%, -1%, 0);
-  }
-}
-
-@keyframes uv-stars-near {
-  0% {
-    transform: translate3d(-0.5%, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(0.5%, -0.5%, 0);
-  }
-
-  100% {
-    transform: translate3d(0, 0.5%, 0);
-  }
-}
-
-/* ---------- Hero entrance ---------- */
+/* =========================================
+   2. HERO ENTRANCE
+   ========================================= */
 
 @keyframes uv-hero-enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    translate: 0 12px;
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 
-.hero__eyebrow,
+.hero__content > .eyebrow,
 .hero__title,
 .hero__description,
-.hero__actions,
-.hero__visual {
-  animation: uv-hero-enter 850ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+.hero__actions {
+  animation: uv-hero-enter 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero__content > .eyebrow {
+  animation-delay: 60ms;
 }
 
 .hero__title {
-  animation-delay: 100ms;
+  animation-delay: 120ms;
 }
 
 .hero__description {
-  animation-delay: 180ms;
+  animation-delay: 190ms;
 }
 
 .hero__actions {
   animation-delay: 260ms;
 }
 
+/* Keep the decorative illustration independent of text entrance. */
 .hero__visual {
+  animation: uv-hero-enter 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: 160ms;
 }
 
-/* ---------- Abstract hero visual ---------- */
+/* =========================================
+   3. HERO ORBITS
+   ========================================= */
 
-.hero__orbit,
-.hero__orbit::before,
-.hero__orbit::after {
-  transform-origin: center;
+/*
+ * Rotate only the inner visual elements.
+ * Keep each orbit's existing ellipse transform intact.
+ */
+
+.hero__orbit--outer {
+  animation: uv-orbit-turn 120s linear infinite;
 }
 
-.hero__orbit {
-  animation: uv-orbit-turn 90s linear infinite;
+.hero__orbit--inner {
+  animation: uv-orbit-turn 95s linear infinite reverse;
 }
 
-.hero__orbit::before {
-  animation: uv-orbit-turn 65s linear infinite reverse;
-}
-
-.hero__orbit::after {
-  animation: uv-orbit-breathe 9s ease-in-out infinite alternate;
+.hero__orbit--third {
+  animation: uv-orbit-turn 145s linear infinite;
 }
 
 @keyframes uv-orbit-turn {
   from {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
 
   to {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
 }
 
-@keyframes uv-orbit-breathe {
-  from {
-    opacity: 0.45;
-    scale: 0.985;
-  }
-
-  to {
-    opacity: 0.85;
-    scale: 1.015;
-  }
-}
-
-/* ---------- Fine ambient light ---------- */
-
+/* Gentle ambient glow */
 @keyframes uv-light-breathe {
   0%,
   100% {
-    opacity: 0.35;
+    opacity: 0.7;
   }
 
   50% {
-    opacity: 0.65;
+    opacity: 1;
   }
 }
 
 .hero__visual::before {
-  animation: uv-light-breathe 12s ease-in-out infinite;
+  animation: uv-light-breathe 14s ease-in-out infinite;
 }
 
-/* ---------- Small interactive refinements ---------- */
+/* =========================================
+   4. INTERACTION TRANSITIONS
+   ========================================= */
 
 @media (hover: hover) and (pointer: fine) {
-  .site-nav__link {
+  .site-nav a,
+  .button,
+  .category-card,
+  .dimension-card,
+  .codex-link {
     transition:
-      color var(--duration-fast) var(--ease-out),
-      opacity var(--duration-fast) var(--ease-out);
-  }
-
-  .brand__mark {
-    transition:
-      transform var(--duration-normal) var(--ease-out),
-      filter var(--duration-normal) var(--ease-out);
-  }
-
-  .brand:hover .brand__mark {
-    filter: drop-shadow(0 0 8px rgb(167 139 250 / 20%));
-    transform: rotate(-3deg);
+      color var(--duration-fast, 180ms) ease,
+      border-color var(--duration-fast, 180ms) ease,
+      background-color var(--duration-fast, 180ms) ease,
+      box-shadow var(--duration-normal, 240ms) ease,
+      transform var(--duration-normal, 240ms) ease;
   }
 }
 
-/* ---------- Reduced motion accessibility ---------- */
+/* =========================================
+   5. REDUCED MOTION
+   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  .cosmos__galaxy,
   .cosmos__nebula,
   .cosmos__stars,
   .cosmos__stars--far,
   .cosmos__stars--near,
-  .hero__eyebrow,
+  .hero__content > .eyebrow,
   .hero__title,
   .hero__description,
   .hero__actions,
   .hero__visual,
-  .hero__orbit,
-  .hero__orbit::before,
-  .hero__orbit::after,
-  .hero__visual::before,
-  .brand:hover .brand__mark {
+  .hero__orbit--outer,
+  .hero__orbit--inner,
+  .hero__orbit--third,
+  .hero__visual::before {
     animation: none !important;
     transition: none !important;
   }
 
-  .hero__eyebrow,
+  .hero__content > .eyebrow,
   .hero__title,
   .hero__description,
   .hero__actions,
   .hero__visual {
     opacity: 1;
-    transform: none;
+    translate: none;
+  }
+
+  .cosmos__canvas {
+    display: none;
   }
 }
