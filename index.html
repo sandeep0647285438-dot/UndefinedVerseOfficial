@@ -32,17 +32,29 @@
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <!-- CSS-generated stars and cosmic atmosphere -->
+  <!-- CSS-generated cosmic background -->
   <div class="cosmos" aria-hidden="true">
+    <div class="cosmos__base"></div>
+    <div class="cosmos__nebula"></div>
+
     <div class="cosmos__galaxy cosmos__galaxy--one"></div>
     <div class="cosmos__galaxy cosmos__galaxy--two"></div>
     <div class="cosmos__galaxy cosmos__galaxy--three"></div>
-    <div class="cosmos__stars"></div>
+
+    <div class="cosmos__stars cosmos__stars--far"></div>
+    <div class="cosmos__stars cosmos__stars--near"></div>
+
+    <div class="cosmos__grain"></div>
+    <div class="cosmos__vignette"></div>
   </div>
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="site-logo" href="index.html" aria-label="UndefinedVerseOfficial home">
+      <a
+        class="site-logo"
+        href="index.html"
+        aria-label="UndefinedVerseOfficial home"
+      >
         <img
           src="assets/icons/uv-logo.svg"
           alt="UndefinedVerseOfficial"
@@ -73,7 +85,11 @@
         </svg>
       </button>
 
-      <nav class="site-nav" id="primary-navigation" aria-label="Main navigation">
+      <nav
+        class="site-nav"
+        id="primary-navigation"
+        aria-label="Main navigation"
+      >
         <a href="index.html" aria-current="page">Home</a>
         <a href="pages/manga.html">Manga</a>
         <a href="pages/novels.html">Novels</a>
@@ -108,7 +124,7 @@
         </div>
       </div>
 
-      <!-- Abstract CSS illustration; no image upload required -->
+      <!-- Abstract CSS illustration -->
       <div class="hero__visual" aria-hidden="true">
         <div class="hero__orbit hero__orbit--outer"></div>
         <div class="hero__orbit hero__orbit--inner"></div>
@@ -125,7 +141,11 @@
       </div>
     </section>
 
-    <section class="section" id="explore" aria-labelledby="explore-title">
+    <section
+      class="section"
+      id="explore"
+      aria-labelledby="explore-title"
+    >
       <div class="section-heading">
         <p class="eyebrow">EXPLORE</p>
         <h2 id="explore-title">
