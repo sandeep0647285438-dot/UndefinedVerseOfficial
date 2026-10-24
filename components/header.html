@@ -1,45 +1,54 @@
 
 <header class="site-header">
-  <a
-    class="site-logo"
-    href="../index.html"
-    aria-label="UndefinedVerseOfficial home"
-  >
-    <img
-      src="../assets/icons/uv-logo.svg"
-      alt="UndefinedVerseOfficial"
-      width="180"
-      height="50"
-    >
-  </a>
+  <div class="site-header__inner">
 
-  <button
-    class="nav-toggle"
-    type="button"
-    aria-label="Open navigation"
-    aria-expanded="false"
-    aria-controls="primary-navigation"
-  >
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
+    <a
+      class="site-logo"
+      href="../index.html"
+      aria-label="UndefinedVerseOfficial home"
     >
-      <use href="../assets/icons/sprite.svg#uv-menu"></use>
-    </svg>
-  </button>
+      <img
+        src="../assets/icons/uv-logo.svg"
+        alt="UndefinedVerseOfficial"
+        width="420"
+        height="88"
+      >
+    </a>
 
-  <nav
-    class="site-nav"
-    id="primary-navigation"
-    aria-label="Main navigation"
-  >
-    <a href="../index.html">Home</a>
-    <a href="../pages/manga.html">Manga</a>
-    <a href="../pages/novels.html">Novels</a>
-    <a href="../pages/codex.html">Codex</a>
-    <a href="../pages/about.html">About</a>
-    <a href="../pages/status.html">Status</a>
-  </nav>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      aria-label="Open navigation"
+    >
+      <svg
+        class="icon nav-toggle__icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <use href="../assets/icons/sprite.svg#uv-menu"></use>
+      </svg>
+    </button>
+
+    <nav
+      class="site-nav"
+      id="primary-navigation"
+      aria-label="Main navigation"
+    >
+      <a href="../index.html">Home</a>
+      <a href="../pages/manga.html">Manga</a>
+      <a href="../pages/novels.html">Novels</a>
+      <a href="../pages/codex.html">Codex</a>
+      <a href="../pages/about.html">About</a>
+      <a href="../pages/status.html">Status</a>
+    </nav>
+
+  </div>
 </header>
