@@ -1,255 +1,201 @@
 /*
  * UNDEFINEDVERSEOFFICIAL
- * Cosmic background — assets/css/background.css
- * CSS-generated stars, nebulae, and distant spiral galaxies.
+ * CSS-generated cosmic background
+ * File: assets/css/background.css
  */
 
 .cosmos {
   position: fixed;
   inset: 0;
-  z-index: var(--z-background);
+  z-index: var(--z-background, -1);
   overflow: hidden;
-  isolation: isolate;
   pointer-events: none;
-  background: var(--color-background, #08080b);
+  background: #08080b;
+  isolation: isolate;
 }
 
-/* Deep-space foundation */
-.cosmos__base {
+.cosmos__base,
+.cosmos__nebula,
+.cosmos__galaxy,
+.cosmos__stars,
+.cosmos__grain,
+.cosmos__vignette {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      ellipse at 50% 18%,
-      rgba(72, 48, 112, 0.15),
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 85% 65%,
-      rgba(54, 39, 88, 0.11),
-      transparent 42%
-    ),
-    radial-gradient(
-      ellipse at 10% 82%,
-      rgba(50, 40, 82, 0.09),
-      transparent 40%
-    ),
-    #090810;
+  pointer-events: none;
 }
 
-/* Diffuse nebula lighting */
+.cosmos__base {
+  background:
+    radial-gradient(ellipse at 50% 45%, #171020 0%, transparent 58%),
+    linear-gradient(180deg, #08080b 0%, #0c0913 55%, #08080b 100%);
+}
+
+/* Diffuse violet atmosphere */
 .cosmos__nebula {
-  position: absolute;
   inset: -25%;
-  opacity: 0.7;
+  opacity: 0.65;
   background:
-    radial-gradient(
-      ellipse at 25% 32%,
-      rgba(106, 70, 155, 0.13),
-      transparent 25%
-    ),
-    radial-gradient(
-      ellipse at 72% 42%,
-      rgba(79, 61, 135, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      ellipse at 55% 78%,
-      rgba(109, 73, 150, 0.09),
-      transparent 24%
-    );
-  filter: blur(36px);
-  transform: translate3d(0, 0, 0);
-  animation: nebula-drift 38s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 75% 24%,
+      rgba(105, 57, 177, 0.24), transparent 27%),
+    radial-gradient(ellipse at 18% 62%,
+      rgba(70, 45, 132, 0.2), transparent 30%),
+    radial-gradient(ellipse at 78% 82%,
+      rgba(86, 48, 150, 0.18), transparent 26%);
+  filter: blur(28px);
+  animation: uv-nebula-drift 45s ease-in-out infinite alternate;
 }
 
-/* CSS spiral galaxies: soft arms, faint cores, no external images */
+/* CSS spiral galaxy construction */
 .cosmos__galaxy {
-  position: absolute;
-  width: clamp(240px, 42vw, 660px);
+  inset: auto;
+  width: clamp(280px, 62vw, 680px);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: 0.24;
+  opacity: 0.78;
   background:
-    radial-gradient(
-      ellipse at center,
-      rgba(235, 225, 255, 0.42) 0,
-      rgba(170, 139, 230, 0.18) 3%,
-      rgba(104, 76, 156, 0.12) 8%,
-      transparent 19%
-    ),
+    radial-gradient(ellipse at center,
+      rgba(238, 221, 255, 0.95) 0%,
+      rgba(177, 126, 255, 0.72) 2%,
+      rgba(111, 67, 183, 0.38) 6%,
+      transparent 14%),
     repeating-conic-gradient(
-      from 18deg at center,
-      transparent 0deg 17deg,
-      rgba(160, 132, 215, 0.08) 21deg,
-      rgba(202, 186, 240, 0.16) 24deg,
-      rgba(108, 79, 161, 0.06) 29deg,
-      transparent 35deg 48deg
+      from 10deg at 50% 50%,
+      transparent 0deg 12deg,
+      rgba(147, 95, 235, 0.12) 15deg,
+      rgba(205, 177, 255, 0.38) 18deg,
+      transparent 24deg 38deg
     ),
-    radial-gradient(
-      ellipse at center,
+    radial-gradient(ellipse at center,
       transparent 12%,
-      rgba(118, 91, 176, 0.12) 35%,
-      rgba(78, 59, 120, 0.08) 48%,
-      transparent 70%
-    );
-  filter: blur(7px);
+      rgba(109, 71, 180, 0.18) 28%,
+      rgba(154, 109, 226, 0.12) 40%,
+      transparent 68%);
   -webkit-mask-image: radial-gradient(
     ellipse at center,
-    #000 0,
-    rgba(0, 0, 0, 0.88) 35%,
+    #000 0%,
+    rgba(0, 0, 0, 0.9) 35%,
     transparent 72%
   );
   mask-image: radial-gradient(
     ellipse at center,
-    #000 0,
-    rgba(0, 0, 0, 0.88) 35%,
+    #000 0%,
+    rgba(0, 0, 0, 0.9) 35%,
     transparent 72%
   );
+  filter: blur(1.4px);
+  animation: uv-galaxy-drift 100s ease-in-out infinite alternate;
 }
 
 .cosmos__galaxy--one {
-  top: 2%;
-  right: -12%;
-  transform: rotate(-24deg) scaleY(0.62);
+  top: 8%;
+  right: -20%;
+  transform: rotate(-22deg) scaleY(0.72);
 }
 
 .cosmos__galaxy--two {
-  top: 37%;
-  left: -20%;
-  width: clamp(280px, 48vw, 720px);
-  opacity: 0.17;
-  transform: rotate(32deg) scaleY(0.68);
+  top: 43%;
+  left: -28%;
+  width: clamp(260px, 54vw, 560px);
+  opacity: 0.58;
+  transform: rotate(25deg) scaleY(0.65);
+  animation-direction: alternate-reverse;
+  animation-duration: 125s;
 }
 
 .cosmos__galaxy--three {
-  right: 9%;
-  bottom: -42%;
-  width: clamp(220px, 36vw, 520px);
-  opacity: 0.13;
-  transform: rotate(-48deg) scaleY(0.7);
+  top: 73%;
+  right: -18%;
+  width: clamp(300px, 66vw, 700px);
+  opacity: 0.5;
+  transform: rotate(-35deg) scaleY(0.7);
+  animation-duration: 145s;
 }
 
-/* Repeating star fields */
+/* Star fields */
 .cosmos__stars {
-  position: absolute;
-  inset: 0;
   background-repeat: repeat;
-  will-change: background-position;
 }
 
 .cosmos__stars--far {
-  opacity: 0.43;
+  opacity: 0.5;
   background-image:
-    radial-gradient(1px 1px at 17px 31px, #e9e2ff 98%, transparent),
-    radial-gradient(1px 1px at 93px 77px, #bcb0e9 98%, transparent),
-    radial-gradient(1px 1px at 156px 19px, #ffffff 98%, transparent),
-    radial-gradient(1px 1px at 214px 112px, #c8c0dc 98%, transparent),
-    radial-gradient(1px 1px at 264px 54px, #d9d0ff 98%, transparent),
-    radial-gradient(1px 1px at 328px 139px, #ffffff 98%, transparent);
-  background-size: 360px 180px;
-  animation: stars-drift-far 120s linear infinite;
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 120px 100px, #cdb8ff, transparent),
+    radial-gradient(1.5px 1.5px at 210px 170px, #fff, transparent),
+    radial-gradient(1px 1px at 300px 60px, #d8caff, transparent);
+  background-size: 340px 250px;
+  animation: uv-stars-far 180s linear infinite;
 }
 
 .cosmos__stars--near {
-  opacity: 0.3;
+  opacity: 0.38;
   background-image:
-    radial-gradient(1.5px 1.5px at 42px 65px, #ffffff 98%, transparent),
-    radial-gradient(1px 1px at 136px 24px, #cbbcff 98%, transparent),
-    radial-gradient(1.5px 1.5px at 228px 98px, #f0eaff 98%, transparent),
-    radial-gradient(1px 1px at 302px 42px, #b4a4e9 98%, transparent);
-  background-size: 390px 160px;
-  animation: stars-drift-near 85s linear infinite;
+    radial-gradient(2px 2px at 70px 80px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 250px 190px, #e2d4ff, transparent),
+    radial-gradient(1px 1px at 180px 35px, #fff, transparent);
+  background-size: 370px 290px;
+  animation: uv-stars-near 120s linear infinite;
 }
 
-/* Optional animated star canvas, controlled by JavaScript */
-.cosmos__canvas {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-}
-
-/* Fine film grain */
+/* Subtle film grain */
 .cosmos__grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
 }
 
-/* Edge shading for contrast */
+/* Keep the edges darker for readable text */
 .cosmos__vignette {
-  position: absolute;
-  inset: 0;
   background: radial-gradient(
     ellipse at center,
-    transparent 35%,
-    rgba(5, 4, 10, 0.32) 100%
+    transparent 30%,
+    rgba(5, 4, 9, 0.3) 72%,
+    rgba(5, 4, 9, 0.78) 100%
   );
 }
 
-/* Slow atmospheric movement */
-@keyframes nebula-drift {
-  0% {
-    transform: translate3d(-1%, -1%, 0) scale(1);
-  }
-
-  50% {
-    transform: translate3d(1%, 0.5%, 0) scale(1.035);
-  }
-
-  100% {
-    transform: translate3d(0.5%, 1%, 0) scale(1.015);
-  }
+@keyframes uv-nebula-drift {
+  from { transform: translate3d(-1%, 0, 0) scale(1); }
+  to { transform: translate3d(1%, 1%, 0) scale(1.04); }
 }
 
-@keyframes stars-drift-far {
+@keyframes uv-galaxy-drift {
+  from { translate: -0.5% -0.3%; }
+  to { translate: 0.7% 0.5%; }
+}
+
+@keyframes uv-stars-far {
   from { background-position: 0 0; }
-  to { background-position: -360px 180px; }
+  to { background-position: 340px 250px; }
 }
 
-@keyframes stars-drift-near {
+@keyframes uv-stars-near {
   from { background-position: 0 0; }
-  to { background-position: 390px -160px; }
+  to { background-position: -370px 290px; }
 }
 
-/* Reduced-motion support */
-@media (prefers-reduced-motion: reduce) {
-  .cosmos__nebula,
-  .cosmos__stars--far,
-  .cosmos__stars--near {
-    animation: none !important;
-  }
-
-  .cosmos__canvas {
-    display: none;
-  }
-}
-
-/* Lightweight settings for smaller devices */
 @media (max-width: 600px) {
-  .cosmos__nebula {
-    filter: blur(24px);
+  .cosmos__galaxy--one {
+    top: 12%;
+    right: -45%;
   }
 
-  .cosmos__galaxy {
-    filter: blur(9px);
-    opacity: 0.13;
+  .cosmos__galaxy--two {
+    top: 46%;
+    left: -43%;
   }
 
   .cosmos__galaxy--three {
-    opacity: 0.09;
+    top: 76%;
+    right: -42%;
   }
+}
 
-  .cosmos__grain {
-    opacity: 0.025;
-  }
-
-  .cosmos__canvas {
-    opacity: 0.45;
+@media (prefers-reduced-motion: reduce) {
+  .cosmos__nebula,
+  .cosmos__galaxy,
+  .cosmos__stars--far,
+  .cosmos__stars--near {
+    animation: none !important;
   }
 }
