@@ -20,10 +20,6 @@ export function initManga() {
   const notice = document.querySelector("#development-notice");
 
   mangaElements.forEach((element) => {
-    if (element.matches("a")) {
-      element.setAttribute("href", "#development-notice");
-    }
-
     element.dataset.catalogueStatus = "in-development";
 
     if (notice) {
