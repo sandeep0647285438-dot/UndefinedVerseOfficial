@@ -1,55 +1,50 @@
 
-<svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 360 100"
-     fill="none">
-  <title>UndefinedVerseOfficial</title>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="420"
+  height="88"
+  viewBox="0 0 420 88"
+  fill="none"
+  role="img"
+  aria-labelledby="uv-logo-title"
+>
+  <title id="uv-logo-title">UndefinedVerseOfficial</title>
 
-  <defs>
-    <linearGradient id="uv-silver"
-                    x1="12" y1="12"
-                    x2="88" y2="88"
-                    gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F2EFF8"/>
-      <stop offset="0.55" stop-color="#B8B1CF"/>
-      <stop offset="1" stop-color="#77708F"/>
-    </linearGradient>
-  </defs>
-
-  <g transform="translate(4 0)">
-    <circle cx="50" cy="50" r="43"
-            stroke="url(#uv-silver)"
-            stroke-width="1.2"
-            opacity=".65"/>
-
-    <path d="M30 25V55
-             C30 69 38 77 50 77
-             C62 77 70 69 70 55V25"
-          stroke="url(#uv-silver)"
-          stroke-width="5"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-
-    <path d="M43 39L50 32L57 39"
-          stroke="#F2EFF8"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-
-    <circle cx="50" cy="50" r="2.5"
-            fill="#F2EFF8"/>
+  <g id="uv-symbol">
+    <path
+      d="M12 12H27V48C27 59 33 65 44 65C55 65 61 59 61 48V12H76V48C76 68 63 79 44 79C25 79 12 68 12 48V12Z"
+      fill="#E8E5EF"
+    />
+    <path
+      d="M44 7L51 14L44 21L37 14L44 7Z"
+      fill="#A99AEF"
+    />
+    <path
+      d="M44 29V55"
+      stroke="#A99AEF"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
   </g>
 
-  <g fill="#F2EFF8">
-    <text x="108" y="47"
-          font-family="Arial, Helvetica, sans-serif"
-          font-size="23"
-          font-weight="600"
-          letter-spacing="1.1">UNDEFINEDVERSE</text>
+  <g fill="#E8E5EF">
+    <text
+      x="96"
+      y="43"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="27"
+      font-weight="600"
+      letter-spacing="0.3"
+    >UNDEFINEDVERSE</text>
 
-    <text x="109" y="68"
-          font-family="Arial, Helvetica, sans-serif"
-          font-size="10"
-          letter-spacing="4.2"
-          fill="#AAA3C5">OFFICIAL</text>
+    <text
+      x="98"
+      y="64"
+      fill="#A99AEF"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="10"
+      font-weight="500"
+      letter-spacing="4.2"
+    >OFFICIAL</text>
   </g>
 </svg>
