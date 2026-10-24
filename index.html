@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <meta name="theme-color" content="#08080b">
+  <meta name="color-scheme" content="dark">
+
   <meta
     name="description"
-    content="UndefinedVerseOfficial — an independent creative project for original worlds, manga, novels, and fictional lore."
+    content="UndefinedVerseOfficial — an independent creative project for original stories, imagined worlds, manga, novels, and fictional lore."
   >
-  <meta name="color-scheme" content="dark">
 
   <title>UndefinedVerseOfficial</title>
 
@@ -31,19 +31,13 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main-content">
-    Skip to content
-  </a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <div class="cosmos" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a
-        class="site-logo"
-        href="index.html"
-        aria-label="UndefinedVerseOfficial home"
-      >
+      <a class="site-logo" href="index.html" aria-label="UndefinedVerseOfficial home">
         <img
           src="assets/icons/uv-logo.svg"
           alt="UndefinedVerseOfficial"
@@ -60,7 +54,7 @@
         aria-label="Open navigation"
       >
         <svg
-          class="icon nav-toggle__icon"
+          class="icon"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -70,15 +64,11 @@
           stroke-linecap="round"
           aria-hidden="true"
         >
-          <use href="assets/icons/sprite.svg#uv-menu"></use>
+          <path d="M4 7H20M4 12H20M4 17H20"/>
         </svg>
       </button>
 
-      <nav
-        class="site-nav"
-        id="primary-navigation"
-        aria-label="Main navigation"
-      >
+      <nav class="site-nav" id="primary-navigation" aria-label="Main navigation">
         <a href="index.html" aria-current="page">Home</a>
         <a href="pages/manga.html">Manga</a>
         <a href="pages/novels.html">Novels</a>
@@ -94,132 +84,112 @@
       <div class="hero__content">
         <p class="eyebrow">INDEPENDENT CREATIVE PROJECT</p>
 
-        <h1 id="hero-title">
+        <h1 id="hero-title" class="hero__title">
           UndefinedVerseOfficial
         </h1>
 
-        <p>
+        <p class="hero__description">
           A growing space for original stories, imagined worlds,
           and ideas in development.
         </p>
 
         <div class="hero__actions">
-          <a class="button" href="pages/manga.html">
+          <a class="button button--primary" href="#explore">
             Explore the project
           </a>
-
-          <a class="button button--secondary" href="pages/about.html">
+          <a class="button button--quiet" href="pages/about.html">
             About UV
           </a>
         </div>
       </div>
     </section>
 
-    <section
-      class="section"
-      aria-labelledby="explore-title"
-      data-reveal
-    >
+    <section class="section" id="explore" aria-labelledby="explore-title">
       <div class="section__header">
         <p class="eyebrow">EXPLORE</p>
         <h2 id="explore-title">Project sections</h2>
-        <p>
-          Browse the project's sections and check their current status.
-        </p>
+        <p>Explore the different areas of UndefinedVerseOfficial.</p>
       </div>
 
       <div class="card-grid">
-        <article class="card">
+        <a
+          class="category-card"
+          href="pages/manga.html"
+          data-work-title="manga"
+          data-catalogue-status="in-development"
+        >
+          <div class="category-card__icon" aria-hidden="true">◈</div>
           <p class="eyebrow">01 / STORIES</p>
-          <h3>Manga</h3>
-          <p>
+          <h3 class="category-card__title">Manga</h3>
+          <p class="category-card__description">
             A dedicated space for original manga projects.
             The catalogue is in development.
           </p>
-          <a
-            href="pages/manga.html"
-            data-work-title="manga"
-            data-catalogue-status="in-development"
-          >
-            View Manga
-            <span aria-hidden="true">↗</span>
-          </a>
-        </article>
+          <span class="category-card__action">
+            Explore Manga <span class="category-card__arrow" aria-hidden="true">↗</span>
+          </span>
+        </a>
 
-        <article class="card">
+        <a
+          class="category-card"
+          href="pages/novels.html"
+          data-work-title="novels"
+          data-catalogue-status="in-development"
+        >
+          <div class="category-card__icon" aria-hidden="true">◇</div>
           <p class="eyebrow">02 / FICTION</p>
-          <h3>Novels</h3>
-          <p>
+          <h3 class="category-card__title">Novels</h3>
+          <p class="category-card__description">
             A future home for original fiction and longer-form stories.
           </p>
-          <a
-            href="pages/novels.html"
-            data-work-title="novels"
-            data-catalogue-status="in-development"
-          >
-            View Novels
-            <span aria-hidden="true">↗</span>
-          </a>
-        </article>
+          <span class="category-card__action">
+            Explore Novels <span class="category-card__arrow" aria-hidden="true">↗</span>
+          </span>
+        </a>
 
-        <article class="card">
-          <p class="eyebrow">03 / LORE</p>
-          <h3>Codex</h3>
-          <p>
-            A developing collection of fictional concepts,
-            terminology, and worldbuilding.
+        <a
+          class="dimension-card"
+          href="pages/codex.html"
+          data-work-title="codex"
+          data-catalogue-status="in-development"
+        >
+          <span class="dimension-card__top">
+            <span class="dimension-card__index">03 / LORE</span>
+            <span class="dimension-card__symbol" aria-hidden="true">⌘</span>
+          </span>
+          <h3 class="dimension-card__title">Codex</h3>
+          <p class="dimension-card__description">
+            Fictional concepts, terminology, and worldbuilding
+            for the developing project.
           </p>
-          <a
-            href="pages/codex.html"
-            data-work-title="codex"
-            data-catalogue-status="in-development"
-          >
-            Explore Codex
-            <span aria-hidden="true">↗</span>
-          </a>
-        </article>
+          <span class="dimension-card__footer">
+            <span>Explore Codex</span>
+            <span class="dimension-card__arrow" aria-hidden="true">↗</span>
+          </span>
+        </a>
       </div>
     </section>
 
-    <section
-      class="section"
-      aria-labelledby="status-title"
-      data-reveal
-    >
-      <div class="card">
-        <p class="eyebrow">PROJECT STATUS</p>
-        <h2 id="status-title">Under development</h2>
-        <p>
-          Some sections are still being built. Their pages are available
-          to explore, but unfinished catalogues will remain unpublished
-          until their content is ready.
-        </p>
-        <a href="pages/status.html">View project status</a>
-      </div>
-    </section>
-
-    <section
-      class="section work-notice card"
-      id="development-notice"
-      aria-labelledby="development-notice-title"
-      hidden
-    >
-      <h2 id="development-notice-title">Section in development</h2>
-      <p>
-        This section is being prepared. Please check back when
-        its content becomes available.
-      </p>
-      <a href="pages/status.html">View project status</a>
+    <section class="section" aria-labelledby="status-title">
+      <a class="codex-link" href="pages/status.html">
+        <div class="codex-link__content">
+          <span class="codex-link__label">PROJECT STATUS</span>
+          <h2 class="codex-link__title" id="status-title">
+            Under development
+          </h2>
+          <p class="codex-link__description">
+            Some sections are still being built. Visit the status page
+            for a clearer view of what's available.
+          </p>
+        </div>
+        <span class="codex-link__arrow" aria-hidden="true">↗</span>
+      </a>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="site-footer__inner">
-      <a
-        class="site-footer__brand"
-        href="index.html"
-        aria-label="UndefinedVerseOfficial home"
-      >
+      <a class="site-footer__brand" href="index.html">
         <img
           src="assets/icons/uv-mark.svg"
           alt=""
@@ -229,18 +199,14 @@
         <span>UndefinedVerseOfficial</span>
       </a>
 
-      <p>
-        An independent creative project.
-      </p>
+      <p>An independent creative project.</p>
 
       <nav aria-label="Footer navigation">
         <a href="pages/about.html">About</a>
         <a href="pages/status.html">Status</a>
       </nav>
 
-      <p>
-        © <span data-current-year>2026</span> UndefinedVerseOfficial
-      </p>
+      <p>© <span data-current-year>2026</span> UndefinedVerseOfficial</p>
     </div>
   </footer>
 
