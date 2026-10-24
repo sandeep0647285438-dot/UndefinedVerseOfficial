@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090810">
 
+  <meta name="theme-color" content="#08080b">
   <meta
     name="description"
-    content="UndefinedVerseOfficial — an independent creative project in development."
+    content="UndefinedVerseOfficial — an independent creative project for original worlds, manga, novels, and fictional lore."
   >
+  <meta name="color-scheme" content="dark">
 
   <title>UndefinedVerseOfficial</title>
 
@@ -27,259 +28,222 @@
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/accessibility.css">
-
-  <script src="assets/js/main.js" type="module"></script>
 </head>
 
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content">
+    Skip to content
+  </a>
 
-  <div class="cosmos" aria-hidden="true">
-    <div class="cosmos__base"></div>
-    <div class="cosmos__nebula"></div>
-    <div class="cosmos__stars cosmos__stars--far"></div>
-    <div class="cosmos__stars cosmos__stars--near"></div>
-    <canvas class="cosmos__canvas"></canvas>
-    <div class="cosmos__grain"></div>
-    <div class="cosmos__vignette"></div>
-  </div>
+  <div class="cosmos" aria-hidden="true"></div>
 
   <header class="site-header">
-    <a class="brand" href="#universe" aria-label="UndefinedVerseOfficial home">
-      <svg
-        class="brand__mark"
-        viewBox="0 0 48 48"
-        role="img"
-        aria-label="UV logo"
+    <div class="site-header__inner">
+      <a
+        class="site-logo"
+        href="index.html"
+        aria-label="UndefinedVerseOfficial home"
       >
-        <path
-          d="M8 8H19V28C19 33 21 36 24 36C27 36 29 33 29 28V8H40V29C40 40 33 44 24 44C15 44 8 40 8 29Z"
+        <img
+          src="assets/icons/uv-logo.svg"
+          alt="UndefinedVerseOfficial"
+          width="420"
+          height="88"
+        >
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        aria-label="Open navigation"
+      >
+        <svg
+          class="icon nav-toggle__icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-        />
-        <path
-          d="M8 8L24 22L40 8"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          opacity=".65"
-        />
-      </svg>
+          stroke-width="1.7"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <use href="assets/icons/sprite.svg#uv-menu"></use>
+        </svg>
+      </button>
 
-      <span class="brand__text">
-        <span class="brand__name">UNDEFINEDVERSE</span>
-        <span class="brand__sub">OFFICIAL PROJECT</span>
-      </span>
-    </a>
-
-    <button
-      class="nav-toggle"
-      type="button"
-      aria-label="Open navigation"
-      aria-expanded="false"
-      aria-controls="primary-navigation"
-    >
-      <span></span>
-      <span></span>
-    </button>
-
-    <nav class="site-nav" id="primary-navigation" aria-label="Main navigation">
-      <a href="#universe">Home</a>
-      <a href="#dimensions">Dimensions</a>
-      <a href="#development-notice" data-work-title="Manga">Manga</a>
-      <a href="#development-notice" data-work-title="Novels">Novels</a>
-      <a href="#codex">Codex</a>
-    </nav>
+      <nav
+        class="site-nav"
+        id="primary-navigation"
+        aria-label="Main navigation"
+      >
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="pages/manga.html">Manga</a>
+        <a href="pages/novels.html">Novels</a>
+        <a href="pages/codex.html">Codex</a>
+        <a href="pages/about.html">About</a>
+        <a href="pages/status.html">Status</a>
+      </nav>
+    </div>
   </header>
 
   <main id="main-content">
-    <section class="hero section" id="universe">
+    <section class="hero section" aria-labelledby="hero-title">
       <div class="hero__content">
-        <p class="eyebrow">AN INDEPENDENT CREATIVE PROJECT</p>
+        <p class="eyebrow">INDEPENDENT CREATIVE PROJECT</p>
 
-        <h1 class="hero__title">
-          Beyond the <span>known.</span>
+        <h1 id="hero-title">
+          UndefinedVerseOfficial
         </h1>
 
-        <p class="hero__description">
-          A space for ideas, stories, and worlds still taking shape.
-          UndefinedVerseOfficial is currently in development.
+        <p>
+          A growing space for original stories, imagined worlds,
+          and ideas in development.
         </p>
 
         <div class="hero__actions">
-          <a class="button button--primary" href="#dimensions">
+          <a class="button" href="pages/manga.html">
             Explore the project
-            <span aria-hidden="true">↘</span>
           </a>
 
-          <a class="button button--quiet" href="#development-notice">
-            Project status
+          <a class="button button--secondary" href="pages/about.html">
+            About UV
           </a>
         </div>
       </div>
-
-      <div class="hero__visual" aria-hidden="true">
-        <div class="hero__orbit hero__orbit--outer"></div>
-        <div class="hero__orbit hero__orbit--inner"></div>
-        <div class="hero__core"></div>
-        <div class="hero__spark hero__spark--one"></div>
-        <div class="hero__spark hero__spark--two"></div>
-        <div class="hero__spark hero__spark--three"></div>
-      </div>
-
-      <div class="hero__index">
-        <span>UV / 001</span>
-        <span>PROJECT IN DEVELOPMENT</span>
-      </div>
-    </section>
-
-    <section class="section dimensions" id="dimensions">
-      <div class="section-heading">
-        <p class="eyebrow">01 / PROJECT CONCEPTS</p>
-        <h2>Explore the <span>unknown.</span></h2>
-        <p>
-          Three conceptual directions that shape the visual identity of UV.
-        </p>
-      </div>
-
-      <div class="dimension-grid">
-        <article class="dimension-card">
-          <span class="dimension-card__number">01</span>
-          <div class="dimension-card__symbol" aria-hidden="true">○</div>
-          <h3>Void</h3>
-          <p>Space, silence, and the possibilities between ideas.</p>
-          <span class="dimension-card__footer">CONCEPT / 001</span>
-        </article>
-
-        <article class="dimension-card">
-          <span class="dimension-card__number">02</span>
-          <div class="dimension-card__symbol" aria-hidden="true">⌁</div>
-          <h3>Resonance</h3>
-          <p>Connections, patterns, and ideas that echo across stories.</p>
-          <span class="dimension-card__footer">CONCEPT / 002</span>
-        </article>
-
-        <article class="dimension-card">
-          <span class="dimension-card__number">03</span>
-          <div class="dimension-card__symbol" aria-hidden="true">◇</div>
-          <h3>Threshold</h3>
-          <p>The point where a new idea begins to take shape.</p>
-          <span class="dimension-card__footer">CONCEPT / 003</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="section library" id="library">
-      <div class="section-heading">
-        <p class="eyebrow">02 / CONTENT CATEGORIES</p>
-        <h2>Choose a <span>direction.</span></h2>
-        <p>
-          These categories are planned for the project. Content is not
-          available yet.
-        </p>
-      </div>
-
-      <div class="category-grid">
-        <a
-          class="category-card"
-          id="manga"
-          href="#development-notice"
-          data-work-title="Manga"
-        >
-          <span class="category-card__index">CATEGORY / 01</span>
-          <span class="category-card__icon" aria-hidden="true">漫</span>
-          <span class="category-card__title">Manga</span>
-          <span class="category-card__description">
-            Visit the manga section status.
-          </span>
-          <span class="category-card__action">
-            View status <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a
-          class="category-card"
-          id="novels"
-          href="#development-notice"
-          data-work-title="Novels"
-        >
-          <span class="category-card__index">CATEGORY / 02</span>
-          <span class="category-card__icon" aria-hidden="true">文</span>
-          <span class="category-card__title">Novels</span>
-          <span class="category-card__description">
-            Visit the novels section status.
-          </span>
-          <span class="category-card__action">
-            View status <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section codex" id="codex">
-      <div class="section-heading">
-        <p class="eyebrow">03 / DOCUMENTATION</p>
-        <h2>The <span>Codex.</span></h2>
-        <p>
-          A future home for project notes, design decisions, and development
-          updates.
-        </p>
-      </div>
-
-      <a
-        class="codex-link"
-        href="#development-notice"
-        data-work-title="Codex"
-      >
-        <span>
-          <span class="codex-link__label">PROJECT DOCUMENTATION</span>
-          <span class="codex-link__title">Codex status</span>
-        </span>
-        <span class="codex-link__arrow" aria-hidden="true">↗</span>
-      </a>
     </section>
 
     <section
-      class="section development-notice"
-      id="development-notice"
-      aria-labelledby="notice-title"
-      tabindex="-1"
+      class="section"
+      aria-labelledby="explore-title"
+      data-reveal
     >
-      <div class="development-notice__content">
-        <p class="eyebrow">UNDEFINEDVERSE / PROJECT STATUS</p>
-
-        <div class="status-indicator">
-          <span class="status-indicator__dot"></span>
-          CURRENTLY IN DEVELOPMENT
-        </div>
-
-        <h2 id="notice-title">Website under construction.</h2>
-
-        <p id="notice-description">
-          This section is currently being developed. Content and features
-          will become available as the project progresses.
+      <div class="section__header">
+        <p class="eyebrow">EXPLORE</p>
+        <h2 id="explore-title">Project sections</h2>
+        <p>
+          Browse the project's sections and check their current status.
         </p>
-
-        <a class="button button--quiet" href="#universe">
-          Return to home <span aria-hidden="true">↑</span>
-        </a>
       </div>
 
-      <span class="development-notice__decoration" aria-hidden="true">UV</span>
+      <div class="card-grid">
+        <article class="card">
+          <p class="eyebrow">01 / STORIES</p>
+          <h3>Manga</h3>
+          <p>
+            A dedicated space for original manga projects.
+            The catalogue is in development.
+          </p>
+          <a
+            href="pages/manga.html"
+            data-work-title="manga"
+            data-catalogue-status="in-development"
+          >
+            View Manga
+            <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">02 / FICTION</p>
+          <h3>Novels</h3>
+          <p>
+            A future home for original fiction and longer-form stories.
+          </p>
+          <a
+            href="pages/novels.html"
+            data-work-title="novels"
+            data-catalogue-status="in-development"
+          >
+            View Novels
+            <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">03 / LORE</p>
+          <h3>Codex</h3>
+          <p>
+            A developing collection of fictional concepts,
+            terminology, and worldbuilding.
+          </p>
+          <a
+            href="pages/codex.html"
+            data-work-title="codex"
+            data-catalogue-status="in-development"
+          >
+            Explore Codex
+            <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="section"
+      aria-labelledby="status-title"
+      data-reveal
+    >
+      <div class="card">
+        <p class="eyebrow">PROJECT STATUS</p>
+        <h2 id="status-title">Under development</h2>
+        <p>
+          Some sections are still being built. Their pages are available
+          to explore, but unfinished catalogues will remain unpublished
+          until their content is ready.
+        </p>
+        <a href="pages/status.html">View project status</a>
+      </div>
+    </section>
+
+    <section
+      class="section work-notice card"
+      id="development-notice"
+      aria-labelledby="development-notice-title"
+      hidden
+    >
+      <h2 id="development-notice-title">Section in development</h2>
+      <p>
+        This section is being prepared. Please check back when
+        its content becomes available.
+      </p>
+      <a href="pages/status.html">View project status</a>
     </section>
   </main>
 
   <footer class="site-footer">
-    <a class="footer-brand" href="#universe">UNDEFINEDVERSE</a>
+    <div class="site-footer__inner">
+      <a
+        class="site-footer__brand"
+        href="index.html"
+        aria-label="UndefinedVerseOfficial home"
+      >
+        <img
+          src="assets/icons/uv-mark.svg"
+          alt=""
+          width="32"
+          height="32"
+        >
+        <span>UndefinedVerseOfficial</span>
+      </a>
 
-    <p>Independent creative project. Currently in development.</p>
+      <p>
+        An independent creative project.
+      </p>
 
-    <a href="#development-notice">Project status ↗</a>
+      <nav aria-label="Footer navigation">
+        <a href="pages/about.html">About</a>
+        <a href="pages/status.html">Status</a>
+      </nav>
 
-    <span class="site-footer__copyright">
-      © <span id="current-year">2026</span> UndefinedVerseOfficial
-    </span>
+      <p>
+        © <span data-current-year>2026</span> UndefinedVerseOfficial
+      </p>
+    </div>
   </footer>
+
+  <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
