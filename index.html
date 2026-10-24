@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,13 @@
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <div class="cosmos" aria-hidden="true"></div>
+  <!-- CSS-generated stars and cosmic atmosphere -->
+  <div class="cosmos" aria-hidden="true">
+    <div class="cosmos__galaxy cosmos__galaxy--one"></div>
+    <div class="cosmos__galaxy cosmos__galaxy--two"></div>
+    <div class="cosmos__galaxy cosmos__galaxy--three"></div>
+    <div class="cosmos__stars"></div>
+  </div>
 
   <header class="site-header">
     <div class="site-header__inner">
@@ -85,7 +90,7 @@
         <p class="eyebrow">INDEPENDENT CREATIVE PROJECT</p>
 
         <h1 id="hero-title" class="hero__title">
-          UndefinedVerseOfficial
+          Undefined<span>Verse</span>Official
         </h1>
 
         <p class="hero__description">
@@ -102,16 +107,36 @@
           </a>
         </div>
       </div>
+
+      <!-- Abstract CSS illustration; no image upload required -->
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__orbit hero__orbit--outer"></div>
+        <div class="hero__orbit hero__orbit--inner"></div>
+        <div class="hero__orbit hero__orbit--third"></div>
+        <div class="hero__core"></div>
+        <span class="hero__spark hero__spark--one"></span>
+        <span class="hero__spark hero__spark--two"></span>
+        <span class="hero__spark hero__spark--three"></span>
+      </div>
+
+      <div class="hero__index" aria-hidden="true">
+        <span>UV / ORIGINAL WORLDS</span>
+        <span>CREATIVE PROJECT · 2026</span>
+      </div>
     </section>
 
     <section class="section" id="explore" aria-labelledby="explore-title">
-      <div class="section__header">
+      <div class="section-heading">
         <p class="eyebrow">EXPLORE</p>
-        <h2 id="explore-title">Project sections</h2>
-        <p>Explore the different areas of UndefinedVerseOfficial.</p>
+        <h2 id="explore-title">
+          Project <span>sections</span>
+        </h2>
+        <p>
+          Explore the different areas of UndefinedVerseOfficial.
+        </p>
       </div>
 
-      <div class="card-grid">
+      <div class="category-grid">
         <a
           class="category-card"
           href="pages/manga.html"
@@ -126,7 +151,8 @@
             The catalogue is in development.
           </p>
           <span class="category-card__action">
-            Explore Manga <span class="category-card__arrow" aria-hidden="true">↗</span>
+            Explore Manga
+            <span class="category-card__arrow" aria-hidden="true">↗</span>
           </span>
         </a>
 
@@ -143,31 +169,43 @@
             A future home for original fiction and longer-form stories.
           </p>
           <span class="category-card__action">
-            Explore Novels <span class="category-card__arrow" aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a
-          class="dimension-card"
-          href="pages/codex.html"
-          data-work-title="codex"
-          data-catalogue-status="in-development"
-        >
-          <span class="dimension-card__top">
-            <span class="dimension-card__index">03 / LORE</span>
-            <span class="dimension-card__symbol" aria-hidden="true">⌘</span>
-          </span>
-          <h3 class="dimension-card__title">Codex</h3>
-          <p class="dimension-card__description">
-            Fictional concepts, terminology, and worldbuilding
-            for the developing project.
-          </p>
-          <span class="dimension-card__footer">
-            <span>Explore Codex</span>
-            <span class="dimension-card__arrow" aria-hidden="true">↗</span>
+            Explore Novels
+            <span class="category-card__arrow" aria-hidden="true">↗</span>
           </span>
         </a>
       </div>
+    </section>
+
+    <section class="section" aria-labelledby="codex-title">
+      <div class="section-heading">
+        <p class="eyebrow">03 / WORLDBUILDING</p>
+        <h2 id="codex-title">Ideas, concepts, and <span>lore</span></h2>
+        <p>
+          A place for fictional concepts, terminology, and worldbuilding
+          as the project develops.
+        </p>
+      </div>
+
+      <a
+        class="dimension-card"
+        href="pages/codex.html"
+        data-work-title="codex"
+        data-catalogue-status="in-development"
+      >
+        <span class="dimension-card__top">
+          <span class="dimension-card__index">03 / LORE</span>
+          <span class="dimension-card__symbol" aria-hidden="true">⌘</span>
+        </span>
+        <h3 class="dimension-card__title">Codex</h3>
+        <p class="dimension-card__description">
+          Fictional concepts, terminology, and worldbuilding
+          for the developing project.
+        </p>
+        <span class="dimension-card__footer">
+          <span>Explore Codex</span>
+          <span class="dimension-card__arrow" aria-hidden="true">↗</span>
+        </span>
+      </a>
     </section>
 
     <section class="section" aria-labelledby="status-title">
@@ -206,7 +244,9 @@
         <a href="pages/status.html">Status</a>
       </nav>
 
-      <p>© <span data-current-year>2026</span> UndefinedVerseOfficial</p>
+      <p class="site-footer__copyright">
+        © <span data-current-year>2026</span> UndefinedVerseOfficial
+      </p>
     </div>
   </footer>
 
