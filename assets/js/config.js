@@ -1,43 +1,24 @@
 
 /**
  * UNDEFINEDVERSEOFFICIAL
- * Shared project configuration
+ * Shared website configuration
  * File: assets/js/config.js
  */
 
 export const UV_CONFIG = Object.freeze({
-  name: "UndefinedVerseOfficial",
-
-  // Keep this aligned with the deployed website's canonical URL.
-  siteUrl: "https://undefinedverseofficial.pages.dev",
+  site: Object.freeze({
+    name: "UndefinedVerseOfficial",
+    shortName: "UV",
+    url: "https://undefinedverseofficial.pages.dev",
+    themeColor: "#08080b"
+  }),
 
   selectors: Object.freeze({
-    header: ".site-header",
-    navigation: ".site-nav",
+    navigation: "#primary-navigation",
     navigationToggle: ".nav-toggle",
-    background: ".cosmos",
-    hero: ".hero",
-    reveal: "[data-reveal]",
-    currentYear: "[data-current-year]",
-    developmentNotice: "#development-notice"
-  }),
-
-  breakpoints: Object.freeze({
-    mobile: 760,
-    smallMobile: 540,
-    tablet: 1024
-  }),
-
-  motion: Object.freeze({
-    scrollThreshold: 16,
-    revealRootMargin: "0px 0px -48px 0px",
-    revealThreshold: 0.12
-  }),
-
-  features: Object.freeze({
-    smoothScroll: true,
-    scrollReveal: true,
-    backgroundEffects: true
+    developmentNotice: "#development-notice",
+    catalogueLink: "[data-work-title]",
+    currentYear: "[data-current-year]"
   }),
 
   categories: Object.freeze([
@@ -45,22 +26,48 @@ export const UV_CONFIG = Object.freeze({
       id: "manga",
       label: "Manga",
       status: "in-development",
-      target: "#development-notice"
+      target: "/pages/manga.html"
     }),
     Object.freeze({
       id: "novels",
       label: "Novels",
       status: "in-development",
-      target: "#development-notice"
+      target: "/pages/novels.html"
     }),
     Object.freeze({
       id: "codex",
       label: "Codex",
       status: "in-development",
-      target: "#development-notice"
+      target: "/pages/codex.html"
+    }),
+    Object.freeze({
+      id: "about",
+      label: "About",
+      status: "available",
+      target: "/pages/about.html"
+    }),
+    Object.freeze({
+      id: "status",
+      label: "Status",
+      status: "available",
+      target: "/pages/status.html"
     })
-  ])
-});
+  ]),
 
-export const prefersReducedMotion = () =>
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  motion: Object.freeze({
+    defaultDuration: 220,
+    revealThreshold: 0.12
+  }),
+
+  accessibility: Object.freeze({
+    reducedMotionQuery: "(prefers-reduced-motion: reduce)",
+    focusableElements: [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "[tabindex]:not([tabindex='-1'])"
+    ].join(", ")
+  })
+});
