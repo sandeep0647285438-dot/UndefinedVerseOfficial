@@ -1,0 +1,55 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 360 100"
+     fill="none">
+  <title>UndefinedVerseOfficial</title>
+
+  <defs>
+    <linearGradient id="uv-silver"
+                    x1="12" y1="12"
+                    x2="88" y2="88"
+                    gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F2EFF8"/>
+      <stop offset="0.55" stop-color="#B8B1CF"/>
+      <stop offset="1" stop-color="#77708F"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4 0)">
+    <circle cx="50" cy="50" r="43"
+            stroke="url(#uv-silver)"
+            stroke-width="1.2"
+            opacity=".65"/>
+
+    <path d="M30 25V55
+             C30 69 38 77 50 77
+             C62 77 70 69 70 55V25"
+          stroke="url(#uv-silver)"
+          stroke-width="5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <path d="M43 39L50 32L57 39"
+          stroke="#F2EFF8"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <circle cx="50" cy="50" r="2.5"
+            fill="#F2EFF8"/>
+  </g>
+
+  <g fill="#F2EFF8">
+    <text x="108" y="47"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="23"
+          font-weight="600"
+          letter-spacing="1.1">UNDEFINEDVERSE</text>
+
+    <text x="109" y="68"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="10"
+          letter-spacing="4.2"
+          fill="#AAA3C5">OFFICIAL</text>
+  </g>
+</svg>
