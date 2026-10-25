@@ -4,10 +4,10 @@
  * Main application controller
  * File: assets/js/main.js
  *
- * Connects the site's independent JavaScript modules.
+ * Navigation module disabled.
+ * Other independent modules remain connected.
  */
 
-import { initNavigation } from "./navigation.js";
 import { initBackground } from "./background.js";
 import { initMotion } from "./motion.js";
 import { initScrollReveal } from "./scroll-reveal.js";
@@ -25,7 +25,6 @@ function startUndefinedVerse() {
 
   const modules = [
     ["Accessibility", initAccessibility],
-    ["Navigation", initNavigation],
     ["Background", initBackground],
     ["Motion", initMotion],
     ["Scroll reveal", initScrollReveal],
@@ -54,10 +53,6 @@ function startUndefinedVerse() {
       );
     }
   }
-
-  /*
-   * Provide a single cleanup entry point for future use.
-   */
 
   window.UVApp = Object.freeze({
     destroy() {
