@@ -6,16 +6,25 @@
  */
 
 export function initNavigation() {
+  "use strict";
+
   const toggle = document.querySelector(".nav-toggle");
   const navigation = document.querySelector(".site-nav");
+  const header = document.querySelector(".site-header");
 
   if (!toggle || !navigation) {
+    console.error(
+      "[UndefinedVerse] Navigation could not initialize.",
+      {
+        toggleFound: Boolean(toggle),
+        navigationFound: Boolean(navigation)
+      }
+    );
+
     return () => {};
   }
 
-  const header = document.querySelector(".site-header");
   const mobileQuery = window.matchMedia("(max-width: 760px)");
-
   let isOpen = false;
 
   function setOpen(nextState, restoreFocus = false) {
@@ -34,17 +43,25 @@ export function initNavigation() {
       header.classList.toggle("menu-is-open", isOpen);
     }
 
-    if (!isOpen && restoreFocus) {
+    if (restoreFocus) {
       toggle.focus();
     }
   }
 
-  function handleToggle() {
+  function handleToggle(event) {
+    event.preventDefault();
+    event.stopPropagation();
     setOpen(!isOpen);
   }
 
   function handleNavigationClick(event) {
-    const link = event.target.closest("a");
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const link = target.closest("a");
 
     if (link && navigation.contains(link)) {
       setOpen(false);
@@ -56,9 +73,12 @@ export function initNavigation() {
       return;
     }
 
+    const target = event.target;
+
     if (
-      !toggle.contains(event.target) &&
-      !navigation.contains(event.target)
+      target instanceof Node &&
+      !toggle.contains(target) &&
+      !navigation.contains(target)
     ) {
       setOpen(false);
     }
@@ -81,27 +101,22 @@ export function initNavigation() {
   document.addEventListener("click", handleOutsideClick);
   document.addEventListener("keydown", handleKeydown);
 
-  if (mobileQuery.addEventListener) {
+  if (typeof mobileQuery.addEventListener === "function") {
     mobileQuery.addEventListener("change", handleBreakpointChange);
   } else {
     mobileQuery.addListener(handleBreakpointChange);
   }
 
-  // Synchronize initial state with the HTML.
   setOpen(false);
 
-  // Return a cleanup function for safe reinitialization.
   return function destroyNavigation() {
     toggle.removeEventListener("click", handleToggle);
     navigation.removeEventListener("click", handleNavigationClick);
     document.removeEventListener("click", handleOutsideClick);
     document.removeEventListener("keydown", handleKeydown);
 
-    if (mobileQuery.removeEventListener) {
-      mobileQuery.removeEventListener(
-        "change",
-        handleBreakpointChange
-      );
+    if (typeof mobileQuery.removeEventListener === "function") {
+      mobileQuery.removeEventListener("change", handleBreakpointChange);
     } else {
       mobileQuery.removeListener(handleBreakpointChange);
     }
