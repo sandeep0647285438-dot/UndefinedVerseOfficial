@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08080b">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="View a public UndefinedVerseOfficial profile.">
+
+  <title>Profile | UndefinedVerseOfficial</title>
+
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/typography.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/background.css">
+  <link rel="stylesheet" href="../assets/css/logo.css">
+  <link rel="stylesheet" href="../assets/css/navigation.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <link rel="stylesheet" href="../assets/css/accessibility.css">
+
+  <style>
+    .profile-page {
+      width: min(760px, calc(100% - 32px));
+      margin: 56px auto 88px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-panel {
+      padding: clamp(22px, 5vw, 40px);
+      border: 1px solid rgba(190, 170, 255, .22);
+      border-radius: 20px;
+      background: rgba(12, 10, 23, .88);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .22);
+    }
+
+    .profile-heading {
+      margin-bottom: 28px;
+    }
+
+    .profile-heading h1 {
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-heading p,
+    .profile-muted {
+      color: #b7b1c8;
+    }
+
+    .profile-identity {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      min-width: 0;
+    }
+
+    .profile-avatar {
+      width: 92px;
+      height: 92px;
+      flex: 0 0 92px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(190, 170, 255, .4);
+      border-radius: 50%;
+      background: #211832;
+      color: #e8ddff;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-fields {
+      display: grid;
+      gap: 18px;
+    }
+
+    .profile-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .profile-field label {
+      font-size: .9rem;
+      color: #e1d9f2;
+    }
+
+    .profile-field input,
+    .profile-field textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 14px;
+      border: 1px solid rgba(190, 170, 255, .24);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .04);
+      color: #f7f3ff;
+      font: inherit;
+    }
+
+    .profile-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .profile-field input:focus-visible,
+    .profile-field textarea:focus-visible,
+    .profile-actions button:focus-visible,
+    .profile-actions a:focus-visible {
+      outline: 2px solid #bda0ff;
+      outline-offset: 3px;
+    }
+
+    .profile-value {
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .profile-website {
+      color: #c9b5ff;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .profile-actions button,
+    .profile-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid rgba(190, 170, 255, .3);
+      border-radius: 10px;
+      background: rgba(128, 91, 210, .16);
+      color: #f4efff;
+      font: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .profile-actions button:hover,
+    .profile-actions a:hover {
+      background: rgba(128, 91, 210, .3);
+    }
+
+    .profile-actions button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .profile-message {
+      min-height: 24px;
+      margin-top: 18px;
+      color: #d5c7ff;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-message[data-kind="error"] {
+      color: #ffaaaa;
+    }
+
+    .profile-message[data-kind="success"] {
+      color: #a8efc0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .profile-page {
+        margin-top: 28px;
+      }
+
+      .profile-identity {
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .profile-avatar {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#profile-main">Skip to content</a>
+
+  <div class="cosmos" aria-hidden="true">
+    <div class="cosmos__base"></div>
+    <div class="cosmos__nebula"></div>
+    <div class="cosmos__galaxy cosmos__galaxy--one"></div>
+    <div class="cosmos__galaxy cosmos__galaxy--two"></div>
+    <div class="cosmos__galaxy cosmos__galaxy--three"></div>
+    <div class="cosmos__stars cosmos__stars--far"></div>
+    <div class="cosmos__stars cosmos__stars--near"></div>
+    <div class="cosmos__grain"></div>
+    <div class="cosmos__vignette"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-logo" href="../index.html"
+         aria-label="UndefinedVerseOfficial home">
+        <img src="../assets/icons/uv-logo.svg"
+             alt="UndefinedVerseOfficial"
+             width="420" height="88">
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="manga.html">Manga</a>
+        <a href="novels.html">Novels</a>
+        <a href="codex.html">Codex</a>
+        <a href="about.html">About</a>
+        <a href="status.html">Status</a>
+      </nav>
+
+      <a class="account-link" href="account.html"
+         id="profile-account-link">Sign in</a>
+    </div>
+  </header>
+
+  <main class="profile-page" id="profile-main">
+    <section class="profile-panel" aria-labelledby="profile-title">
+      <div class="profile-heading">
+        <p class="eyebrow">UV / COMMUNITY</p>
+        <h1 id="profile-title">Profile</h1>
+        <p id="profile-subtitle">Loading profile...</p>
+      </div>
+
+      <div id="profile-content" hidden>
+        <div class="profile-identity">
+          <div class="profile-avatar" id="profile-avatar"
+               aria-label="Profile avatar">UV</div>
+          <div>
+            <h2 id="profile-display-name">UndefinedVerse user</h2>
+            <p class="profile-muted" id="profile-username"></p>
+          </div>
+        </div>
+
+        <div id="profile-view">
+          <div class="profile-fields">
+            <div class="profile-field">
+              <label>About</label>
+              <p class="profile-value" id="profile-bio">No bio added yet.</p>
+            </div>
+
+            <div class="profile-field">
+              <label>Website</label>
+              <p>
+                <a class="profile-website" id="profile-website"
+                   hidden rel="noopener noreferrer"
+                   target="_blank"></a>
+                <span class="profile-muted" id="profile-no-website">
+                  No website added.
+                </span>
+              </p>
+            </div>
+
+            <p class="profile-muted" id="profile-created"></p>
+          </div>
+        </div>
+
+        <form id="profile-edit-form" hidden>
+          <div class="profile-fields">
+            <div class="profile-field">
+              <label for="edit-username">Username</label>
+              <input id="edit-username" name="username"
+                     maxlength="30" autocomplete="username"
+                     pattern="[A-Za-z0-9_]+" required>
+            </div>
+
+            <div class="profile-field">
+              <label for="edit-display-name">Display name</label>
+              <input id="edit-display-name" name="display_name"
+                     maxlength="50" autocomplete="nickname">
+            </div>
+
+            <div class="profile-field">
+              <label for="edit-avatar-url">Avatar image URL</label>
+              <input id="edit-avatar-url" name="avatar_url"
+                     type="url" maxlength="500"
+                     placeholder="https://example.com/avatar.png">
+            </div>
+
+            <div class="profile-field">
+              <label for="edit-bio">Bio</label>
+              <textarea id="edit-bio" name="bio"
+                        maxlength="300"
+                        placeholder="A little about you..."></textarea>
+            </div>
+
+            <div class="profile-field">
+              <label for="edit-website">Website</label>
+              <input id="edit-website" name="website"
+                     type="url" maxlength="300"
+                     placeholder="https://example.com">
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button type="submit" id="profile-save">Save profile</button>
+            <button type="button" id="profile-cancel">Cancel</button>
+          </div>
+        </form>
+
+        <div class="profile-actions" id="profile-owner-actions" hidden>
+          <button type="button" id="profile-edit-button">Edit profile</button>
+          <button type="button" id="profile-signout">Sign out</button>
+        </div>
+
+        <div class="profile-actions">
+          <a href="../index.html">Back to UV</a>
+        </div>
+      </div>
+
+      <p class="profile-message" id="profile-message"
+         role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { supabase } from "../assets/js/supabase.js";
+
+    const $ = (id) => document.getElementById(id);
+
+    const message = $("profile-message");
+    const subtitle = $("profile-subtitle");
+    const content = $("profile-content");
+    const view = $("profile-view");
+    const form = $("profile-edit-form");
+    const ownerActions = $("profile-owner-actions");
+    const avatar = $("profile-avatar");
+
+    let currentUser = null;
+    let profile = null;
+
+    function showMessage(text, kind = "") {
+      message.textContent = text;
+      message.dataset.kind = kind;
+    }
+
+    function safeExternalUrl(value) {
+      if (!value) return null;
+
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:"
+          ? url.href
+          : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function setAvatar(url, displayName, username) {
+      avatar.replaceChildren();
+
+      const safeUrl = safeExternalUrl(url);
+
+      if (safeUrl) {
+        const img = document.createElement("img");
+        img.src = safeUrl;
+        img.alt = "";
+        img.referrerPolicy = "no-referrer";
+
+        img.addEventListener("error", () => {
+          avatar.textContent =
+            (displayName || username || "UV").trim().charAt(0).toUpperCase();
+        }, { once: true });
+
+        avatar.append(img);
+      } else {
+        avatar.textContent =
+          (displayName || username || "UV").trim().charAt(0).toUpperCase();
+      }
+    }
+
+    function renderProfile(data) {
+      profile = data;
+
+      const displayName = data.display_name?.trim() || data.username || "UV user";
+      const username = data.username ? "@" + data.username : "Username not set";
+
+      $("profile-title").textContent = displayName;
+      $("profile-display-name").textContent = displayName;
+      $("profile-username").textContent = username;
+      $("profile-bio").textContent = data.bio?.trim() || "No bio added yet.";
+
+      const websiteUrl = safeExternalUrl(data.website);
+      const websiteLink = $("profile-website");
+
+      if (websiteUrl) {
+        websiteLink.href = websiteUrl;
+        websiteLink.textContent = websiteUrl;
+        websiteLink.hidden = false;
+        $("profile-no-website").hidden = true;
+      } else {
+        websiteLink.hidden = true;
+        websiteLink.removeAttribute("href");
+        $("profile-no-website").hidden = false;
+      }
+
+      $("profile-created").textContent = data.created_at
+        ? "Member since " + new Date(data.created_at).toLocaleDateString()
+        : "";
+
+      setAvatar(data.avatar_url, displayName, data.username);
+
+      if (currentUser && data.id === currentUser.id) {
+        $("profile-account-link").textContent = "My profile";
+      } else {
+        $("profile-account-link").textContent = "Sign in";
+      }
+
+      content.hidden = false;
+      subtitle.textContent =
+        currentUser && data.id === currentUser.id
+          ? "Your public profile"
+          : "Public profile";
+
+      ownerActions.hidden = !(currentUser && data.id === currentUser.id);
+      showMessage("");
+    }
+
+    function fillEditForm(data) {
+      $("edit-username").value = data.username || "";
+      $("edit-display-name").value = data.display_name || "";
+      $("edit-avatar-url").value = data.avatar_url || "";
+      $("edit-bio").value = data.bio || "";
+      $("edit-website").value = data.website || "";
+    }
+
+    function startEditing() {
+      if (!currentUser || !profile || profile.id !== currentUser.id) return;
+
+      fillEditForm(profile);
+      view.hidden = true;
+      ownerActions.hidden = true;
+      form.hidden = false;
+      showMessage("Edit your details and save when ready.");
+    }
+
+    function cancelEditing() {
+      form.hidden = true;
+      view.hidden = false;
+      ownerActions.hidden = !(currentUser && profile?.id === currentUser.id);
+      showMessage("");
+    }
+
+    async function loadProfile() {
+      subtitle.textContent = "Loading profile...";
+      content.hidden = true;
+      showMessage("");
+
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
+
+      if (sessionError) {
+        subtitle.textContent = "Could not check your sign-in status.";
+        showMessage(sessionError.message, "error");
+        return;
+      }
+
+      currentUser = sessionData.session?.user || null;
+
+      const params = new URLSearchParams(window.location.search);
+      const requestedUsername = params.get("username");
+      const requestedId = params.get("id");
+
+      let query = supabase
+        .from("profiles")
+        .select("id, username, display_name, bio, avatar_url, website, created_at");
+
+      if (requestedUsername) {
+        query = query.ilike("username", requestedUsername);
+      } else if (requestedId) {
+        query = query.eq("id", requestedId);
+      } else if (currentUser) {
+        query = query.eq("id", currentUser.id);
+      } else {
+        subtitle.textContent = "Sign in to view your own profile.";
+        showMessage("To view a public profile, open its profile link.");
+        return;
+      }
+
+      const { data, error } = await query.maybeSingle();
+
+      if (error) {
+        subtitle.textContent = "Could not load this profile.";
+        showMessage(error.message, "error");
+        return;
+      }
+
+      if (!data) {
+        subtitle.textContent = "Profile not found.";
+        showMessage("This profile may not exist or may not be available.");
+        return;
+      }
+
+      renderProfile(data);
+    }
+
+    $("profile-edit-button").addEventListener("click", startEditing);
+    $("profile-cancel").addEventListener("click", cancelEditing);
+
+    $("profile-signout").addEventListener("click", async () => {
+      $("profile-signout").disabled = true;
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        showMessage(error.message, "error");
+        $("profile-signout").disabled = false;
+        return;
+      }
+
+      window.location.href = "account.html";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!currentUser || !profile || profile.id !== currentUser.id) {
+        showMessage("You can only edit your own profile.", "error");
+        return;
+      }
+
+      const username = $("edit-username").value.trim();
+      const displayName = $("edit-display-name").value.trim();
+      const avatarUrl = $("edit-avatar-url").value.trim();
+      const bio = $("edit-bio").value.trim();
+      const website = $("edit-website").value.trim();
+
+      if (!/^[A-Za-z0-9_]{3,30}$/.test(username)) {
+        showMessage(
+          "Username must be 3–30 characters and use only letters, numbers, or underscores.",
+          "error"
+        );
+        return;
+      }
+
+      if (avatarUrl && !safeExternalUrl(avatarUrl)) {
+        showMessage("Avatar URL must begin with http:// or https://.", "error");
+        return;
+      }
+
+      if (website && !safeExternalUrl(website)) {
+        showMessage("Website URL must begin with http:// or https://.", "error");
+        return;
+      }
+
+      const saveButton = $("profile-save");
+      saveButton.disabled = true;
+      showMessage("Saving profile...");
+
+      const updates = {
+        username,
+        display_name: displayName || null,
+        avatar_url: avatarUrl || null,
+        bio: bio || null,
+        website: website || null,
+        updated_at: new Date().toISOString()
+      };
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("id", currentUser.id)
+        .select("id, username, display_name, bio, avatar_url, website, created_at")
+        .maybeSingle();
+
+      saveButton.disabled = false;
+
+      if (error) {
+        showMessage(
+          error.code === "23505"
+            ? "That username is already taken."
+            : error.message,
+          "error"
+        );
+        return;
+      }
+
+      if (!data) {
+        showMessage(
+          "Profile was not updated. Check your Supabase UPDATE permissions and row-level security policies.",
+          "error"
+        );
+        return;
+      }
+
+      renderProfile(data);
+      form.hidden = true;
+      view.hidden = false;
+
+      const url = new URL(window.location.href);
+      url.search = "";
+      url.searchParams.set("username", data.username);
+      window.history.replaceState({}, "", url);
+
+      showMessage("Profile saved successfully.", "success");
+    });
+
+    supabase.auth.onAuthStateChange(() => {
+      // Reload after auth changes without blocking the auth callback.
+      setTimeout(() => loadProfile(), 0);
+    });
+
+    loadProfile().catch((error) => {
+      subtitle.textContent = "Could not load this profile.";
+      showMessage(error.message || "Unexpected error.", "error");
+    });
+  </script>
+</body>
+</html>
