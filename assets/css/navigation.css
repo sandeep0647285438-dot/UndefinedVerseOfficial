@@ -1,7 +1,8 @@
 
 /*
  * UNDEFINEDVERSEOFFICIAL
- * Navigation and mobile header — assets/css/navigation.css
+ * Navigation and account button
+ * File: assets/css/navigation.css
  */
 
 .site-header {
@@ -21,11 +22,22 @@
   backdrop-filter: blur(18px);
 }
 
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  width: 100%;
+  min-width: 0;
+}
+
 .site-nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: clamp(1rem, 2.4vw, 2rem);
+  flex-wrap: wrap;
+  gap: clamp(0.7rem, 2vw, 1.5rem);
+  min-width: 0;
 }
 
 .site-nav a {
@@ -37,8 +49,8 @@
   font-size: 0.82rem;
   font-weight: 550;
   white-space: nowrap;
-  transition:
-    color var(--duration-fast) var(--ease-standard);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
 }
 
 .site-nav a::after {
@@ -65,127 +77,127 @@
   transform-origin: left;
 }
 
-.site-nav a:focus-visible {
+.site-nav a:focus-visible,
+.account-link:focus-visible,
+.account-avatar-link:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 4px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* Hidden on desktop; JavaScript controls the mobile menu. */
-.nav-toggle {
-  display: none;
+/* Account sign-in button */
+.account-link {
+  display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 6px;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid var(--color-border);
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--color-purple-border);
   border-radius: var(--radius-md);
-  background: rgba(18, 16, 28, 0.8);
+  background: rgba(91, 61, 145, 0.18);
   color: var(--color-silver-bright);
-}
-
-.nav-toggle span {
-  display: block;
-  width: 17px;
-  height: 1.5px;
-  border-radius: var(--radius-pill);
-  background: currentColor;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
   transition:
-    transform var(--duration-normal) var(--ease-standard),
-    opacity var(--duration-fast) var(--ease-standard);
+    background var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
 }
 
-.nav-toggle:hover {
-  border-color: var(--color-purple-border);
+.account-link:hover {
+  background: rgba(91, 61, 145, 0.3);
+  border-color: var(--color-purple);
 }
 
-.nav-toggle:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 4px;
+/* Signed-in user's profile avatar link */
+.account-avatar-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border: 1px solid var(--color-purple-border);
+  border-radius: 50%;
+  background: rgba(91, 61, 145, 0.2);
+  color: var(--color-silver-bright);
+  text-decoration: none;
 }
 
-/* The menu button receives this class when opened by JavaScript. */
-.nav-toggle.is-active span:first-child {
-  transform: translateY(3.75px) rotate(45deg);
+.account-avatar-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.nav-toggle.is-active span:last-child {
-  transform: translateY(-3.75px) rotate(-45deg);
+.account-avatar-link [data-account-initial] {
+  font-size: 1rem;
+  font-weight: 650;
 }
 
-/* Tablet and mobile navigation. */
+/* No hamburger and no collapsible navigation. */
+.nav-toggle {
+  display: none !important;
+}
+
+/* Keep links visible on phones without a full-screen menu. */
 @media (max-width: 760px) {
   .site-header {
-    gap: var(--space-3);
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
   }
 
-  .nav-toggle {
-    display: inline-flex;
-    flex-shrink: 0;
+  .site-header__inner {
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
   }
 
   .site-nav {
-    position: absolute;
-    top: calc(100% + 1px);
-    right: 0;
-    left: 0;
-    display: flex;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 0;
-    padding: 0 var(--page-gutter);
-    overflow: hidden;
-    border-bottom: 1px solid transparent;
-    background: rgba(9, 8, 16, 0.97);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-8px);
-    transition:
-      opacity var(--duration-normal) var(--ease-standard),
-      transform var(--duration-normal) var(--ease-standard),
-      visibility var(--duration-normal);
-  }
-
-  .site-nav.is-open {
-    padding-top: 0.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom-color: var(--color-border);
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
+    position: static !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.15rem 1rem;
+    padding: 0 !important;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .site-nav a {
-    min-height: 48px;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(216, 211, 229, 0.06);
-  }
-
-  .site-nav a:last-child {
-    border-bottom: 0;
+    min-height: 38px;
+    font-size: 0.8rem;
   }
 
   .site-nav a::after {
     display: none;
   }
 
-  .site-nav a:hover {
-    color: var(--color-purple);
+  .site-nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .account-link {
+    min-height: 38px;
+    padding: 0.45rem 0.7rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-nav,
   .site-nav a,
   .site-nav a::after,
-  .nav-toggle span {
+  .account-link {
     transition: none !important;
   }
 }
