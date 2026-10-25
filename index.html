@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +28,72 @@
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/accessibility.css">
+
+  <!-- Keep navigation visible without the hamburger menu. -->
+  <style>
+    .site-header__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .site-nav {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px 18px;
+      width: auto;
+      max-width: 100%;
+      position: static !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+    }
+
+    .site-nav a {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 4px;
+      text-decoration: none;
+    }
+
+    .site-nav a:focus-visible {
+      outline: 2px solid #b9a3ff;
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 760px) {
+      .site-header__inner {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .site-logo {
+        max-width: 100%;
+      }
+
+      .site-logo img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .site-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 4px 14px;
+      }
+
+      .site-nav a {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -48,6 +115,7 @@
     <div class="cosmos__vignette"></div>
   </div>
 
+  <!-- Header with permanently visible navigation -->
   <header class="site-header">
     <div class="site-header__inner">
       <a
@@ -63,46 +131,21 @@
         >
       </a>
 
-      <button
-        class="nav-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="primary-navigation"
-        aria-label="Open navigation"
-      >
-        <svg
-          class="icon"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.7"
-          stroke-linecap="round"
-          aria-hidden="true"
-        >
-          <path d="M4 7H20M4 12H20M4 17H20"/>
-        </svg>
-      </button>
-
-      <nav
-        class="site-nav"
-        id="primary-navigation"
-        aria-label="Main navigation"
-      >
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html" aria-current="page">Home</a>
         <a href="pages/manga.html">Manga</a>
         <a href="pages/novels.html">Novels</a>
         <a href="pages/codex.html">Codex</a>
         <a href="pages/about.html">About</a>
         <a href="pages/status.html">Status</a>
+        <a href="pages/account.html">Account</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
 
-    <!-- Hero without the oversized title -->
+    <!-- Hero -->
     <section class="hero section" aria-label="Introduction">
       <div class="hero__content">
         <p class="eyebrow">INDEPENDENT CREATIVE PROJECT</p>
@@ -285,6 +328,7 @@
       <nav aria-label="Footer navigation">
         <a href="pages/about.html">About</a>
         <a href="pages/status.html">Status</a>
+        <a href="pages/account.html">Account</a>
       </nav>
 
       <p class="site-footer__copyright">
