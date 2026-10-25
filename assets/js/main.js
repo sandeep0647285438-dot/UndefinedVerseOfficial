@@ -4,10 +4,10 @@
  * Main application controller
  * File: assets/js/main.js
  *
- * Navigation module disabled.
- * Other independent modules remain connected.
+ * Connects the site's independent JavaScript modules.
  */
 
+import { initNavigation } from "./navigation.js";
 import { initBackground } from "./background.js";
 import { initMotion } from "./motion.js";
 import { initScrollReveal } from "./scroll-reveal.js";
@@ -25,6 +25,7 @@ function startUndefinedVerse() {
 
   const modules = [
     ["Accessibility", initAccessibility],
+    ["Navigation", initNavigation],
     ["Background", initBackground],
     ["Motion", initMotion],
     ["Scroll reveal", initScrollReveal],
