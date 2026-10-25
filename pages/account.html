@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080611">
+  <meta name="description" content="Create an account or sign in to UndefinedVerseOfficial.">
+  <title>Account | UndefinedVerseOfficial</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080611;
+      --panel: rgba(20, 15, 39, .94);
+      --text: #f4f0ff;
+      --muted: #b7aecf;
+      --purple: #a78bfa;
+      --border: rgba(190, 170, 255, .2);
+      --error: #ff9baf;
+      --success: #8ee8c1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 20%, #38205b 0, transparent 38%),
+        radial-gradient(ellipse at 85% 75%, #211747 0, transparent 40%),
+        var(--bg);
+    }
+
+    a { color: #c9b8ff; }
+
+    .shell {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .card {
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 20px 70px #0006;
+    }
+
+    .brand {
+      margin: 0;
+      color: var(--purple);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(1.7rem, 7vw, 2.2rem);
+      overflow-wrap: anywhere;
+    }
+
+    .intro, .hint {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: .92rem;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 24px 0;
+      padding: 5px;
+      background: #090713;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    button, input { font: inherit; }
+
+    .tab {
+      padding: 11px 8px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      color: white;
+      background: #39265e;
+    }
+
+    .field { margin: 16px 0; }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: .9rem;
+      font-weight: 650;
+    }
+
+    input {
+      width: 100%;
+      min-height: 46px;
+      padding: 12px;
+      color: white;
+      background: #0c0918;
+      border: 1px solid #493b68;
+      border-radius: 10px;
+    }
+
+    input:focus-visible, button:focus-visible, a:focus-visible {
+      outline: 2px solid #c4b5fd;
+      outline-offset: 3px;
+    }
+
+    .password-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    .password-wrap input { min-width: 0; }
+
+    .small-button {
+      flex-shrink: 0;
+      padding: 0 10px;
+      color: var(--text);
+      background: #211735;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .primary {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 10px;
+      padding: 12px;
+      color: #160c2b;
+      background: linear-gradient(110deg, #c4b5fd, #a78bfa);
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .notice {
+      display: none;
+      margin: 16px 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.show { display: block; }
+    .notice.error { color: var(--error); }
+    .notice.success { color: var(--success); }
+
+    .hidden { display: none !important; }
+
+    .account-details {
+      margin: 18px 0;
+      padding: 14px;
+      background: #0c0918;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    @media (max-width: 360px) {
+      .card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <a class="back" href="../index.html">← Back to UV home</a>
+
+    <section class="card">
+      <p class="brand">UndefinedVerseOfficial</p>
+      <h1 id="page-title">Your account</h1>
+      <p class="intro">
+        Create your account and establish your identity in the UV community.
+      </p>
+
+      <div id="auth-area">
+        <div class="tabs" role="tablist" aria-label="Account action">
+          <button class="tab" id="login-tab" type="button"
+            role="tab" aria-selected="true">Log in</button>
+          <button class="tab" id="signup-tab" type="button"
+            role="tab" aria-selected="false">Sign up</button>
+        </div>
+
+        <form id="auth-form">
+          <div class="field hidden" id="name-field">
+            <label for="display-name">Display name (optional)</label>
+            <input id="display-name" name="displayName"
+              type="text" maxlength="50" autocomplete="nickname"
+              placeholder="How should we display your name?">
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email"
+              autocomplete="email" maxlength="254"
+              required placeholder="you@example.com">
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input id="password" name="password" type="password"
+                autocomplete="current-password" minlength="8"
+                required placeholder="At least 8 characters">
+              <button class="small-button" id="toggle-password"
+                type="button" aria-label="Show password"
+                aria-pressed="false">Show</button>
+            </div>
+            <p class="hint" id="password-hint">
+              Enter your password to sign in.
+            </p>
+          </div>
+
+          <button class="primary" id="submit-button" type="submit">
+            Log in
+          </button>
+        </form>
+
+        <button id="forgot-button" class="tab" type="button"
+          style="width:100%;margin-top:10px">
+          Forgot password?
+        </button>
+      </div>
+
+      <div id="signed-in-area" class="hidden">
+        <h2>You're signed in</h2>
+        <p class="intro">Your UV account is connected.</p>
+        <div class="account-details">
+          <p><strong>Email</strong></p>
+          <p id="user-email"></p>
+          <p><strong>User ID</strong></p>
+          <p id="user-id"></p>
+        </div>
+        <p class="hint">
+          Your public profile page will be connected in the next step.
+        </p>
+        <button class="primary" id="logout-button" type="button">
+          Log out
+        </button>
+      </div>
+
+      <div id="notice" class="notice" role="status"
+        aria-live="polite"></div>
+
+      <p class="footer">
+        Keep your password private. Never share verification links or
+        account credentials with anyone.
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { supabase } from "../assets/js/supabase.js";
+
+    const $ = (id) => document.getElementById(id);
+
+    const authArea = $("auth-area");
+    const signedInArea = $("signed-in-area");
+    const form = $("auth-form");
+    const notice = $("notice");
+    const submitButton = $("submit-button");
+
+    let mode = "login";
+    let busy = false;
+
+    function showNotice(message, type = "success") {
+      notice.textContent = message;
+      notice.className = `notice show ${type}`;
+    }
+
+    function clearNotice() {
+      notice.textContent = "";
+      notice.className = "notice";
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signup = mode === "signup";
+
+      $("login-tab").setAttribute("aria-selected", String(!signup));
+      $("signup-tab").setAttribute("aria-selected", String(signup));
+      $("name-field").classList.toggle("hidden", !signup);
+      $("forgot-button").classList.toggle("hidden", signup);
+
+      $("page-title").textContent = signup ? "Create your account" : "Welcome back";
+      submitButton.textContent = signup ? "Create account" : "Log in";
+      $("password").autocomplete = signup ? "new-password" : "current-password";
+      $("password-hint").textContent = signup
+        ? "Use at least 8 characters. Choose a password you don't use elsewhere."
+        : "Enter your password to sign in.";
+
+      clearNotice();
+    }
+
+    function setBusy(value) {
+      busy = value;
+      submitButton.disabled = value;
+      $("forgot-button").disabled = value;
+      $("login-tab").disabled = value;
+      $("signup-tab").disabled = value;
+      $("logout-button").disabled = value;
+      submitButton.textContent = value
+        ? "Please wait…"
+        : mode === "signup" ? "Create account" : "Log in";
+    }
+
+    function displaySession(user) {
+      authArea.classList.add("hidden");
+      signedInArea.classList.remove("hidden");
+      $("user-email").textContent = user.email || "Email unavailable";
+      $("user-id").textContent = user.id;
+    }
+
+    function displaySignedOut() {
+      authArea.classList.remove("hidden");
+      signedInArea.classList.add("hidden");
+    }
+
+    $("login-tab").addEventListener("click", () => setMode("login"));
+    $("signup-tab").addEventListener("click", () => setMode("signup"));
+
+    $("toggle-password").addEventListener("click", () => {
+      const input = $("password");
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      $("toggle-password").textContent = show ? "Hide" : "Show";
+      $("toggle-password").setAttribute("aria-label",
+        show ? "Hide password" : "Show password");
+      $("toggle-password").setAttribute("aria-pressed", String(show));
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (busy) return;
+      clearNotice();
+
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      const displayName = $("display-name").value.trim();
+
+      if (mode === "signup" && password.length < 8) {
+        showNotice("Choose a password with at least 8 characters.", "error");
+        return;
+      }
+
+      setBusy(true);
+
+      try {
+        if (mode === "signup") {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: window.location.origin + "/pages/account.html",
+              data: {
+                display_name: displayName || null
+              }
+            }
+          });
+
+          if (error) throw error;
+
+          if (data.session && data.user) {
+            displaySession(data.user);
+            showNotice("Your account was created and you're signed in.");
+          } else {
+            showNotice(
+              "Registration submitted. Check your email for the verification link before signing in."
+            );
+            form.reset();
+          }
+        } else {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (error) throw error;
+
+          displaySession(data.user);
+          showNotice("Signed in successfully.");
+          $("password").value = "";
+        }
+      } catch (error) {
+        showNotice(
+          error.message || "Something went wrong. Please try again.",
+          "error"
+        );
+      } finally {
+        setBusy(false);
+      }
+    });
+
+    $("forgot-button").addEventListener("click", async () => {
+      if (busy) return;
+      clearNotice();
+
+      const email = $("email").value.trim();
+      if (!email) {
+        showNotice("Enter your email address first.", "error");
+        $("email").focus();
+        return;
+      }
+
+      setBusy(true);
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + "/pages/account.html"
+        });
+
+        if (error) throw error;
+
+        showNotice(
+          "If an account exists for that email, a password-reset link will be sent."
+        );
+      } catch (error) {
+        showNotice(error.message || "Unable to request a reset.", "error");
+      } finally {
+        setBusy(false);
+      }
+    });
+
+    $("logout-button").addEventListener("click", async () => {
+      if (busy) return;
+      clearNotice();
+      setBusy(true);
+
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+
+        displaySignedOut();
+        showNotice("You've been logged out.");
+      } catch (error) {
+        showNotice(error.message || "Unable to log out.", "error");
+      } finally {
+        setBusy(false);
+      }
+    });
+
+    // Restore an existing session after a page reload.
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.getSession();
+
+    if (sessionError) {
+      showNotice("Unable to check your session. Please reload the page.", "error");
+    } else if (sessionData.session?.user) {
+      displaySession(sessionData.session.user);
+    }
+
+    // Keep the visible account state in sync with authentication.
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        displaySession(session.user);
+      } else if (event === "SIGNED_OUT") {
+        displaySignedOut();
+      }
+    });
+
+    setMode("login");
+  </script>
+</body>
+</html>
