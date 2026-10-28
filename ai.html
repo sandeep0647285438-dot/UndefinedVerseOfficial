@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090812">
+  <meta name="description" content="Chat with UV AI, the AI assistant of UndefinedVerseOfficial.">
+  <title>UV AI — UndefinedVerseOfficial</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090812;
+      --panel: #12111e;
+      --panel2: #1a1828;
+      --line: #302b45;
+      --text: #f5f3ff;
+      --muted: #aaa4c2;
+      --purple: #b8a0ff;
+      --purple2: #8c6df0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 15% 0%, #35205b55, transparent 42%),
+        radial-gradient(ellipse at 90% 90%, #28235a55, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    button, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      width: min(100%, 900px);
+      height: 100dvh;
+      min-height: 480px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 0 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(140deg, #c6b4ff, #7651dc);
+      color: #160d2c;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .brand { flex: 1; min-width: 0; }
+    .brand h1 { font-size: 18px; margin: 0; }
+    .brand p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+
+    .small-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 9px 12px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 12px 0;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #69e3a2;
+      border-radius: 50%;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0 24px;
+      scroll-behavior: smooth;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 45px 12px 30px;
+    }
+
+    .welcome .orb {
+      width: 65px;
+      height: 65px;
+      display: grid;
+      place-items: center;
+      margin: auto auto 18px;
+      border-radius: 22px;
+      background: linear-gradient(140deg, #c6b4ff, #7651dc);
+      color: #160d2c;
+      font-size: 30px;
+    }
+
+    .welcome h2 { margin: 0 0 10px; font-size: 25px; }
+    .welcome p { color: var(--muted); line-height: 1.6; }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .suggestions button {
+      border: 1px solid var(--line);
+      background: #171426;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 11px 13px;
+      font-size: 13px;
+    }
+
+    .message {
+      display: flex;
+      gap: 10px;
+      margin: 18px 0;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      flex: 0 0 32px;
+      height: 32px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: var(--panel2);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message.user .avatar {
+      background: #42336c;
+      color: white;
+    }
+
+    .content {
+      min-width: 0;
+      flex: 1;
+      padding: 4px 0;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .message.user .content {
+      background: #201b32;
+      border: 1px solid #38304e;
+      border-radius: 5px 15px 15px 15px;
+      padding: 11px 13px;
+    }
+
+    .message.error .content { color: #ffb7b7; }
+
+    .composer-wrap {
+      padding: 12px 0 max(12px, env(safe-area-inset-bottom));
+      background: linear-gradient(transparent, var(--bg) 20%);
+    }
+
+    .composer {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 9px;
+      background: var(--panel);
+      border: 1px solid #49405f;
+      border-radius: 19px;
+    }
+
+    textarea {
+      flex: 1;
+      width: 0;
+      min-height: 42px;
+      max-height: 140px;
+      resize: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 10px 7px;
+      line-height: 1.5;
+    }
+
+    textarea::placeholder { color: #827b9b; }
+
+    .send {
+      flex: 0 0 43px;
+      height: 43px;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(140deg, #c6b4ff, #9676ff);
+      color: #180d32;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .send:disabled { opacity: .5; cursor: wait; }
+
+    .tools {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tools button { font-size: 12px; }
+    .disclaimer {
+      color: #77718d;
+      font-size: 11px;
+      text-align: center;
+      padding: 8px 0 0;
+    }
+
+    @media (max-width: 480px) {
+      .app { padding: 0 12px; }
+      header { padding: 12px 0; }
+      .welcome { padding-top: 35px; }
+      .welcome h2 { font-size: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header>
+      <div class="logo">U</div>
+      <div class="brand">
+        <h1>UV AI</h1>
+        <p>UndefinedVerseOfficial</p>
+      </div>
+      <button class="small-btn" id="newChat" type="button">New chat</button>
+    </header>
+
+    <div class="status">
+      <span class="dot"></span>
+      AI assistant
+      <span>·</span>
+      <span id="statusText">Ready</span>
+    </div>
+
+    <section id="messages" aria-live="polite">
+      <div class="welcome" id="welcome">
+        <div class="orb">✦</div>
+        <h2>What can I help with?</h2>
+        <p>Ask questions, explore ideas, learn something new,<br>
+        or work on your next project.</p>
+        <div class="suggestions">
+          <button type="button" data-prompt="Explain a difficult topic in simple steps.">Explain a topic</button>
+          <button type="button" data-prompt="Help me brainstorm a creative story idea.">Brainstorm ideas</button>
+          <button type="button" data-prompt="Help me write a JavaScript function.">Write code</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="composer-wrap">
+      <form id="chatForm">
+        <div class="composer">
+          <textarea id="prompt" rows="1"
+            maxlength="4000"
+            placeholder="Message UV AI..."
+            aria-label="Your message"
+            required></textarea>
+          <button class="send" id="send" aria-label="Send message" type="submit">↑</button>
+        </div>
+      </form>
+
+      <div class="tools">
+        <button class="small-btn" id="voice" type="button">🎙 Voice input</button>
+        <button class="small-btn" id="speak" type="button">🔊 Read replies: off</button>
+      </div>
+
+      <div class="disclaimer">
+        AI can make mistakes. Verify important information.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const API =
+        "https://uv-ai-chatbot.sandeep0647285438.workers.dev/chat";
+
+      const form = document.getElementById("chatForm");
+      const prompt = document.getElementById("prompt");
+      const send = document.getElementById("send");
+      const messagesEl = document.getElementById("messages");
+      const welcome = document.getElementById("welcome");
+      const statusText = document.getElementById("statusText");
+      const voiceButton = document.getElementById("voice");
+      const speakButton = document.getElementById("speak");
+
+      let history = [];
+      let busy = false;
+      let speakReplies = false;
+
+      function addMessage(role, text, isError = false) {
+        const row = document.createElement("div");
+        row.className =
+          "message " + (role === "user" ? "user" : "assistant") +
+          (isError ? " error" : "");
+
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.textContent = role === "user" ? "You" : "U";
+
+        const content = document.createElement("div");
+        content.className = "content";
+        content.textContent = text;
+
+        row.append(avatar, content);
+        messagesEl.appendChild(row);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return content;
+      }
+
+      function showWelcome(show) {
+        welcome.hidden = !show;
+      }
+
+      async function sendMessage(text) {
+        text = text.trim();
+        if (!text || busy) return;
+
+        busy = true;
+        send.disabled = true;
+        prompt.disabled = true;
+        statusText.textContent = "Thinking...";
+        showWelcome(false);
+
+        addMessage("user", text);
+        history.push({ role: "user", content: text });
+
+        const thinking = addMessage("assistant", "Thinking…");
+
+        try {
+          const response = await fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: history.slice(-12)
+            })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Request failed.");
+          }
+
+          if (typeof data.reply !== "string" || !data.reply.trim()) {
+            throw new Error("The AI returned an empty reply.");
+          }
+
+          thinking.textContent = data.reply;
+          history.push({ role: "assistant", content: data.reply });
+
+          if (speakReplies && "speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(
+              new SpeechSynthesisUtterance(data.reply)
+            );
+          }
+        } catch (error) {
+          thinking.textContent =
+            "I couldn't get a reply. " + error.message;
+          thinking.parentElement.classList.add("error");
+        } finally {
+          busy = false;
+          send.disabled = false;
+          prompt.disabled = false;
+          statusText.textContent = "Ready";
+          prompt.focus();
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = prompt.value;
+        prompt.value = "";
+        prompt.style.height = "auto";
+        sendMessage(text);
+      });
+
+      prompt.addEventListener("input", () => {
+        prompt.style.height = "auto";
+        prompt.style.height =
+          Math.min(prompt.scrollHeight, 140) + "px";
+      });
+
+      prompt.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey &&
+          !event.isComposing
+        ) {
+          event.preventDefault();
+          form.requestSubmit();
+        }
+      });
+
+      document.querySelectorAll("[data-prompt]").forEach((button) => {
+        button.addEventListener("click", () => {
+          prompt.value = button.dataset.prompt;
+          form.requestSubmit();
+        });
+      });
+
+      document.getElementById("newChat").addEventListener("click", () => {
+        if (busy) return;
+
+        history = [];
+        messagesEl.replaceChildren();
+        messagesEl.appendChild(welcome);
+        showWelcome(true);
+        prompt.value = "";
+        statusText.textContent = "New conversation";
+        if ("speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        prompt.focus();
+      });
+
+      speakButton.addEventListener("click", () => {
+        speakReplies = !speakReplies;
+        speakButton.textContent = speakReplies
+          ? "🔊 Read replies: on"
+          : "🔊 Read replies: off";
+
+        if (!speakReplies && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+      });
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        voiceButton.textContent = "🎙 Voice unavailable";
+        voiceButton.title =
+          "Speech recognition is not supported in this browser.";
+      } else {
+        voiceButton.addEventListener("click", () => {
+          const recognition = new SpeechRecognition();
+          recognition.lang = navigator.language || "en-US";
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+
+          voiceButton.disabled = true;
+          voiceButton.textContent = "🎙 Listening...";
+
+          recognition.onresult = (event) => {
+            prompt.value =
+              event.results[0][0].transcript;
+            prompt.dispatchEvent(new Event("input"));
+            prompt.focus();
+          };
+
+          recognition.onerror = () => {
+            statusText.textContent =
+              "Voice input failed. Try typing instead.";
+          };
+
+          recognition.onend = () => {
+            voiceButton.disabled = false;
+            voiceButton.textContent = "🎙 Voice input";
+          };
+
+          try {
+            recognition.start();
+          } catch {
+            voiceButton.disabled = false;
+            voiceButton.textContent = "🎙 Voice input";
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
