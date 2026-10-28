@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UV AI Connection Test</title>
+</head>
+<body>
+  <h1>UV AI Connection Test</h1>
+  <p>This temporary page checks whether the AI backend responds.</p>
+  <button id="test">Test AI connection</button>
+  <pre id="result">Ready to test.</pre>
+
+  <script>
+    const WORKER_URL =
+      "https://YOUR-WORKER-HOSTNAME.workers.dev/chat";
+
+    const button = document.getElementById("test");
+    const result = document.getElementById("result");
+
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      result.textContent = "Connecting to UV AI...";
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            messages: [{
+              role: "user",
+              content: "Reply with a short greeting."
+            }]
+          })
+        });
+
+        const data = await response.json();
+
+        result.textContent =
+          "HTTP " + response.status + "\n" +
+          JSON.stringify(data, null, 2);
+      } catch (error) {
+        result.textContent =
+          "Connection failed: " + error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
