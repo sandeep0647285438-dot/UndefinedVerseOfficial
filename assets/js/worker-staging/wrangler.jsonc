@@ -1,0 +1,10 @@
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "uvi-staging-test",
+  "main": "./uv-ai-chatbot.js",
+  "compatibility_date": "2026-10-29",
+  "ai": {
+    "binding": "AI"
+  }
+}
