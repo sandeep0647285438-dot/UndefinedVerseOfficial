@@ -4,21 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090812">
-  <meta name="description" content="Chat with UV AI, the AI assistant of UndefinedVerseOfficial.">
-  <title>UV AI — UndefinedVerseOfficial</title>
-
+  <meta name="theme-color" content="#080611">
+  <meta name="description" content="Talk with UVI, UndefinedVerseIntelligence, the AI assistant for UndefinedVerseOfficial.">
+  <title>UVI AI | UndefinedVerseOfficial</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #090812;
-      --panel: #12111e;
-      --panel2: #1a1828;
-      --line: #302b45;
-      --text: #f5f3ff;
-      --muted: #aaa4c2;
+      --bg: #080611;
+      --panel: rgba(19, 14, 37, .94);
+      --panel2: #100c20;
+      --text: #f5f1ff;
+      --muted: #b7aecf;
       --purple: #b8a0ff;
-      --purple2: #8c6df0;
+      --border: rgba(190, 170, 255, .2);
+      --user: #342354;
+      --assistant: #171126;
+      --danger: #ff9baf;
     }
 
     * { box-sizing: border-box; }
@@ -26,101 +27,130 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 15% 0%, #35205b55, transparent 42%),
-        radial-gradient(ellipse at 90% 90%, #28235a55, transparent 40%),
-        var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 10%, #30204d 0, transparent 38%),
+        radial-gradient(ellipse at 90% 80%, #201540 0, transparent 40%),
+        var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     button, textarea { font: inherit; }
-    button { cursor: pointer; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    a { color: #d0c1ff; }
 
     .app {
-      width: min(100%, 900px);
-      height: 100dvh;
-      min-height: 480px;
+      width: min(100%, 920px);
+      min-height: 100dvh;
       margin: auto;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      padding: 0 16px;
     }
 
     header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--line);
+      padding: 10px 2px 16px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .logo {
-      width: 43px;
-      height: 43px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(140deg, #c6b4ff, #7651dc);
-      color: #160d2c;
-      font-size: 21px;
-      font-weight: 900;
+    .brand { min-width: 0; }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.15rem, 4vw, 1.5rem);
+      letter-spacing: .02em;
     }
 
-    .brand { flex: 1; min-width: 0; }
-    .brand h1 { font-size: 18px; margin: 0; }
-    .brand p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
-
-    .small-btn {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 9px 12px;
-    }
-
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    .brand p {
+      margin: 4px 0 0;
       color: var(--muted);
-      font-size: 12px;
-      padding: 12px 0;
+      font-size: .82rem;
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      background: #69e3a2;
-      border-radius: 50%;
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 7px;
     }
 
-    #messages {
+    .small, .suggestion {
+      color: var(--text);
+      background: #211832;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 11px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .notice {
+      margin: 12px 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--muted);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.error { color: var(--danger); }
+
+    .notice a { font-weight: 700; }
+
+    .privacy {
+      margin: 12px 0 4px;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .chat {
       flex: 1;
-      overflow-y: auto;
-      padding: 10px 0 24px;
-      scroll-behavior: smooth;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px 0;
     }
 
     .welcome {
+      margin: auto 0;
+      padding: 28px 14px;
       text-align: center;
-      padding: 45px 12px 30px;
     }
 
-    .welcome .orb {
-      width: 65px;
-      height: 65px;
-      display: grid;
-      place-items: center;
-      margin: auto auto 18px;
-      border-radius: 22px;
-      background: linear-gradient(140deg, #c6b4ff, #7651dc);
-      color: #160d2c;
-      font-size: 30px;
+    .orb {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #f1eaff, #b7a0ff 23%, #593c94 55%, #140d28 78%);
+      box-shadow: 0 0 42px #8b5cf655, inset 0 0 20px #fff3;
     }
 
-    .welcome h2 { margin: 0 0 10px; font-size: 25px; }
-    .welcome p { color: var(--muted); line-height: 1.6; }
+    .welcome h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.45rem, 5vw, 2rem);
+    }
+
+    .welcome p {
+      max-width: 560px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.6;
+    }
 
     .suggestions {
       display: flex;
@@ -130,389 +160,541 @@
       margin-top: 22px;
     }
 
-    .suggestions button {
-      border: 1px solid var(--line);
-      background: #171426;
-      color: var(--text);
-      border-radius: 14px;
-      padding: 11px 13px;
-      font-size: 13px;
+    .suggestion {
+      font-size: .86rem;
+      max-width: 100%;
     }
 
     .message {
       display: flex;
-      gap: 10px;
-      margin: 18px 0;
-      align-items: flex-start;
+      flex-direction: column;
+      gap: 5px;
+      max-width: 88%;
     }
 
-    .avatar {
-      flex: 0 0 32px;
-      height: 32px;
-      border-radius: 11px;
-      display: grid;
-      place-items: center;
-      background: var(--panel2);
-      font-size: 14px;
-      font-weight: bold;
+    .message.user { align-self: flex-end; }
+    .message.assistant { align-self: flex-start; }
+
+    .role {
+      padding: 0 5px;
+      color: var(--muted);
+      font-size: .75rem;
     }
 
-    .message.user .avatar {
-      background: #42336c;
-      color: white;
-    }
-
-    .content {
-      min-width: 0;
-      flex: 1;
-      padding: 4px 0;
-      line-height: 1.7;
+    .bubble {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      line-height: 1.65;
       overflow-wrap: anywhere;
       white-space: pre-wrap;
     }
 
-    .message.user .content {
-      background: #201b32;
-      border: 1px solid #38304e;
-      border-radius: 5px 15px 15px 15px;
-      padding: 11px 13px;
+    .user .bubble {
+      background: var(--user);
+      border-top-right-radius: 5px;
     }
 
-    .message.error .content { color: #ffb7b7; }
-
-    .composer-wrap {
-      padding: 12px 0 max(12px, env(safe-area-inset-bottom));
-      background: linear-gradient(transparent, var(--bg) 20%);
+    .assistant .bubble {
+      background: var(--assistant);
+      border-top-left-radius: 5px;
     }
 
     .composer {
+      position: sticky;
+      bottom: 0;
+      padding: 12px 0 max(10px, env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, transparent, var(--bg) 14%);
+    }
+
+    .composer-inner {
       display: flex;
       align-items: flex-end;
       gap: 8px;
       padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
       background: var(--panel);
-      border: 1px solid #49405f;
-      border-radius: 19px;
+      box-shadow: 0 12px 36px #0004;
     }
 
     textarea {
       flex: 1;
-      width: 0;
+      min-width: 0;
       min-height: 42px;
-      max-height: 140px;
-      resize: none;
-      border: 0;
-      outline: 0;
-      background: transparent;
+      max-height: 160px;
+      resize: vertical;
+      padding: 10px;
       color: var(--text);
-      padding: 10px 7px;
+      background: transparent;
+      border: 0;
+      outline: none;
       line-height: 1.5;
     }
 
-    textarea::placeholder { color: #827b9b; }
-
     .send {
-      flex: 0 0 43px;
-      height: 43px;
+      min-width: 48px;
+      min-height: 42px;
+      padding: 8px 12px;
+      color: #160c2b;
+      background: linear-gradient(110deg, #d0c1ff, #a78bfa);
       border: 0;
-      border-radius: 13px;
-      background: linear-gradient(140deg, #c6b4ff, #9676ff);
-      color: #180d32;
-      font-weight: 900;
-      font-size: 20px;
+      border-radius: 11px;
+      font-weight: 800;
+      cursor: pointer;
     }
-
-    .send:disabled { opacity: .5; cursor: wait; }
 
     .tools {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 9px;
     }
 
-    .tools button { font-size: 12px; }
-    .disclaimer {
-      color: #77718d;
-      font-size: 11px;
-      text-align: center;
-      padding: 8px 0 0;
+    .tools span {
+      color: var(--muted);
+      font-size: .76rem;
+      align-self: center;
     }
 
-    @media (max-width: 480px) {
-      .app { padding: 0 12px; }
-      header { padding: 12px 0; }
-      .welcome { padding-top: 35px; }
-      .welcome h2 { font-size: 22px; }
+    button:focus-visible, a:focus-visible, textarea:focus-visible {
+      outline: 2px solid #d0c1ff;
+      outline-offset: 3px;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation: none !important;
-      }
+    .hidden { display: none !important; }
+
+    @media (max-width: 520px) {
+      .app { padding: 10px; }
+      header { align-items: flex-start; }
+      .top-actions { max-width: 45%; }
+      .small { padding: 8px; font-size: .78rem; }
+      .message { max-width: 96%; }
+      .welcome { padding: 22px 4px; }
     }
   </style>
 </head>
-
 <body>
   <main class="app">
     <header>
-      <div class="logo">U</div>
       <div class="brand">
-        <h1>UV AI</h1>
-        <p>UndefinedVerseOfficial</p>
+        <h1>UVI <span style="color:#b8a0ff">AI</span></h1>
+        <p>UndefinedVerseIntelligence</p>
       </div>
-      <button class="small-btn" id="newChat" type="button">New chat</button>
+      <div class="top-actions">
+        <a class="small" href="./index.html">UV Home</a>
+        <button class="small" id="new-chat" type="button">New chat</button>
+      </div>
     </header>
 
-    <div class="status">
-      <span class="dot"></span>
-      AI assistant
-      <span>·</span>
-      <span id="statusText">Ready</span>
+    <div id="notice" class="notice" role="status" aria-live="polite">
+      Checking your account…
     </div>
 
-    <section id="messages" aria-live="polite">
-      <div class="welcome" id="welcome">
-        <div class="orb">✦</div>
-        <h2>What can I help with?</h2>
-        <p>Ask questions, explore ideas, learn something new,<br>
-        or work on your next project.</p>
-        <div class="suggestions">
-          <button type="button" data-prompt="Explain a difficult topic in simple steps.">Explain a topic</button>
-          <button type="button" data-prompt="Help me brainstorm a creative story idea.">Brainstorm ideas</button>
-          <button type="button" data-prompt="Help me write a JavaScript function.">Write code</button>
-        </div>
-      </div>
+    <section id="signed-out" class="notice hidden">
+      Sign in to use UVI with private chat history and saved memory.
+      <p><a href="./pages/account.html">Go to your UV account →</a></p>
     </section>
 
-    <section class="composer-wrap">
-      <form id="chatForm">
-        <div class="composer">
-          <textarea id="prompt" rows="1"
-            maxlength="4000"
-            placeholder="Message UV AI..."
-            aria-label="Your message"
-            required></textarea>
-          <button class="send" id="send" aria-label="Send message" type="submit">↑</button>
-        </div>
-      </form>
-
-      <div class="tools">
-        <button class="small-btn" id="voice" type="button">🎙 Voice input</button>
-        <button class="small-btn" id="speak" type="button">🔊 Read replies: off</button>
+    <section id="chat-area" class="hidden">
+      <div class="privacy">
+        Your conversation and memories are private to your signed-in account.
+        Only approved UV project facts may be added to shared project knowledge.
       </div>
 
-      <div class="disclaimer">
-        AI can make mistakes. Verify important information.
+      <section id="chat" class="chat" aria-live="polite">
+        <div class="welcome" id="welcome">
+          <div class="orb" aria-hidden="true"></div>
+          <h2>Talk with UVI</h2>
+          <p>
+            Ask questions, work on ideas, or continue developing
+            UndefinedVerseOfficial. Your saved memories help UVI continue
+            your work across sessions.
+          </p>
+          <div class="suggestions">
+            <button class="suggestion" type="button">What do you know about UV?</button>
+            <button class="suggestion" type="button">Help me plan my next feature</button>
+            <button class="suggestion" type="button">Explain a coding problem</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="composer">
+        <form id="chat-form" class="composer-inner">
+          <textarea id="message" maxlength="5000" rows="1"
+            placeholder="Message UVI…" aria-label="Message UVI"
+            required></textarea>
+          <button class="send" id="send" type="submit">Send</button>
+        </form>
+
+        <div class="tools">
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <button class="small" id="voice-input" type="button">🎙 Voice input</button>
+            <button class="small" id="voice-output" type="button" aria-pressed="false">
+              🔈 Read replies: off
+            </button>
+          </div>
+          <span id="status">Ready</span>
+        </div>
+        <p class="privacy">
+          UVI can suggest changes, but it cannot directly edit or deploy your site.
+        </p>
       </div>
     </section>
   </main>
 
-  <script>
-    (() => {
-      "use strict";
+  <script type="module">
+    import { supabase } from "./assets/js/supabase.js";
 
-      const API =
-        "https://uv-ai-chatbot.sandeep0647285438.workers.dev/chat";
+    const WORKER_URL =
+      "https://uv-ai-chatbot.sandeep0647285438.workers.dev";
 
-      const form = document.getElementById("chatForm");
-      const prompt = document.getElementById("prompt");
-      const send = document.getElementById("send");
-      const messagesEl = document.getElementById("messages");
-      const welcome = document.getElementById("welcome");
-      const statusText = document.getElementById("statusText");
-      const voiceButton = document.getElementById("voice");
-      const speakButton = document.getElementById("speak");
+    const $ = (id) => document.getElementById(id);
+    const notice = $("notice");
+    const chatArea = $("chat-area");
+    const signedOut = $("signed-out");
+    const chat = $("chat");
+    const form = $("chat-form");
+    const input = $("message");
+    const sendButton = $("send");
+    const statusText = $("status");
 
-      let history = [];
-      let busy = false;
-      let speakReplies = false;
+    let currentUser = null;
+    let conversationId = null;
+    let sending = false;
+    let speakReplies = false;
+    let recognition = null;
 
-      function addMessage(role, text, isError = false) {
-        const row = document.createElement("div");
-        row.className =
-          "message " + (role === "user" ? "user" : "assistant") +
-          (isError ? " error" : "");
+    function newId() {
+      if (crypto.randomUUID) return crypto.randomUUID();
 
-        const avatar = document.createElement("div");
-        avatar.className = "avatar";
-        avatar.textContent = role === "user" ? "You" : "U";
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        const v = c === "x" ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
 
-        const content = document.createElement("div");
-        content.className = "content";
-        content.textContent = text;
+    function historyKey() {
+      return `uvi-chat-history:${currentUser.id}`;
+    }
 
-        row.append(avatar, content);
-        messagesEl.appendChild(row);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-        return content;
+    function conversationKey() {
+      return `uvi-conversation:${currentUser.id}`;
+    }
+
+    function readLocalHistory() {
+      try {
+        const data = JSON.parse(localStorage.getItem(historyKey()) || "[]");
+        return Array.isArray(data) ? data : [];
+      } catch {
+        return [];
       }
+    }
 
-      function showWelcome(show) {
-        welcome.hidden = !show;
+    function saveLocalHistory(items) {
+      try {
+        localStorage.setItem(historyKey(), JSON.stringify(items.slice(-80)));
+      } catch {
+        // Database history is still saved by the Worker.
       }
+    }
 
-      async function sendMessage(text) {
-        text = text.trim();
-        if (!text || busy) return;
+    function showNotice(message, isError = false) {
+      notice.textContent = message;
+      notice.classList.remove("hidden");
+      notice.classList.toggle("error", isError);
+    }
 
-        busy = true;
-        send.disabled = true;
-        prompt.disabled = true;
-        statusText.textContent = "Thinking...";
-        showWelcome(false);
+    function hideNotice() {
+      notice.classList.add("hidden");
+    }
 
-        addMessage("user", text);
-        history.push({ role: "user", content: text });
+    function makeMessage(role, content) {
+      const wrapper = document.createElement("article");
+      wrapper.className = `message ${role}`;
 
-        const thinking = addMessage("assistant", "Thinking…");
+      const label = document.createElement("div");
+      label.className = "role";
+      label.textContent = role === "user" ? "You" : "UVI";
 
-        try {
-          const response = await fetch(API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              messages: history.slice(-12)
-            })
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = content;
+
+      wrapper.append(label, bubble);
+      chat.appendChild(wrapper);
+      return wrapper;
+    }
+
+    function scrollToBottom() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+
+    function hideWelcome() {
+      $("welcome")?.classList.add("hidden");
+    }
+
+    function renderLocalHistory() {
+      chat.replaceChildren();
+
+      const items = readLocalHistory();
+      if (!items.length) {
+        const welcome = document.createElement("div");
+        welcome.className = "welcome";
+        welcome.id = "welcome";
+
+        const orb = document.createElement("div");
+        orb.className = "orb";
+        orb.setAttribute("aria-hidden", "true");
+
+        const title = document.createElement("h2");
+        title.textContent = "Talk with UVI";
+
+        const intro = document.createElement("p");
+        intro.textContent =
+          "Ask questions, work on ideas, or continue developing UndefinedVerseOfficial.";
+
+        const suggestions = document.createElement("div");
+        suggestions.className = "suggestions";
+
+        [
+          "What do you know about UV?",
+          "Help me plan my next feature",
+          "Explain a coding problem"
+        ].forEach(text => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "suggestion";
+          button.textContent = text;
+          button.addEventListener("click", () => {
+            input.value = text;
+            input.focus();
           });
+          suggestions.appendChild(button);
+        });
 
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.error || "Request failed.");
-          }
-
-          if (typeof data.reply !== "string" || !data.reply.trim()) {
-            throw new Error("The AI returned an empty reply.");
-          }
-
-          thinking.textContent = data.reply;
-          history.push({ role: "assistant", content: data.reply });
-
-          if (speakReplies && "speechSynthesis" in window) {
-            window.speechSynthesis.cancel();
-            window.speechSynthesis.speak(
-              new SpeechSynthesisUtterance(data.reply)
-            );
-          }
-        } catch (error) {
-          thinking.textContent =
-            "I couldn't get a reply. " + error.message;
-          thinking.parentElement.classList.add("error");
-        } finally {
-          busy = false;
-          send.disabled = false;
-          prompt.disabled = false;
-          statusText.textContent = "Ready";
-          prompt.focus();
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
+        welcome.append(orb, title, intro, suggestions);
+        chat.appendChild(welcome);
+        return;
       }
 
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const text = prompt.value;
-        prompt.value = "";
-        prompt.style.height = "auto";
-        sendMessage(text);
-      });
-
-      prompt.addEventListener("input", () => {
-        prompt.style.height = "auto";
-        prompt.style.height =
-          Math.min(prompt.scrollHeight, 140) + "px";
-      });
-
-      prompt.addEventListener("keydown", (event) => {
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey &&
-          !event.isComposing
-        ) {
-          event.preventDefault();
-          form.requestSubmit();
+      items.forEach(item => {
+        if (item && (item.role === "user" || item.role === "assistant") &&
+            typeof item.content === "string") {
+          makeMessage(item.role, item.content);
         }
       });
+      scrollToBottom();
+    }
 
-      document.querySelectorAll("[data-prompt]").forEach((button) => {
-        button.addEventListener("click", () => {
-          prompt.value = button.dataset.prompt;
-          form.requestSubmit();
+    async function loadSession() {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        showNotice("Couldn't check your session. Reload and try again.", true);
+        return;
+      }
+
+      currentUser = data.session?.user || null;
+
+      if (!currentUser) {
+        chatArea.classList.add("hidden");
+        signedOut.classList.remove("hidden");
+        showNotice("Sign in is required for private saved chats.");
+        return;
+      }
+
+      conversationId = localStorage.getItem(conversationKey());
+      if (!conversationId) {
+        conversationId = newId();
+        localStorage.setItem(conversationKey(), conversationId);
+      }
+
+      signedOut.classList.add("hidden");
+      chatArea.classList.remove("hidden");
+      hideNotice();
+      renderLocalHistory();
+      statusText.textContent = "Private memory enabled";
+    }
+
+    async function sendMessage(text) {
+      if (sending || !currentUser) return;
+
+      const message = text.trim();
+      if (!message) return;
+
+      sending = true;
+      sendButton.disabled = true;
+      input.disabled = true;
+      statusText.textContent = "UVI is thinking…";
+
+      hideWelcome();
+      const localHistory = readLocalHistory();
+      localHistory.push({ role: "user", content: message });
+      saveLocalHistory(localHistory);
+      makeMessage("user", message);
+      input.value = "";
+      scrollToBottom();
+
+      const typing = makeMessage("assistant", "Thinking…");
+
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error || !data.session?.access_token) {
+          throw new Error("Your session expired. Sign in again.");
+        }
+
+        const response = await fetch(`${WORKER_URL}/chat`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${data.session.access_token}`
+          },
+          body: JSON.stringify({
+            message,
+            conversationId
+          })
         });
-      });
 
-      document.getElementById("newChat").addEventListener("click", () => {
-        if (busy) return;
+        const result = await response.json().catch(() => ({}));
 
-        history = [];
-        messagesEl.replaceChildren();
-        messagesEl.appendChild(welcome);
-        showWelcome(true);
-        prompt.value = "";
-        statusText.textContent = "New conversation";
-        if ("speechSynthesis" in window) {
-          window.speechSynthesis.cancel();
+        if (!response.ok) {
+          throw new Error(result.error || `Request failed (${response.status}).`);
         }
-        prompt.focus();
-      });
 
-      speakButton.addEventListener("click", () => {
-        speakReplies = !speakReplies;
-        speakButton.textContent = speakReplies
-          ? "🔊 Read replies: on"
-          : "🔊 Read replies: off";
-
-        if (!speakReplies && "speechSynthesis" in window) {
-          window.speechSynthesis.cancel();
+        if (result.conversationId) {
+          conversationId = result.conversationId;
+          localStorage.setItem(conversationKey(), conversationId);
         }
-      });
 
+        typing.remove();
+        const reply = typeof result.reply === "string"
+          ? result.reply
+          : "I couldn't create a reply.";
+
+        makeMessage("assistant", reply);
+
+        const updatedHistory = readLocalHistory();
+        updatedHistory.push({ role: "assistant", content: reply });
+        saveLocalHistory(updatedHistory);
+
+        if (speakReplies && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(new SpeechSynthesisUtterance(reply));
+        }
+
+        statusText.textContent = "Saved";
+        scrollToBottom();
+      } catch (error) {
+        typing.remove();
+        makeMessage(
+          "assistant",
+          `I couldn't complete that request: ${error.message || "Please try again."}`
+        );
+        statusText.textContent = "Request failed";
+      } finally {
+        sending = false;
+        sendButton.disabled = false;
+        input.disabled = false;
+        input.focus();
+      }
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      sendMessage(input.value);
+    });
+
+    $("new-chat").addEventListener("click", () => {
+      if (!currentUser || sending) return;
+
+      conversationId = newId();
+      localStorage.setItem(conversationKey(), conversationId);
+      saveLocalHistory([]);
+      renderLocalHistory();
+      statusText.textContent = "New private conversation";
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    });
+
+    document.querySelectorAll(".suggestion").forEach(button => {
+      button.addEventListener("click", () => {
+        input.value = button.textContent;
+        input.focus();
+      });
+    });
+
+    $("voice-output").addEventListener("click", () => {
+      speakReplies = !speakReplies;
+      $("voice-output").setAttribute("aria-pressed", String(speakReplies));
+      $("voice-output").textContent =
+        speakReplies ? "🔈 Read replies: on" : "🔈 Read replies: off";
+
+      if (!speakReplies && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    });
+
+    $("voice-input").addEventListener("click", () => {
       const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
+        window.SpeechRecognition || window.webkitSpeechRecognition;
 
       if (!SpeechRecognition) {
-        voiceButton.textContent = "🎙 Voice unavailable";
-        voiceButton.title =
-          "Speech recognition is not supported in this browser.";
-      } else {
-        voiceButton.addEventListener("click", () => {
-          const recognition = new SpeechRecognition();
-          recognition.lang = navigator.language || "en-US";
-          recognition.interimResults = false;
-          recognition.maxAlternatives = 1;
-
-          voiceButton.disabled = true;
-          voiceButton.textContent = "🎙 Listening...";
-
-          recognition.onresult = (event) => {
-            prompt.value =
-              event.results[0][0].transcript;
-            prompt.dispatchEvent(new Event("input"));
-            prompt.focus();
-          };
-
-          recognition.onerror = () => {
-            statusText.textContent =
-              "Voice input failed. Try typing instead.";
-          };
-
-          recognition.onend = () => {
-            voiceButton.disabled = false;
-            voiceButton.textContent = "🎙 Voice input";
-          };
-
-          try {
-            recognition.start();
-          } catch {
-            voiceButton.disabled = false;
-            voiceButton.textContent = "🎙 Voice input";
-          }
-        });
+        showNotice(
+          "Voice input isn't supported in this browser. You can type your message instead."
+        );
+        return;
       }
-    })();
+
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+        statusText.textContent = "Voice input stopped";
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = navigator.language || "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        statusText.textContent = "Listening…";
+        $("voice-input").textContent = "Stop listening";
+      };
+
+      recognition.onresult = event => {
+        const transcript = event.results?.[0]?.[0]?.transcript;
+        if (transcript) input.value = `${input.value} ${transcript}`.trim();
+        input.focus();
+      };
+
+      recognition.onerror = () => {
+        statusText.textContent = "Voice input unavailable";
+      };
+
+      recognition.onend = () => {
+        recognition = null;
+        $("voice-input").textContent = "🎙 Voice input";
+        if (!sending) statusText.textContent = "Ready";
+      };
+
+      recognition.start();
+    });
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session?.user) {
+        currentUser = null;
+        chatArea.classList.add("hidden");
+        signedOut.classList.remove("hidden");
+        showNotice("You've been signed out. Your saved chats remain tied to your account.");
+      } else if (session.user.id !== currentUser?.id) {
+        loadSession();
+      }
+    });
+
+    await loadSession();
   </script>
 </body>
 </html>
