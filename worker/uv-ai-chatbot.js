@@ -1,5 +1,5 @@
 
-const MODEL = "@cf/meta/llama-3.1-8b-instruct";
+const MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
 const MAX_MESSAGE_LENGTH = 5000;
 const MAX_HISTORY = 16;
 
